@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
+import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/Widget/Courseportal.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class PortalPage extends StatefulWidget {
 
 class _PortalPageState extends State<PortalPage> {
   List<Portal> portals = [];
-
+  List<Portal> filteredPortals = [];
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,7 @@ class _PortalPageState extends State<PortalPage> {
         final List<dynamic> portalJsonList = jsonDecode(response.body);
         List<Portal> fetchedPortals = portalJsonList.map((json) => Portal.fromJson(json)).toList();
         setState(() {
+          filteredPortals = fetchedPortals;
           portals = fetchedPortals;
         });
       } else {
@@ -40,6 +42,13 @@ class _PortalPageState extends State<PortalPage> {
         portals = [];
       });
     }
+  }
+
+  void filterPortals(String searchText){
+    setState(() {
+      filteredPortals = portals.where((portal) => portal.portalName.toLowerCase().contains(searchText.toLowerCase())
+      ).toList();
+    });
   }
 
   double calculateMaxCrossAxisExtent(BuildContext context) {
@@ -64,8 +73,9 @@ class _PortalPageState extends State<PortalPage> {
                 ),
               ),
             ),
+            DetailsForPortal_Instructor(name: 'categories', number: portals.length),
             Positioned(
-              top: 50.0,
+              top: 190.0,
               left: 20.0,
               right: 20.0,
               child: Container(
@@ -74,18 +84,26 @@ class _PortalPageState extends State<PortalPage> {
                   color: tdBGColor,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: const TextField(
+                child: TextField(
                   cursorColor: tdbrown,
-                  decoration: InputDecoration(
+                  decoration:const InputDecoration(
                     hintText: 'Search',
                     border: InputBorder.none,
                     prefixIcon: Icon(Icons.search,color: tdBlue,),
                   ),
+                  onChanged: (value){
+                    filterPortals(value);
+                  },
                 ),
               ),
             ),
+            if(portals.isEmpty)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else
             Padding(
-                padding: const EdgeInsets.only(top: 120),
+                padding: const EdgeInsets.only(top: 250),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -104,9 +122,10 @@ class _PortalPageState extends State<PortalPage> {
                           childAspectRatio: 3 / 3,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 15),
-                      itemCount: portals.length,
+                      itemCount: filteredPortals.length,
                       itemBuilder: (context, i) {
-                        return CoursePortal(portals: portals[i]);
+                        final portal = filteredPortals[i];
+                        return CoursePortal(portals: portal);
                       }),
                 ),
               ),
