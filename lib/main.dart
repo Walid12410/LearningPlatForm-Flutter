@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/GetStart/pageview.dart';
 import 'package:learningplatformapp/HomePages/CoursePage.dart';
+import 'package:learningplatformapp/HomePages/HomePage.dart';
 import 'package:learningplatformapp/HomePages/PortalPage.dart';
+import 'package:learningplatformapp/SignInUp/signin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +24,7 @@ class _MyAppState extends State<MyApp> {
       title: 'App',
       debugShowCheckedModeBanner: false,
       color: Colors.red,
-      home: PageViewScreen(),
+      home: SignIn(),
     );
   }
 }

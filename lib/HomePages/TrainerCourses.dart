@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
+import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/Widget/CourseOfTrainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,7 @@ class TrainerCourse extends StatefulWidget {
 
 class _TrainerCourseState extends State<TrainerCourse> {
   List<Course> courses = [];
+  List<Course> filterCourses = [];
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _TrainerCourseState extends State<TrainerCourse> {
         List<Course> filteredCourses = fetchedCourses.where((course) => course.trainerID == widget.trainerId).toList();
         setState(() {
           courses = filteredCourses;
+          filterCourses = filteredCourses;
         });
       } else {
         throw Exception('Failed to load courses');
@@ -50,25 +53,102 @@ class _TrainerCourseState extends State<TrainerCourse> {
     }
   }
 
+  void filterCourse(String searchText){
+    setState(() {
+      filterCourses = courses.where((course) =>course.name.toLowerCase().contains(searchText.toLowerCase())
+      ).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Instructor Course',
-        style: TextStyle(color: tdBlue),),
-        centerTitle: true,
-        backgroundColor: tdbrown,
-      ),
-      body:Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: courses.length,
-              itemBuilder: (context, i) {
-               return  CourseOfTrainer(courses: courses[i]);
-              },
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Color(0xFFEC9D52),
+                  Color(0xFF004296)
+                ])
             ),
           ),
+          DetailsForPortal_Instructor(name: 'Instructor Course', number: courses.length),
+          Positioned(
+            top: 180.0,
+            left: 20.0,
+            right: 20.0,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context); // Assuming you are inside a BuildContext
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0), // Adjust padding as needed
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Choose your desired background color
+                      borderRadius: BorderRadius.circular(20.0), // Adjust border radius as needed
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: tdBlue, // You can change the color of the icon as needed
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5,),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: BoxDecoration(
+                      color: tdBGColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: TextField(
+                      cursorColor: tdbrown,
+                      decoration: const InputDecoration(
+                        hintText: 'Search',
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.search, color: tdBlue),
+                      ),
+                      onChanged: (value) {
+                        filterCourse(value);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if(courses.isEmpty)
+            const Center(
+              child: CircularProgressIndicator(),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.only(top: 240),
+              child:Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: filterCourses.length,
+                    itemBuilder: (context, i) {
+                      Course course = filterCourses[i];
+                      return  CourseOfTrainer(courses: course);
+                    },
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -14,7 +14,7 @@ class DetailsForPortal_Instructor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 50.0,
+      top: 60.0,
       left: 20.0,
       right: 20.0,
       child: Container(
@@ -27,38 +27,41 @@ class DetailsForPortal_Instructor extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.work,
-                    size: 130,
-                    color: tdbrown,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Learning PlatForm App',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold, color: tdBlue),
-                      ),
-                      Text(
-                        'Available ${name}',
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold, color: tdBlue),
-                      ),
-                      Text(
-                        '${number} ${name}',
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold, color: tdBlue),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.work,
+                      size: 110,
+                      color: tdbrown,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Learning PlatForm App',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold, color: tdBlue),
+                        ),
+                        Text(
+                          'Available ${name}',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold, color: tdBlue),
+                        ),
+                        Text(
+                          '${number} ${name}',
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold, color: tdBlue),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           )
       ),
     );

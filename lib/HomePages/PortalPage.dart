@@ -115,12 +115,12 @@ class _PortalPageState extends State<PortalPage> {
                 height: double.infinity,
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: calculateMaxCrossAxisExtent(context),
                           childAspectRatio: 3 / 3,
-                          crossAxisSpacing: 12,
+                          crossAxisSpacing: 10,
                           mainAxisSpacing: 15),
                       itemCount: filteredPortals.length,
                       itemBuilder: (context, i) {
