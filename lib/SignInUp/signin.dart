@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/HomePages/HomePage.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -8,9 +12,46 @@ class SignIn extends StatefulWidget {
   State<SignIn> createState() => _SignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInState extends State<SignIn>{
   bool isObscure = true;
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
+  Future<void> checkLogin(String username, String password) async {
+    String apiUrl = 'http://192.168.1.55/EduPlatForm/CMS/api/TrainerCrudOperation.php?operation=Login';
+    var response = await http.post(
+      Uri.parse(apiUrl),
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
+    var responseData = json.decode(response.body);
+    if (!responseData['error']) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content: Text(responseData['message']),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK',style: TextStyle(color: tdBlue),),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +65,8 @@ class _SignInState extends State<SignIn> {
                 gradient: LinearGradient(colors: [
                   Color(0xFFEC9D52),
                   Color(0xFF004296),
-                ])),
+                ])
+            ),
           ),
           Positioned(
             top: 0,
@@ -67,6 +109,7 @@ class _SignInState extends State<SignIn> {
                         children: [
                           const SizedBox(height: 50),
                           TextField(
+                            controller: usernameController,
                             decoration: InputDecoration(
                               labelText: 'UserName',
                               labelStyle: const TextStyle(
@@ -89,6 +132,7 @@ class _SignInState extends State<SignIn> {
                             height: 20,
                           ),
                           TextField(
+                            controller: passwordController,
                             obscureText: isObscure,
                             decoration: InputDecoration(
                               labelText: 'Password',
@@ -149,7 +193,10 @@ class _SignInState extends State<SignIn> {
                                   Color(0xFF004296),
                                 ])),
                             child: TextButton(
-                              onPressed: () {},
+                                onPressed: () {
+                                  checkLogin(usernameController.text,
+                                      passwordController.text);
+                                },
                               child: const Text(
                                 'SIGN IN',
                                 style: TextStyle(
