@@ -24,7 +24,7 @@ class _PasswordFieldsState extends State<PasswordFields> {
     return Row(
       children: [
         Expanded(
-          child: TextField(
+          child: TextFormField(
             controller: widget.passwordController,
             obscureText: isObscurePassword,
             decoration: InputDecoration(
@@ -50,9 +50,7 @@ class _PasswordFieldsState extends State<PasswordFields> {
               ),
               suffixIcon: IconButton(
                 icon: Icon(
-                  isObscurePassword
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+                  isObscurePassword ? Icons.visibility_off : Icons.visibility,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -62,11 +60,23 @@ class _PasswordFieldsState extends State<PasswordFields> {
                 },
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a password';
+              }
+              if (value.length < 8) {
+                return 'Password must be at least 8 characters long';
+              }
+              if (!containsUppercase(value)) {
+                return 'Password must contain at least one uppercase letter';
+              }
+              return null;
+            },
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: TextField(
+          child: TextFormField(
             controller: widget.confirmPasswordController,
             obscureText: isObscureConfirmPassword,
             decoration: InputDecoration(
@@ -92,9 +102,7 @@ class _PasswordFieldsState extends State<PasswordFields> {
               ),
               suffixIcon: IconButton(
                 icon: Icon(
-                  isObscureConfirmPassword
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+                  isObscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -104,9 +112,27 @@ class _PasswordFieldsState extends State<PasswordFields> {
                 },
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password again';
+              }
+              if (value != widget.passwordController.text) {
+                return 'Passwords do not match';
+              }
+              return null;
+            },
           ),
         ),
       ],
     );
+  }
+
+  bool containsUppercase(String value) {
+    for (var char in value.runes) {
+      if (char >= 65 && char <= 90) {
+        return true;
+      }
+    }
+    return false;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/HomePages/HomePage.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
+import 'package:learningplatformapp/SignInUp/signup.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -232,7 +233,10 @@ class _SignInState extends State<SignIn> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                    const SignUp()));
+                                  },
                                   child: const Text(
                                     'SIGNUP',
                                     style: TextStyle(

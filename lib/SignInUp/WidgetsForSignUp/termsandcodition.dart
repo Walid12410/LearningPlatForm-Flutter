@@ -4,13 +4,8 @@ import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
 
 class TermsAndConditionsCheckbox extends StatelessWidget {
-  final bool value;
-  final ValueChanged<bool?> onChanged;
-
 
   const TermsAndConditionsCheckbox({
-    required this.value,
-    required this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -18,14 +13,11 @@ class TermsAndConditionsCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Checkbox(
-          value: value,
-          onChanged: onChanged,
-        ),
+        const SizedBox(width: 10,),
         Flexible(
           child: RichText(
             text: TextSpan(
-              text: 'You agree to our ',
+              text: ' By clicking in signup You agree to our ',
               style: const TextStyle(
                 color: tdBlue, // Set the desired color here
               ),
