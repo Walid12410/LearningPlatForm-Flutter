@@ -126,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> insertTrainerData(String firstName, String lastName, String email, String telephone, String userName, String password,String gender) async {
-    String url = 'http://192.168.1.44/EduPlatForm/CMS/api/TrainerCrudOperation.php';
+    String url = 'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php';
     String operation = 'Insert';
 
     // Current date
@@ -136,17 +136,17 @@ class _SignUpFormState extends State<SignUpForm> {
     // Request parameters
     Map<String, String> params = {
       'operation': operation,
-      'TrainerFName': firstName,
-      'TrainerLName': lastName,
-      'TrainerProfilePic': 'null',
-      'TrainerGender': gender, // Assuming gender is male, you can change it as needed
-      'TrainerTelephone': telephone,
-      'TrainerEmail': email,
+      'UserFirstName': firstName,
+      'UserLastName': lastName,
+      'UserProfilePic': 'null',
+      'UserGender': gender, // Assuming gender is male, you can change it as needed
+      'UserTelephone': telephone,
+      'UserEmail': email,
       'JoinDate': formattedDate,
       'IsActive': '1', // Active by default
-      'username': userName,
-      'password': password,
-      'usertype': 'student' // User type by default
+      'UserName': userName,
+      'UserPassword': password,
+      'UserType': 'ST' // User type by default
     };
 
     // Make POST request

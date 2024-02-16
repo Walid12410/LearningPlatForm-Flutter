@@ -8,6 +8,7 @@ class Trainer {
   final String email;
   final DateTime joindate;
   final bool isActive;
+  final String usertype;
 
   Trainer({
     required this.id,
@@ -19,11 +20,12 @@ class Trainer {
     required this.email,
     required this.joindate,
     required this.isActive,
+    required this.usertype
   });
 
   factory Trainer.fromJson(Map<String, dynamic> json) {
-    String tpicture = json['TrainerProfilePic'] ?? '';
-    if (tpicture == null && json['TrainerProfilePic'] is String) {
+    String tpicture = json['UserProfilePic'] ?? '';
+    if (tpicture == null && json['UserProfilePic'] is String) {
       tpicture = '';
     }
     final Map<String, dynamic> joinDateJson = json['JoinDate'];
@@ -31,14 +33,15 @@ class Trainer {
 
     return Trainer(
       id: json['TrainerID'] ?? 0,
-      fname: json['TrainerFName'] ?? '',
-      lname: json['TrainerLName'] ?? '',
+      fname: json['UserFirstName'] ?? '',
+      lname: json['UserLastName'] ?? '',
       tpicture: tpicture,
-      telephone: json['TrainerTelephone'] ?? '',
+      telephone: json['UserTelephone'] ?? '',
       joindate: dateString.isNotEmpty ? DateTime.parse(dateString) : DateTime.now(),
       isActive: json['IsActive'] == 1,
-      email: json['TrainerEmail'] ?? '',
-      gender: json['TrainerGender'] ?? '',
+      email: json['UserEmail'] ?? '',
+      gender: json['UserGender'] ?? '',
+      usertype: json['UserType']
     );
   }
 

@@ -25,7 +25,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
   Future<void> getTrainer() async {
     try {
-      Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/TrainerCrudOperation.php?operation=SelectAll');
+      Uri url = Uri.parse('http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> portalJsonList = jsonDecode(response.body);

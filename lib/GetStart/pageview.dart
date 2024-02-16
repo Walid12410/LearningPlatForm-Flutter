@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/HomePages/HomePage.dart';
+import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'pageviewdetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -127,7 +127,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                          const HomePage()));
+                          const SignIn()));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.white,

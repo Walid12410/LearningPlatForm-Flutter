@@ -147,100 +147,132 @@ class _SignUpFieldsState extends State<SignUpFields> {
             },
           ),
           const SizedBox(height: 10),
-          TextFormField(
-            controller: widget.telephoneController,
-            decoration: InputDecoration(
-              labelText: 'Telephone',
-              labelStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: tdBlue,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: tdBlue,
-                  width: 1,
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: TextFormField(
+                    controller: widget.telephoneController,
+                    decoration: InputDecoration(
+                      labelText: 'Telephone',
+                      labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: tdBlue,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                          color: tdBlue,
+                          width: 1,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your telephone number';
+                      }
+                      if (!isNumeric(value)) {
+                        return 'Please enter only numeric values';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                  width: 1,
+              Expanded(
+                child: TextFormField(
+                  controller: widget.userNameController,
+                  decoration: InputDecoration(
+                    labelText: 'UserName',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: tdBlue,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: tdBlue,
+                        width: 1,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a username';
+                    }
+                    return null;
+                  },
                 ),
               ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your telephone number';
-              }
-              if (!isNumeric(value)) {
-                return 'Please enter only numeric values';
-              }
-              // You can add more sophisticated telephone validation here if needed
-              return null;
-            },
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: widget.userNameController,
-            decoration: InputDecoration(
-              labelText: 'UserName',
-              labelStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: tdBlue,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: tdBlue,
-                  width: 1,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                  width: 1,
-                ),
-              ),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a username';
-              }
-              // You can add more sophisticated validation for username here if needed
-              return null;
-            },
+            ],
           ),
           const SizedBox(height: 5),
-          RadioListTile<String>(
-            title: const Text('Male',style: TextStyle(color: tdBlue,
-            fontWeight: FontWeight.bold,fontSize: 20),),
-            value: 'M',
-            groupValue: widget.genderController.text.isNotEmpty ? widget.genderController.text : null,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                setState(() {
-                  widget.genderController.text = newValue;
-                });
-              }
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Female',style: TextStyle(color: tdBlue,fontWeight: FontWeight.bold
-            ,fontSize: 20),),
-            value: 'F',
-            groupValue: widget.genderController.text.isNotEmpty ? widget.genderController.text : null,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                setState(() {
-                  widget.genderController.text = newValue;
-                });
-              }
-            },
+          Row(
+            children: [
+              Expanded(
+                child: RadioListTile<String>(
+                  title: const Text(
+                    'Male',
+                    style: TextStyle(
+                      color: tdBlue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  value: 'M',
+                  groupValue: widget.genderController.text.isNotEmpty
+                      ? widget.genderController.text
+                      : null,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() {
+                        widget.genderController.text = newValue;
+                      });
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: RadioListTile<String>(
+                  title: const Text(
+                    'Female',
+                    style: TextStyle(
+                      color: tdBlue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  value: 'F',
+                  groupValue: widget.genderController.text.isNotEmpty
+                      ? widget.genderController.text
+                      : null,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() {
+                        widget.genderController.text = newValue;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 2),
           PasswordFields(
