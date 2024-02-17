@@ -32,7 +32,7 @@ class Trainer {
     final String dateString = joinDateJson['date'] ?? '';
 
     return Trainer(
-      id: json['TrainerID'] ?? 0,
+      id: json['UserID'] ?? 0,
       fname: json['UserFirstName'] ?? '',
       lname: json['UserLastName'] ?? '',
       tpicture: tpicture,

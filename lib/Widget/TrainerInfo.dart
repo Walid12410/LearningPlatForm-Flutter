@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/HomePages/TrainerCourses.dart';
+import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 
@@ -31,7 +31,7 @@ class TrainerInfo extends StatelessWidget {
             trailing: TextButton.icon(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                TrainerCourse(trainerId: trainers.id)));
+                TrainerCourse(userid: trainers.id)));
               },
               icon: const Icon(Icons.forward,
                 color: tdBlue,),

@@ -8,6 +8,7 @@ class Course {
   int isActive;
   int portalID;
   int trainerID;
+  int view;
 
   Course({
     required this.id,
@@ -19,6 +20,7 @@ class Course {
     required this.isActive,
     required this.portalID,
     required this.trainerID,
+    required this.view
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -30,8 +32,9 @@ class Course {
       trainerShareRate: json['TrainerShareRate'],
       createDate: DateTime.parse(json['CreateDate']['date']), // parse the 'date' part of the CreateDate
       isActive: json['IsActice'],
-      portalID: json['TrainerID'],
-      trainerID: json['PortalID'],
+      portalID: json['PortalID'],
+      trainerID: json['TrainerID'],
+      view: json['views']
     );
   }
 }

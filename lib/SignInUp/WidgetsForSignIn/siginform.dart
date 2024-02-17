@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/SignInUp/signup.dart';
 
-class SignInForm extends StatelessWidget {
+class SignInForm extends StatefulWidget {
   const SignInForm({
     Key? key,
     required GlobalKey<FormState> formKey,
@@ -10,21 +10,30 @@ class SignInForm extends StatelessWidget {
     required this.usernameController,
     required this.passwordController,
     required this.toggleVisibility,
+    required this.rememberMe,
+    required this.toggleRememberMe,
     required this.onPressed,
   })  : _formKey = formKey,
         super(key: key);
 
   final GlobalKey<FormState> _formKey;
   final bool isObscure;
+  final bool rememberMe;
+  final VoidCallback toggleRememberMe;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
   final VoidCallback toggleVisibility;
   final VoidCallback onPressed;
 
   @override
+  _SignInFormState createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: widget._formKey,
       child: Column(
         children: [
           const SizedBox(height: 15),
@@ -40,7 +49,7 @@ class SignInForm extends StatelessWidget {
               children: [
                 const SizedBox(height: 50),
                 TextFormField(
-                  controller: usernameController,
+                  controller: widget.usernameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your username';
@@ -70,14 +79,14 @@ class SignInForm extends StatelessWidget {
                   height: 20,
                 ),
                 TextFormField(
-                  controller: passwordController,
+                  controller: widget.passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
                     return null;
                   },
-                  obscureText: isObscure,
+                  obscureText: widget.isObscure,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: const TextStyle(
@@ -97,12 +106,12 @@ class SignInForm extends StatelessWidget {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        isObscure
+                        widget.isObscure
                             ? Icons.visibility_off
                             : Icons.visibility,
                         color: Colors.grey,
                       ),
-                      onPressed: toggleVisibility,
+                      onPressed: widget.toggleVisibility,
                     ),
                   ),
                 ),
@@ -110,8 +119,10 @@ class SignInForm extends StatelessWidget {
                 Row(
                   children: [
                     Checkbox(
-                      value: false,
-                      onChanged: (value) {},
+                      value: widget.rememberMe,
+                      onChanged: (value) {
+                        widget.toggleRememberMe();
+                      },
                     ),
                     const Text(
                       'Remember me',
@@ -142,7 +153,7 @@ class SignInForm extends StatelessWidget {
                         Color(0xFF004296),
                       ])),
                   child: TextButton(
-                    onPressed: onPressed,
+                    onPressed: widget.onPressed,
                     child: const Text(
                       'SIGN IN',
                       style: TextStyle(

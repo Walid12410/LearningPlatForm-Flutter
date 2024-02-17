@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
-import 'package:learningplatformapp/Widget/CourseOfTrainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:learningplatformapp/AllClass/course.dart';
+import 'package:learningplatformapp/Widget/CourseOfPortal.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-class TrainerCourse extends StatefulWidget {
-  int? trainerId;
-  TrainerCourse({super.key,required this.trainerId});
+class CourseListView extends StatefulWidget {
+  int? portalid;
+  CourseListView({super.key, required this.portalid});
 
   @override
-  State<TrainerCourse> createState() => _TrainerCourseState();
+  State<CourseListView> createState() => _CourseListViewState();
 }
 
-class _TrainerCourseState extends State<TrainerCourse> {
+class _CourseListViewState extends State<CourseListView> {
   List<Course> courses = [];
-  List<Course> filterCourses = [];
+  List<Course> filteredCourse = [];
 
   @override
   void initState() {
@@ -38,10 +38,11 @@ class _TrainerCourseState extends State<TrainerCourse> {
           parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
           return Course.fromJson(parsedJson);
         }).toList();
-        List<Course> filteredCourses = fetchedCourses.where((course) => course.trainerID == widget.trainerId).toList();
+        List<Course> filteredCourses = fetchedCourses.where((course) => course.portalID == widget.portalid).toList();
         setState(() {
+          print(fetchedCourses);
+          filteredCourse = filteredCourses;
           courses = filteredCourses;
-          filterCourses = filteredCourses;
         });
       } else {
         throw Exception('Failed to load courses');
@@ -55,7 +56,7 @@ class _TrainerCourseState extends State<TrainerCourse> {
 
   void filterCourse(String searchText){
     setState(() {
-      filterCourses = courses.where((course) =>course.name.toLowerCase().contains(searchText.toLowerCase())
+      filteredCourse = courses.where((course) =>course.name.toLowerCase().contains(searchText.toLowerCase())
       ).toList();
     });
   }
@@ -69,13 +70,13 @@ class _TrainerCourseState extends State<TrainerCourse> {
             height: double.infinity,
             width: double.infinity,
             decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color(0xFFEC9D52),
-                  Color(0xFF004296)
-                ])
+              gradient: LinearGradient(colors: [
+                Color(0xFFEC9D52),
+                Color(0xFF004296)
+              ])
             ),
           ),
-          DetailsForPortal_Instructor(name: 'Instructor Course', number: courses.length),
+          DetailsForPortal_Instructor(name: 'Course', number: courses.length),
           Positioned(
             top: 180.0,
             left: 20.0,
@@ -127,28 +128,29 @@ class _TrainerCourseState extends State<TrainerCourse> {
               child: CircularProgressIndicator(),
             )
           else
-            Padding(
-              padding: const EdgeInsets.only(top: 240),
-              child:Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    itemCount: filterCourses.length,
-                    itemBuilder: (context, i) {
-                      Course course = filterCourses[i];
-                      return  CourseOfTrainer(courses: course);
-                    },
-                  ),
+          Padding(
+            padding: const EdgeInsets.only(top: 240),
+            child:Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: filteredCourse.length,
+                  itemBuilder: (context, i) {
+                    Course course = filteredCourse[i];
+                    return Courseofportal(course: course);
+                  },
                 ),
               ),
             ),
+
+          ),
         ],
       ),
     );

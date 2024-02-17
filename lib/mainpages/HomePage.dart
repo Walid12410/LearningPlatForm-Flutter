@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'MainPage.dart';
+import '../Homepage/MainPage.dart';
 import 'Trainer.dart';
 import 'setting.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -7,8 +7,9 @@ import 'PortalPage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
+  const HomePage({required this.uid,Key? key});
 
+  final int uid;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -16,12 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const MainPage(),
-    const PortalPage(),
-    const TrainerPage(),
-    const Setting(),
-  ];
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      MainPage(userid: widget.uid),
+      const PortalPage(),
+      const TrainerPage(),
+      const Setting(),
+    ];
+  }
 
   void _onPageTapped(int index) {
     setState(() {

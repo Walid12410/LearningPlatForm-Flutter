@@ -35,10 +35,10 @@ class _TrainerPageState extends State<TrainerPage> {
           filteredTrainers = fetchedPortals;
         });
       } else {
-        throw Exception('Failed to load portals');
+        throw Exception('Failed to load trainer');
       }
     } catch (e) {
-      print('Error fetching portals: $e');
+      print('Error fetching trainer: $e');
     }
   }
 

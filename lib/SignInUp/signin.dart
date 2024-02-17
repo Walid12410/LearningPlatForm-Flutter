@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/HomePages/HomePage.dart';
+import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:learningplatformapp/SignInUp/WidgetsForSignIn/siginform.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -15,9 +15,16 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool isObscure = true;
+  bool rememberMe = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void toggleRememberMe() {
+    setState(() {
+      rememberMe = !rememberMe;
+    });
+  }
 
   Future<void> checkLogin(BuildContext context, String username, String password) async {
     String apiUrl = 'http://192.168.1.13/EduPlatform/CMS/api/LoginPage.php';
@@ -33,9 +40,12 @@ class _SignInState extends State<SignIn> {
       var responseData = json.decode(response.body);
       if (responseData['status'] != null && responseData['status'] is bool &&
           responseData['status']) {
-        String? userID = responseData['userID']?.toString();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        int? userID = responseData['userID']?.toInt();
+        if (userID != null) {
+          print(userID);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage(uid: userID)));
+        }
       } else {
         ShowDialog(context, 'Login Failed', responseData['message']);
       }
@@ -83,6 +93,8 @@ class _SignInState extends State<SignIn> {
               child: SingleChildScrollView(
                 child: SignInForm(
                   formKey: _formKey,
+                  rememberMe: rememberMe,
+                  toggleRememberMe: toggleRememberMe,
                   isObscure: isObscure,
                   usernameController: usernameController,
                   passwordController: passwordController,

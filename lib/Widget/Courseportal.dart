@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
-import 'package:learningplatformapp/HomePages/CoursePage.dart';
+import 'package:learningplatformapp/mainpages/CoursePage.dart';
 
 class CoursePortal extends StatelessWidget {
   const CoursePortal({
