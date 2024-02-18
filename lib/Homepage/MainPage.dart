@@ -146,7 +146,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               _isLoadingCourseViews
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(color: tdbrown)
                   : Specialforyou(text: 'Most Viewed Courses', press: () {}),
               const SizedBox(height: 5),
               _isLoadingCourseViews
@@ -158,7 +158,7 @@ class _MainPageState extends State<MainPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: _isLoadingCourseViews
-                              ? [const CircularProgressIndicator()]
+                              ? [const CircularProgressIndicator(color: tdbrown)]
                               : List.generate(
                                   min(
                                       3,
@@ -184,7 +184,7 @@ class _MainPageState extends State<MainPage> {
                     ),
               const SizedBox(height: 5),
               _isLoadingLatestCourses
-                  ? const CircularProgressIndicator()
+                  ? const CircularProgressIndicator(color: tdbrown)
                   : Specialforyou(text: 'Latest Course Added', press: () {}),
               const SizedBox(height: 5),
               _isLoadingLatestCourses
@@ -195,7 +195,7 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.all(1),
                         child: Row(
                           children: _isLoadingLatestCourses
-                              ? [const CircularProgressIndicator()]
+                              ? [const CircularProgressIndicator(color: tdbrown)]
                               : List.generate(
                                   min(
                                       4,
@@ -227,7 +227,7 @@ class _MainPageState extends State<MainPage> {
                   child: Row(
                     children: _isLoadingRecommendedCourses // Check if loading
                         ? [
-                            const CircularProgressIndicator()
+                            const CircularProgressIndicator(color: tdbrown)
                           ] // Display loading indicator
                         : List.generate(
                             // Use List.generate to create a list of recommended courses or loading indicator
