@@ -3,12 +3,10 @@ import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dar
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/Widget/CourseOfPortal.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class CourseListView extends StatefulWidget {
-  int? portalid;
+  int portalid;
   CourseListView({super.key, required this.portalid});
 
   @override
@@ -16,50 +14,37 @@ class CourseListView extends StatefulWidget {
 }
 
 class _CourseListViewState extends State<CourseListView> {
-  List<Course> courses = [];
-  List<Course> filteredCourse = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    getCourse();
+    _fetchCourses(widget.portalid);
   }
 
-  Future<void> getCourse() async {
+  Future<void> _fetchCourses(int portalid) async {
+    setState(() {
+      _isLoading = true; // Set isLoading to true when fetching starts
+    });
     try {
-      Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> courseJsonList = jsonDecode(response.body);
-        List<Course> fetchedCourses = courseJsonList.map((json) {
-          final parsedJson = json as Map<String, dynamic>;
-          parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-          parsedJson['TrainerShareRate'] = double.parse(parsedJson['TrainerShareRate']);
-          parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-          return Course.fromJson(parsedJson);
-        }).toList();
-        List<Course> filteredCourses = fetchedCourses.where((course) => course.portalID == widget.portalid).toList();
-        setState(() {
-          print(fetchedCourses);
-          filteredCourse = filteredCourses;
-          courses = filteredCourses;
-        });
-      } else {
-        throw Exception('Failed to load courses');
-      }
+      await getCourse(portalid); // Wait for getCourse to complete
     } catch (e) {
+      print('Error fetching courses: $e');
+    } finally {
       setState(() {
-        courses = [];
+        _isLoading = false; // Set isLoading to false when fetching completes
       });
     }
   }
 
-  void filterCourse(String searchText){
+  void filterCourse(String searchText) {
     setState(() {
-      filteredCourse = courses.where((course) =>course.name.toLowerCase().contains(searchText.toLowerCase())
-      ).toList();
+      filteredCourse = courses
+          .where((course) => course.name.toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,9 +108,22 @@ class _CourseListViewState extends State<CourseListView> {
               ],
             ),
           ),
-          if(courses.isEmpty)
+          if (_isLoading)
             const Center(
-              child: CircularProgressIndicator(),
+              child: SizedBox(
+                width: 150,
+                height: 150,
+                child: CircularProgressIndicator(
+                  color: tdbrown,
+                ),
+              ),
+            )
+          else if (filteredCourse.isEmpty)
+            const Center(
+              child: Text(
+                'No Course available',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
             )
           else
           Padding(

@@ -3,8 +3,6 @@ import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/Widget/CourseOfTrainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class TrainerCourse extends StatefulWidget {
@@ -16,54 +14,34 @@ class TrainerCourse extends StatefulWidget {
 }
 
 class _TrainerCourseState extends State<TrainerCourse> {
-  List<Course> courses = [];
-  List<Course> filterCourses = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    getCourse();
+    _fetchCourses(widget.userid);
   }
 
-  Future<void> getCourse() async {
+  Future<void> _fetchCourses(int userid) async {
+    setState(() {
+      _isLoading = true; // Set isLoading to true when fetching starts
+    });
     try {
-      Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> courseJsonList = jsonDecode(response.body);
-        List<Course> fetchedCourses = courseJsonList.map((json) {
-          final parsedJson = json as Map<String, dynamic>;
-          parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-          parsedJson['TrainerShareRate'] = double.parse(parsedJson['TrainerShareRate']);
-          parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-          return Course.fromJson(parsedJson);
-        }).toList();
-        List<Course> filteredCourses = fetchedCourses.where((course) => course.trainerID == widget.userid).toList();
-        if (filteredCourses.isNotEmpty) {
-          setState(() {
-            print(filteredCourses);
-            courses = filteredCourses;
-            filterCourses = filteredCourses;
-          });
-        } else {
-          throw Exception('No courses found for trainer with ID: ${widget.userid}');
-        }
-      } else {
-        throw Exception('Failed to load courses. Status Code: ${response.statusCode}');
-      }
+      await getCourseTrainer(userid); // Wait for getCourse to complete
     } catch (e) {
-      print('Error fetching courses: $e');
+      print('Error fetching trainseid: $e');
+    } finally {
       setState(() {
-        courses = []; // Set courses to empty list in case of error
+        _isLoading = false; // Set isLoading to false when fetching completes
       });
     }
   }
 
-
-  void filterCourse(String searchText){
+  void filterCourse(String searchText) {
     setState(() {
-      filterCourses = courses.where((course) =>course.name.toLowerCase().contains(searchText.toLowerCase())
-      ).toList();
+      filterCoursestrainer = coursestrainer
+          .where((course) => course.name.toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
     });
   }
 
@@ -129,11 +107,14 @@ class _TrainerCourseState extends State<TrainerCourse> {
               ],
             ),
           ),
-          if(courses.isEmpty)
+          if (_isLoading) // Show CircularProgressIndicator if isLoading is true
             const Center(
-              child: CircularProgressIndicator(),
+                child: SizedBox(width: 150, height: 150,
+                    child: CircularProgressIndicator(
+                      color: tdbrown,
+                    ))
             )
-          else
+          else// Show the course list if not loading
             Padding(
               padding: const EdgeInsets.only(top: 240),
               child:Container(
@@ -147,9 +128,9 @@ class _TrainerCourseState extends State<TrainerCourse> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    itemCount: filterCourses.length,
+                    itemCount: filterCoursestrainer.length,
                     itemBuilder: (context, i) {
-                      Course course = filterCourses[i];
+                      Course course = filterCoursestrainer[i];
                       return  CourseOfTrainer(courses: course);
                     },
                   ),

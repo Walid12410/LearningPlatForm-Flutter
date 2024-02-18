@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
+import 'package:learningplatformapp/Homepage/widget/RecommendedCourse.dart';
 import 'widget/dialogpage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:learningplatformapp/colors/color.dart';
+import 'widget/specialforyou.dart';
+import 'widget/courseviwe.dart';
+import 'widget/LatestCourseAdded.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({required this.userid, Key? key}) : super(key: key);
@@ -17,230 +21,243 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late Future<List<Trainer>> _futureTrainers;
-  List<Trainer> users = []; // Define list to store trainers
-  List<Course> courseviews = [];
-
+  bool _isLoadingTrainers = false;
+  bool _isLoadingCourseViews = false;
+  bool _isLoadingLatestCourses = false;
 
   @override
   void initState() {
+    _fetchData();
     super.initState();
-    _futureTrainers = fetchTrainers(widget.userid);
+  }
+
+  void _fetchData() {
+    _fetchTrainers();
     getCourseView();
+    getCourseNew();
+    getAllCourses();
   }
 
-  Future<List<Trainer>> fetchTrainers(int userId) async {
-    final response = await http.get(Uri.parse(
-        'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body) as List<dynamic>;
-      List<Trainer> trainers =
-          jsonData.map((json) => Trainer.fromJson(json)).toList();
-      setState(() {
-        users = trainers; // Store fetched trainers in users list
-      });
-      return trainers;
-    } else {
-      throw Exception('Failed to load trainers');
-    }
-  }
-
-  Future<void> getCourseView() async {
+  void _fetchTrainers() async {
+    setState(() {
+      _isLoadingTrainers = true;
+    });
     try {
-      Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> CourseJsonList = jsonDecode(response.body);
-        List<Course> fetchedCourse = CourseJsonList.map((json) {
-          final parsedJson = json as Map<String, dynamic>;
-          parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice'].toString());
-          parsedJson['TrainerShareRate'] = double.parse(parsedJson['TrainerShareRate'].toString());
-          parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-          return Course.fromJson(parsedJson);
-        }).toList();
-        fetchedCourse.sort((a, b) => b.view.compareTo(a.view));
-        setState(() {
-          courseviews = fetchedCourse;
-        });
-      } else {
-        throw Exception('Failed to load Course view');
-      }
+      await fetchTrainers(widget.userid);
     } catch (e) {
-      print('Error fetching Course view: $e');
+      print('Error fetching trainers: $e');
+    } finally {
+      setState(() {
+        _isLoadingTrainers = false;
+      });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Expanded(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          color: tdbrown,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: const TextField(
+                          cursorColor: tdBlue,
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.search, color: tdBlue),
+                          ),
+                          style: TextStyle(color: tdBlue),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return DialogPage(); // Custom dialog page
+                        },
+                      );
+                    },
+                    child: const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(
+                          'assets/user.png'), // Replace this with your image asset path
+                    ),
+                  ),
+                ],
+              ),
+              SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    width: double.infinity,
+                    height: 90,
                     decoration: BoxDecoration(
                       color: tdbrown,
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: TextField(
-                      cursorColor: tdBlue,
-                      decoration: const InputDecoration(
-                        hintText: 'Search',
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.search, color: tdBlue),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text.rich(
+                        TextSpan(
+                          text:
+                              'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                          style: const TextStyle(
+                            color: tdBlue,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: const [
+                            TextSpan(
+                              text: 'Start learning now!',
+                              style: TextStyle(color: tdBlue, fontSize: 20),
+                            )
+                          ],
+                        ),
                       ),
-                      style: TextStyle(color: tdBlue),
                     ),
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return DialogPage(); // Custom dialog page
-                    },
-                  );
-                },
-                child: const CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage(
-                      'assets/user.png'), // Replace this with your image asset path
-                ),
+              _isLoadingCourseViews
+                  ? CircularProgressIndicator()
+                  : Specialforyou(text: 'Most Viewed Courses', press: () {}),
+              const SizedBox(height: 5),
+              _isLoadingCourseViews
+                  ? Container() // Display nothing if loading
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (courseviews.isNotEmpty)
+                              CourseView(
+                                cname: courseviews[0].name,
+                                image: 'assets/courseview/image1.png',
+                                price: courseviews[0].price,
+                                view: courseviews[0].view,
+                                press: () {},
+                              ),
+                            if (courseviews.length > 1)
+                              CourseView(
+                                cname: courseviews[1].name,
+                                image: 'assets/courseview/image2.png',
+                                price: courseviews[1].price,
+                                view: courseviews[1].view,
+                                press: () {},
+                              ),
+                            if (courseviews.length > 2)
+                              CourseView(
+                                cname: courseviews[2].name,
+                                image: 'assets/courseview/image3.png',
+                                price: courseviews[2].price,
+                                view: courseviews[2].view,
+                                press: () {},
+                              ),
+                            const SizedBox(width: 10),
+                          ],
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 5),
+              _isLoadingLatestCourses
+                  ? CircularProgressIndicator()
+                  : Specialforyou(text: 'Latest Course Added', press: () {}),
+              const SizedBox(height: 5),
+              _isLoadingLatestCourses
+                  ? Container() // Display nothing if loading
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1),
+                        child: Row(
+                          children: [
+                            if (courseadd.isNotEmpty)
+                              LatestCourseAdd(
+                                image: 'assets/latestadd/image32.png',
+                                price: courseadd[0].price,
+                                name: courseadd[0].name,
+                              ),
+                            if (courseadd.length > 1)
+                              LatestCourseAdd(
+                                image: 'assets/latestadd/image12.png',
+                                price: courseadd[1].price,
+                                name: courseadd[1].name,
+                              ),
+                            if (courseadd.length > 2)
+                              LatestCourseAdd(
+                                image: 'assets/latestadd/image22.png',
+                                price: courseadd[2].price,
+                                name: courseadd[2].name,
+                              ),
+                            if (courseadd.length > 3)
+                              LatestCourseAdd(
+                                image: 'assets/latestadd/image42.png',
+                                price: courseadd[3].price,
+                                name: courseadd[3].name,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+              const SizedBox(height: 10),
+              Specialforyou(text: 'Recommended Course', press: () {}),
+              const SizedBox(height: 5),
+              SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: Row(
+                      children: [
+                        RecommendedCourse(
+                            cname: allCourses[0].name,
+                            image: 'assets/rc/i1.png',
+                            price: allCourses[0].price,
+                            press: () {}),
+                        RecommendedCourse(
+                            cname: allCourses[1].name,
+                            image: 'assets/rc/i2.png',
+                            price: allCourses[1].price,
+                            press: () {}),
+                        RecommendedCourse(
+                            cname: allCourses[2].name,
+                            image: 'assets/rc/i3.png',
+                            price: allCourses[2].price,
+                            press: () {}),
+                        RecommendedCourse(
+                            cname: allCourses[3].name,
+                            image: 'assets/rc/i4.png',
+                            price: allCourses[3].price,
+                            press: () {}),
+                        RecommendedCourse(
+                            cname: allCourses[4].name,
+                            image: 'assets/rc/i5.png',
+                            price: allCourses[4].price,
+                            press: () {}),
+                      ],
+                    ),
+                  )),
+              const SizedBox(
+                height: 10,
               ),
             ],
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                height: 90,
-                decoration: BoxDecoration(
-                  color: tdbrown,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text.rich(
-                    TextSpan(
-                        text: 'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
-                        style: const TextStyle(color: tdBlue, fontSize: 25,fontWeight: FontWeight.bold),
-                        children:const [
-                           TextSpan(
-                              text: 'Start learning now!',
-                              style: TextStyle(color: tdBlue, fontSize: 20))
-                        ]),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Specialforyou(text: 'Most Viewed Courses', press: (){}),
-          SpecialOffers(category: 'ddd', image: 'assets/user.png', numOfBrands: 3, press: (){})
-        ],
-      ),
-    );
-  }
-}
-
-
-class Specialforyou extends StatelessWidget {
-  const Specialforyou({
-    Key? key,
-    required this.text,
-    required this.press,
-  }) : super(key: key);
-  final String text;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style:const TextStyle(
-              fontSize: 18,
-              color: tdBlue,
-            ),
-          ),
-          GestureDetector(
-            onTap: press,
-            child: const Text('see more',
-            style: TextStyle(color: tdBlue),),
-          )
-        ],
-      ),
-    );
-  }
-}
-class SpecialOffers extends StatelessWidget {
-  const SpecialOffers({
-    super.key, required this.category, required this.image, required this.numOfBrands, required this.press,
-  });
-
-  final String category,image;
-  final int numOfBrands;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 20),
-      child: SizedBox(
-        width: 250,
-        height: 100,
-        child: GestureDetector(
-          onTap: press,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              children: [
-                Image.network(image,
-                    fit: BoxFit.cover,
-                    width: 700,
-                    height: 100),
-                Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            const Color(0xff343434).withOpacity(0.4),
-                            const Color(0xff343434).withOpacity(0.15),
-                          ])
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text.rich(
-                    TextSpan(
-                        style: TextStyle(color: Colors.white),
-                        children: [
-                          TextSpan(text:'$category\n',
-                              style: TextStyle(fontSize: 18)
-                          ),
-                          TextSpan(
-                              text:"Special for you"
-                          )
-                        ]
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
           ),
         ),
       ),

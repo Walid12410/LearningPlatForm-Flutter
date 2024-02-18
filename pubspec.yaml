@@ -74,6 +74,18 @@ flutter:
     - assets/loginwelcome.png
     - assets/signupimage.png
     - assets/user.png
+    - assets/courseview/image1.png
+    - assets/courseview/image2.png
+    - assets/courseview/image3.png
+    - assets/latestadd/image12.png
+    - assets/latestadd/image32.png
+    - assets/latestadd/image22.png
+    - assets/latestadd/image42.png
+    - assets/rc/i1.png
+    - assets/rc/i2.png
+    - assets/rc/i3.png
+    - assets/rc/i4.png
+    - assets/rc/i5.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

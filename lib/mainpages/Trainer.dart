@@ -3,8 +3,7 @@ import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dar
 import 'package:learningplatformapp/Widget/TrainerInfo.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 class TrainerPage extends StatefulWidget {
   const TrainerPage({Key? key}) : super(key: key);
@@ -14,37 +13,33 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  List<Trainer> trainers = [];
-  List<Trainer> filteredTrainers = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    getTrainer();
+    _fetchTrainer();
   }
 
-  Future<void> getTrainer() async {
+  Future<void> _fetchTrainer() async {
+    setState(() {
+      _isLoading = true; // Set isLoading to true when fetching starts
+    });
     try {
-      Uri url = Uri.parse('http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> portalJsonList = jsonDecode(response.body);
-        List<Trainer> fetchedPortals = portalJsonList.map((json) => Trainer.fromJson(json)).toList();
-        setState(() {
-          trainers = fetchedPortals;
-          filteredTrainers = fetchedPortals;
-        });
-      } else {
-        throw Exception('Failed to load trainer');
-      }
+      await getTrainer(); // Wait for getTrainer to complete
     } catch (e) {
       print('Error fetching trainer: $e');
+    } finally {
+      setState(() {
+        _isLoading = false; // Set isLoading to false when fetching completes
+      });
     }
   }
 
   void filterTrainers(String searchText) {
     setState(() {
-      filteredTrainers = trainers.where((trainer) => trainer.fname.toLowerCase().contains(searchText.toLowerCase()) ||
+      filteredTrainers = trainers.where((trainer) =>
+      trainer.fname.toLowerCase().contains(searchText.toLowerCase()) ||
           trainer.lname.toLowerCase().contains(searchText.toLowerCase())).toList();
     });
   }
@@ -90,9 +85,12 @@ class _TrainerPageState extends State<TrainerPage> {
               ),
             ),
           ),
-          if (trainers.isEmpty)
+          if (_isLoading) // Show CircularProgressIndicator if isLoading is true
             const Center(
-              child: CircularProgressIndicator(),
+                child: SizedBox(width: 150, height: 150,
+                    child: CircularProgressIndicator(
+                      color: tdbrown,
+                    ))
             )
           else
             Padding(

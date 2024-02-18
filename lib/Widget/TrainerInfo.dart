@@ -20,12 +20,12 @@ class TrainerInfo extends StatelessWidget {
               borderRadius: BorderRadius.circular(5), color: tdbrown),
           child: ListTile(
             title: Text(
-              '${trainers.toString()}',
+              '$trainers',
               style:
               const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              '${trainers.email}',
+              '$trainers.email',
               style: const TextStyle(color: tdBlue),
             ),
             trailing: TextButton.icon(
