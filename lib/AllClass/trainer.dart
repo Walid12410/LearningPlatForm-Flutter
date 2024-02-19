@@ -60,7 +60,7 @@ List<Trainer> filteredTrainers = [];
 
 Future<List<Trainer>> fetchTrainers(int userId) async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
+      'http://192.168.1.46/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
   if (response.statusCode == 200) {
     final jsonData = jsonDecode(response.body) as List<dynamic>;
     List<Trainer> trainers =
@@ -74,7 +74,7 @@ Future<List<Trainer>> fetchTrainers(int userId) async {
 
 Future<void> getTrainer() async {
   try {
-    Uri url = Uri.parse('http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.46/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> portalJsonList = jsonDecode(response.body);

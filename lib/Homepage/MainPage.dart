@@ -8,6 +8,7 @@ import 'widget/specialforyou.dart';
 import 'widget/courseviwe.dart';
 import 'widget/LatestCourseAdded.dart';
 import 'dart:math';
+import 'widget/RandomCourse.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({required this.userid, Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _MainPageState extends State<MainPage> {
   bool _isLoadingCourseViews = false;
   bool _isLoadingLatestCourses = false;
   bool _isLoadingRecommendedCourses = false;
+  bool _IsLoadingRandomCourse= false;
 
   @override
   void initState() {
@@ -34,9 +36,11 @@ class _MainPageState extends State<MainPage> {
   void _fetchData() {
     _fetchTrainers();
     _fetchRecommendedCourses();
+    _fetchRandomCourse();
     getCourseView();
     getCourseNew();
     getAllCourses();
+    getRandomCourse();
   }
 
   void _fetchRecommendedCourses() async {
@@ -46,6 +50,16 @@ class _MainPageState extends State<MainPage> {
     await Future.delayed(Duration(seconds: 2)); // Simulating delay
     setState(() {
       _isLoadingRecommendedCourses = false;
+    });
+  }
+
+  void _fetchRandomCourse() async {
+    setState(() {
+      _IsLoadingRandomCourse = true; // Set loading state to true
+    });
+    await Future.delayed(Duration(seconds: 2)); // Simulating delay
+    setState(() {
+      _IsLoadingRandomCourse = false;
     });
   }
 
@@ -250,6 +264,35 @@ class _MainPageState extends State<MainPage> {
               const SizedBox(
                 height: 10,
               ),
+              Specialforyou(text: 'For you', press: (){}),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Row(
+                    children: _isLoadingRecommendedCourses // Check if loading
+                        ? [
+                      const CircularProgressIndicator(color: tdbrown)
+                    ] // Display loading indicator
+                        : List.generate(
+                      // Use List.generate to create a list of recommended courses or loading indicator
+                      min(
+                          5,
+                          randomcourse
+                              .length), // Limit to a maximum of 5 times
+                          (index) {
+                        return RandomCourse(
+                          cname: randomcourse[index].name,
+                          image: 'assets/rac/i${index + 1}.png',
+                          price: randomcourse[index].price,
+                          press: () {},
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

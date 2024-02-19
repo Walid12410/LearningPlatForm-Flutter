@@ -126,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> insertTrainerData(String firstName, String lastName, String email, String telephone, String userName, String password,String gender) async {
-    String url = 'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php';
+    String url = 'http://192.168.1.46/EduPlatform/CMS/api/TrainersCrudOperation.php';
     String operation = 'Insert';
 
     // Current date

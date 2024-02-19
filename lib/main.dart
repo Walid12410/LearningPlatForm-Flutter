@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/GetStart/pageview.dart';
-import 'package:learningplatformapp/mainpages/CoursePage.dart';
+import 'package:learningplatformapp/SignInUp/signin.dart';
+import 'package:learningplatformapp/Widget/Courseportal.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
-import 'package:learningplatformapp/SignInUp/signin.dart';
-import 'package:learningplatformapp/SignInUp/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,14 +18,46 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'App',
       debugShowCheckedModeBanner: false,
       color: Colors.red,
-      home: PageViewScreen(),
+      home: FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            int uid = snapshot.data?.getInt('uid') ?? 0;
+            return isLoggedIn ? HomePage(uid: uid) :const PageViewScreen();
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
+      ),
+      routes: {
+        "SignIn" :(context) =>const SignIn(),
+        "portal" :(context) =>const PortalPage(),
+      },
     );
   }
 }
-

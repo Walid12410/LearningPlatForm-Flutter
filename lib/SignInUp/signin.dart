@@ -26,8 +26,15 @@ class _SignInState extends State<SignIn> {
     });
   }
 
+  Future<void> saveLoginInfo(String username, int uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', true);
+    prefs.setString('username', username);
+    prefs.setInt('uid', uid);
+  }
+
   Future<void> checkLogin(BuildContext context, String username, String password) async {
-    String apiUrl = 'http://192.168.1.13/EduPlatform/CMS/api/LoginPage.php';
+    String apiUrl = 'http://192.168.1.46/EduPlatform/CMS/api/LoginPage.php';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {
@@ -36,13 +43,14 @@ class _SignInState extends State<SignIn> {
       },
     );
     if (response.body.isNotEmpty) {
-      // Parse the JSON response
       var responseData = json.decode(response.body);
       if (responseData['status'] != null && responseData['status'] is bool &&
           responseData['status']) {
         int? userID = responseData['userID']?.toInt();
         if (userID != null) {
-          print(userID);
+          if (rememberMe) {
+            await saveLoginInfo(username, userID);
+          }
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => HomePage(uid: userID)));
         }
@@ -103,10 +111,9 @@ class _SignInState extends State<SignIn> {
                       isObscure = !isObscure;
                     });
                   },
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      checkLogin(context, usernameController.text,
-                          passwordController.text);
+                      await checkLogin(context, usernameController.text, passwordController.text);
                     }
                   },
                 ),
