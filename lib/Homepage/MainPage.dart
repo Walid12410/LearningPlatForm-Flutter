@@ -21,11 +21,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late Future<List<Trainer>> _futureTrainers;
-  bool _isLoadingTrainers = false;
-  bool _isLoadingCourseViews = false;
-  bool _isLoadingLatestCourses = false;
-  bool _isLoadingRecommendedCourses = false;
-  bool _IsLoadingRandomCourse= false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -34,46 +30,42 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _fetchData() {
-    _fetchTrainers();
-    _fetchRecommendedCourses();
-    _fetchRandomCourse();
-    getCourseView();
-    getCourseNew();
-    getAllCourses();
-    getRandomCourse();
+    setState(() {
+      _isLoading = true;
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      _fetchTrainers();
+      _fetchRecommendedCourses();
+      _fetchRandomCourse();
+      getCourseView();
+      getCourseNew();
+      getAllCourses();
+      getRandomCourse();
+      _fetchCourseview();
+    });
+  }
+
+
+  void _fetchCourseview() async {
+    await Future.delayed(Duration(seconds: 2)); // Simulating delay
   }
 
   void _fetchRecommendedCourses() async {
-    setState(() {
-      _isLoadingRecommendedCourses = true; // Set loading state to true
-    });
     await Future.delayed(Duration(seconds: 2)); // Simulating delay
-    setState(() {
-      _isLoadingRecommendedCourses = false;
-    });
   }
 
   void _fetchRandomCourse() async {
-    setState(() {
-      _IsLoadingRandomCourse = true; // Set loading state to true
-    });
     await Future.delayed(Duration(seconds: 2)); // Simulating delay
-    setState(() {
-      _IsLoadingRandomCourse = false;
-    });
   }
 
   void _fetchTrainers() async {
-    setState(() {
-      _isLoadingTrainers = true;
-    });
     try {
       await fetchTrainers(widget.userid);
     } catch (e) {
       print('Error fetching trainers: $e');
     } finally {
       setState(() {
-        _isLoadingTrainers = false;
+        _isLoading = false;
       });
     }
   }
@@ -82,220 +74,235 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: BoxDecoration(
-                          color: tdbrown,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: const TextField(
-                          cursorColor: tdBlue,
-                          decoration: InputDecoration(
-                            hintText: 'Search',
-                            border: InputBorder.none,
-                            prefixIcon: Icon(Icons.search, color: tdBlue),
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator(color: tdbrown))
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                color: tdbrown,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: const TextField(
+                                cursorColor: tdBlue,
+                                decoration: InputDecoration(
+                                  hintText: 'Search',
+                                  border: InputBorder.none,
+                                  prefixIcon: Icon(Icons.search, color: tdBlue),
+                                ),
+                                style: TextStyle(color: tdBlue),
+                              ),
+                            ),
                           ),
-                          style: TextStyle(color: tdBlue),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DialogPage(); // Custom dialog page
+                              },
+                            );
+                          },
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundImage: AssetImage(
+                                'assets/user.png'), // Replace this with your image asset path
+                          ),
+                        ),
+                      ],
+                    ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: tdbrown,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text.rich(
+                              TextSpan(
+                                text:
+                                    'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                                style: const TextStyle(
+                                  color: tdBlue,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                children: const [
+                                  TextSpan(
+                                    text: 'Start learning now!',
+                                    style:
+                                        TextStyle(color: tdBlue, fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return DialogPage(); // Custom dialog page
-                        },
-                      );
-                    },
-                    child: const CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(
-                          'assets/user.png'), // Replace this with your image asset path
-                    ),
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: tdbrown,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text.rich(
-                        TextSpan(
-                          text:
-                              'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
-                          style: const TextStyle(
-                            color: tdBlue,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                    _isLoading
+                        ? const CircularProgressIndicator(color: tdbrown)
+                        : Specialforyou(
+                            text: 'Most Viewed Courses', press: () {}),
+                    const SizedBox(height: 5),
+                    _isLoading
+                        ? Container() // Display nothing if loading
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Padding(
+                              padding: const EdgeInsets.all(1),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: _isLoading
+                                    ? [
+                                        const CircularProgressIndicator(
+                                            color: tdbrown)
+                                      ]
+                                    : List.generate(
+                                        min(
+                                            3,
+                                            courseviews
+                                                .length), // Utilize max function to ensure at least 3 items are displayed
+                                        (index) {
+                                          if (index < courseviews.length) {
+                                            return CourseView(
+                                              cname: courseviews[index].name,
+                                              image:
+                                                  'assets/courseview/image${index + 1}.png',
+                                              price: courseviews[index].price,
+                                              view: courseviews[index].view,
+                                              press: () {},
+                                            );
+                                          } else {
+                                            return const SizedBox(); // Return empty SizedBox if index is out of bounds
+                                          }
+                                        },
+                                      ),
+                              ),
+                            ),
                           ),
-                          children: const [
-                            TextSpan(
-                              text: 'Start learning now!',
-                              style: TextStyle(color: tdBlue, fontSize: 20),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              _isLoadingCourseViews
-                  ? const CircularProgressIndicator(color: tdbrown)
-                  : Specialforyou(text: 'Most Viewed Courses', press: () {}),
-              const SizedBox(height: 5),
-              _isLoadingCourseViews
-                  ? Container() // Display nothing if loading
-                  : SingleChildScrollView(
+                    const SizedBox(height: 5),
+                    _isLoading
+                        ? const CircularProgressIndicator(color: tdbrown)
+                        : Specialforyou(
+                            text: 'Latest Course Added', press: () {}),
+                    const SizedBox(height: 5),
+                    _isLoading
+                        ? Container() // Display nothing if loading
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Padding(
+                              padding: const EdgeInsets.all(1),
+                              child: Row(
+                                children: _isLoading
+                                    ? [
+                                        const CircularProgressIndicator(
+                                            color: tdbrown)
+                                      ]
+                                    : List.generate(
+                                        min(
+                                            4,
+                                            courseadd
+                                                .length), // Ensure at least 4 items are displayed
+                                        (index) {
+                                          if (index < courseadd.length) {
+                                            return LatestCourseAdd(
+                                              image:
+                                                  'assets/latestadd/image${index + 1}.png',
+                                              price: courseadd[index].price,
+                                              name: courseadd[index].name,
+                                            );
+                                          } else {
+                                            return const SizedBox(); // Return empty SizedBox if index is out of bounds
+                                          }
+                                        },
+                                      ),
+                              ),
+                            ),
+                          ),
+                    const SizedBox(height: 10),
+                    Specialforyou(text: 'Recommended Course', press: () {}),
+                    const SizedBox(height: 5),
+                    SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Padding(
-                        padding: const EdgeInsets.all(1),
+                        padding: const EdgeInsets.all(1.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: _isLoadingCourseViews
-                              ? [const CircularProgressIndicator(color: tdbrown)]
+                          children: _isLoading // Check if loading
+                              ? [
+                                  const CircularProgressIndicator(
+                                      color: tdbrown)
+                                ]
                               : List.generate(
+                                  // Use List.generate to create a list of recommended courses or loading indicator
                                   min(
-                                      3,
-                                      courseviews
-                                          .length), // Utilize max function to ensure at least 3 items are displayed
+                                      5,
+                                      allCourses
+                                          .length), // Limit to a maximum of 5 times
                                   (index) {
-                                    if (index < courseviews.length) {
-                                      return CourseView(
-                                        cname: courseviews[index].name,
-                                        image:
-                                            'assets/courseview/image${index + 1}.png',
-                                        price: courseviews[index].price,
-                                        view: courseviews[index].view,
-                                        press: () {},
-                                      );
-                                    } else {
-                                      return const SizedBox(); // Return empty SizedBox if index is out of bounds
-                                    }
+                                    return RecommendedCourse(
+                                      cname: allCourses[index].name,
+                                      image: 'assets/rc/i${index + 1}.png',
+                                      price: allCourses[index].price,
+                                      press: () {},
+                                    );
                                   },
                                 ),
                         ),
                       ),
                     ),
-              const SizedBox(height: 5),
-              _isLoadingLatestCourses
-                  ? const CircularProgressIndicator(color: tdbrown)
-                  : Specialforyou(text: 'Latest Course Added', press: () {}),
-              const SizedBox(height: 5),
-              _isLoadingLatestCourses
-                  ? Container() // Display nothing if loading
-                  : SingleChildScrollView(
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Specialforyou(text: 'For you', press: () {}),
+                    SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Padding(
-                        padding: const EdgeInsets.all(1),
+                        padding: const EdgeInsets.all(1.0),
                         child: Row(
-                          children: _isLoadingLatestCourses
-                              ? [const CircularProgressIndicator(color: tdbrown)]
+                          children: _isLoading // Check if loading
+                              ? [
+                                  const CircularProgressIndicator(
+                                      color: tdbrown)
+                                ]
                               : List.generate(
+                                  // Use List.generate to create a list of recommended courses or loading indicator
                                   min(
-                                      4,
-                                      courseadd
-                                          .length), // Ensure at least 4 items are displayed
+                                      5,
+                                      randomcourse
+                                          .length), // Limit to a maximum of 5 times
                                   (index) {
-                                    if (index < courseadd.length) {
-                                      return LatestCourseAdd(
-                                        image:
-                                            'assets/latestadd/image${index + 1}.png',
-                                        price: courseadd[index].price,
-                                        name: courseadd[index].name,
-                                      );
-                                    } else {
-                                      return const SizedBox(); // Return empty SizedBox if index is out of bounds
-                                    }
+                                    return RandomCourse(
+                                      cname: randomcourse[index].name,
+                                      image: 'assets/rac/i${index + 1}.png',
+                                      price: randomcourse[index].price,
+                                      press: () {},
+                                    );
                                   },
                                 ),
                         ),
                       ),
                     ),
-              const SizedBox(height: 10),
-              Specialforyou(text: 'Recommended Course', press: () {}),
-              const SizedBox(height: 5),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: Row(
-                    children: _isLoadingRecommendedCourses // Check if loading
-                        ? [
-                            const CircularProgressIndicator(color: tdbrown)
-                          ] // Display loading indicator
-                        : List.generate(
-                            // Use List.generate to create a list of recommended courses or loading indicator
-                            min(
-                                5,
-                                allCourses
-                                    .length), // Limit to a maximum of 5 times
-                            (index) {
-                              return RecommendedCourse(
-                                cname: allCourses[index].name,
-                                image: 'assets/rc/i${index + 1}.png',
-                                price: allCourses[index].price,
-                                press: () {},
-                              );
-                            },
-                          ),
-                  ),
+                    const SizedBox(height: 10),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Specialforyou(text: 'For you', press: (){}),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: Row(
-                    children: _isLoadingRecommendedCourses // Check if loading
-                        ? [
-                      const CircularProgressIndicator(color: tdbrown)
-                    ] // Display loading indicator
-                        : List.generate(
-                      // Use List.generate to create a list of recommended courses or loading indicator
-                      min(
-                          5,
-                          randomcourse
-                              .length), // Limit to a maximum of 5 times
-                          (index) {
-                        return RandomCourse(
-                          cname: randomcourse[index].name,
-                          image: 'assets/rac/i${index + 1}.png',
-                          price: randomcourse[index].price,
-                          press: () {},
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
-        ),
       ),
     );
   }
