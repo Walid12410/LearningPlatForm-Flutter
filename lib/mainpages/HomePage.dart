@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage> {
               text: 'Instructor',
             ),
             GButton(
-              icon: Icons.settings,
-              text: 'Setting',
+              icon: Icons.person,
+              text: 'Profile',
             ),
           ],
         ),
