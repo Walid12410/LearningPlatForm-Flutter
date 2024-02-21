@@ -60,7 +60,7 @@ class _TrainerCourseState extends State<TrainerCourse> {
                 ])
             ),
           ),
-          DetailsForPortal_Instructor(name: 'Instructor Course', number: courses.length),
+          DetailsForPortal_Instructor(name: 'Instructor Course', number: coursestrainer.length),
           Positioned(
             top: 180.0,
             left: 20.0,

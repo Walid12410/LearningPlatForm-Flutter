@@ -22,17 +22,20 @@ class _TrainerPageState extends State<TrainerPage> {
   }
 
   Future<void> _fetchTrainer() async {
+    if (!mounted) return;
     setState(() {
-      _isLoading = true; // Set isLoading to true when fetching starts
+      _isLoading = true;
     });
     try {
-      await getTrainer(); // Wait for getTrainer to complete
+      await getTrainer();
     } catch (e) {
-      print('Error fetching trainer: $e');
+      print(e);
     } finally {
-      setState(() {
-        _isLoading = false; // Set isLoading to false when fetching completes
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -63,26 +66,49 @@ class _TrainerPageState extends State<TrainerPage> {
           ),
           DetailsForPortal_Instructor(name: 'Instructor', number: trainers.length),
           Positioned(
-            top: 190,
+            top: 180.0,
             left: 20.0,
             right: 20.0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                color: tdBGColor,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: TextField(
-                cursorColor: tdbrown,
-                decoration: const InputDecoration(
-                  hintText: 'Search',
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search,color: tdBlue,),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context); // Assuming you are inside a BuildContext
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0), // Adjust padding as needed
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Choose your desired background color
+                      borderRadius: BorderRadius.circular(20.0), // Adjust border radius as needed
+                    ),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: tdBlue, // You can change the color of the icon as needed
+                    ),
+                  ),
                 ),
-                onChanged: (value){
-                  filterTrainers(value);
-                },
-              ),
+                const SizedBox(width: 5,),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: BoxDecoration(
+                      color: tdBGColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: TextField(
+                      cursorColor: tdbrown,
+                      decoration: const InputDecoration(
+                        hintText: 'Search',
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.search, color: tdBlue),
+                      ),
+                      onChanged: (value) {
+                        filterTrainers(value);
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           if (_isLoading) // Show CircularProgressIndicator if isLoading is true

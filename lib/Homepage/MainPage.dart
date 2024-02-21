@@ -9,6 +9,8 @@ import 'widget/courseviwe.dart';
 import 'widget/LatestCourseAdded.dart';
 import 'dart:math';
 import 'widget/RandomCourse.dart';
+import 'dart:async';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({required this.userid, Key? key}) : super(key: key);
@@ -22,11 +24,19 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   late Future<List<Trainer>> _futureTrainers;
   bool _isLoading = false;
+  late Completer<void> _completer;
 
   @override
   void initState() {
+    _completer = Completer<void>();
     _fetchData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _completer.complete();
+    super.dispose();
   }
 
   void _fetchData() {
@@ -34,17 +44,18 @@ class _MainPageState extends State<MainPage> {
       _isLoading = true;
     });
     Future.delayed(const Duration(seconds: 2), () {
-      _fetchTrainers();
-      _fetchRecommendedCourses();
-      _fetchRandomCourse();
-      getCourseView();
-      getCourseNew();
-      getAllCourses();
-      getRandomCourse();
-      _fetchCourseview();
+      if (!_completer.isCompleted) { // Checking if Completer is completed
+        _fetchTrainers();
+        _fetchRecommendedCourses();
+        _fetchRandomCourse();
+        getCourseView();
+        getCourseNew();
+        getAllCourses();
+        getRandomCourse();
+        _fetchCourseview();
+      }
     });
   }
-
 
   void _fetchCourseview() async {
     await Future.delayed(Duration(seconds: 2)); // Simulating delay
@@ -105,20 +116,49 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return DialogPage(); // Custom dialog page
-                              },
-                            );
-                          },
-                          child: const CircleAvatar(
-                            radius: 20,
-                            backgroundImage: AssetImage(
-                                'assets/user.png'), // Replace this with your image asset path
-                          ),
-                        ),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return DialogPage(); // Custom dialog page
+                                },
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: users[0].tpicture != null
+                                  ? Image.network(
+                                      users[0].tpicture!,
+                                      width:
+                                          40, // Adjust width and height as needed
+                                      height: 40,
+                                      fit: BoxFit.cover, // Adjust fit as needed
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return CircularProgressIndicator();
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          'assets/user.png',
+                                          width:
+                                              40, // Adjust width and height as needed
+                                          height: 40,
+                                          fit: BoxFit
+                                              .cover, // Adjust fit as needed
+                                        );
+                                      },
+                                    )
+                                  : Image.asset(
+                                      'assets/user.png',
+                                      width:
+                                          40, // Adjust width and height as needed
+                                      height: 40,
+                                      fit: BoxFit.cover, // Adjust fit as needed
+                                    ),
+                            )),
                       ],
                     ),
                     SingleChildScrollView(

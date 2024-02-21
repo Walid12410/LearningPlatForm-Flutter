@@ -3,6 +3,8 @@ import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/Widget/Courseportal.dart';
+import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
+import 'Trainer.dart';
 
 class PortalPage extends StatefulWidget {
   const PortalPage({super.key});
@@ -20,7 +22,14 @@ class _PortalPageState extends State<PortalPage> {
     _fetchPortals();
   }
 
+  @override
+  void dispose() {
+    // Dispose of resources like streams, controllers, or listeners here if needed
+    super.dispose();
+  }
+
   Future<void> _fetchPortals() async {
+    if (!mounted) return; // Check if the widget is still mounted before updating state
     setState(() {
       _isLoading = true; // Set isLoading to true when fetching starts
     });
@@ -29,9 +38,11 @@ class _PortalPageState extends State<PortalPage> {
     } catch (e) {
       print('Error fetching portals: $e');
     } finally {
-      setState(() {
-        _isLoading = false; // Set isLoading to false when fetching completes
-      });
+      if (mounted) { // Check again if the widget is still mounted before updating state
+        setState(() {
+          _isLoading = false; // Set isLoading to false when fetching completes
+        });
+      }
     }
   }
 
@@ -67,10 +78,18 @@ class _PortalPageState extends State<PortalPage> {
               ),
             ),
           ),
+          Positioned(
+            top: 170,
+            left: 20,
+            right: 20,
+            child: ProfileMenuWidget(icon: Icons.assignment_ind, text: 'All Instructor', onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>const TrainerPage()));
+            }, textColor: tdBlue),
+          ),
           DetailsForPortal_Instructor(
               name: 'categories', number: portals.length),
           Positioned(
-            top: 190.0,
+            top: 230,
             left: 20.0,
             right: 20.0,
             child: Container(
@@ -114,7 +133,7 @@ class _PortalPageState extends State<PortalPage> {
             )
           else
             Padding(
-              padding: const EdgeInsets.only(top: 250),
+              padding: const EdgeInsets.only(top: 300),
               child: Container(
                 decoration: const BoxDecoration(
                     color: Colors.white,

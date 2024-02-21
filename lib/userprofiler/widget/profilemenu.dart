@@ -52,6 +52,7 @@ class ProfileMenuWidget extends StatelessWidget {
               child: const Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
+                color: tdBlue,
               ),
             )
           : null,

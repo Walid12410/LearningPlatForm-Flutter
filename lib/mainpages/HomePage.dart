@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/userprofiler/profile.dart';
 import '../Homepage/MainPage.dart';
-import 'Trainer.dart';
+import 'package:learningplatformapp/UserCourses/UserCourse.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'PortalPage.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:learningplatformapp/SearchCourse/Search.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({required this.uid,Key? key});
+  const HomePage({required this.uid, Key? key});
 
   final int uid;
   @override
@@ -25,7 +25,8 @@ class _HomePageState extends State<HomePage> {
     _pages = [
       MainPage(userid: widget.uid),
       const PortalPage(),
-      const TrainerPage(),
+      const UserCourse(),
+      const SearchCourse(),
       Profile(id: widget.uid)
     ];
   }
@@ -38,32 +39,31 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: ClipRRect(
-        child: GNav(
-          backgroundColor: tdbrown,
-          selectedIndex: _selectedIndex,
-          onTabChange: _onPageTapped,
-          activeColor: tdBlue,
-          color: tdBlue,
-          tabs: const [
-            GButton(
-              icon: Icons.home,
-              text: 'Home',
-            ),
-            GButton(
-              icon: Icons.category,
-              text: 'Categories',
-            ),
-            GButton(
-              icon:Icons.assignment_ind_outlined,
-              text: 'Instructor',
-            ),
-            GButton(
-              icon: Icons.person,
-              text: 'Profile',
-            ),
+    return Container(
+      color: tdbrown, // Set your desired background color here
+      child: Scaffold(
+        body: _pages[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: tdbrown, // Set the background color here
+          selectedItemColor: tdBlue, // Set the selected item color if needed
+          unselectedItemColor:
+              tdBGColor, // Set the unselected item color if needed
+          onTap: (int newIndex) {
+            setState(() {
+              _selectedIndex = newIndex;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.category_outlined), label: 'Categories'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.school), label: 'MyCourse'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle), label: 'Profile')
           ],
         ),
       ),
