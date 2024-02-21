@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/userprofiler/profile.dart';
 import '../Homepage/MainPage.dart';
 import 'Trainer.dart';
-import 'setting.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'PortalPage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       MainPage(userid: widget.uid),
       const PortalPage(),
       const TrainerPage(),
-      const Setting(),
+      Profile(id: widget.uid)
     ];
   }
 
