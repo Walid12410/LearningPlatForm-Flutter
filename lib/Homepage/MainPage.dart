@@ -40,6 +40,9 @@ class _MainPageState extends State<MainPage> {
     try {
       await fetchTrainers(widget.userid);
     } catch (e) {
+      print('Error fetching trainers: $e');
+      // Handle the error here, you can show a snackbar or toast message to inform the user
+      // For example:
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error fetching trainers: $e'),
@@ -85,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return DialogPage();
+                          return DialogPage(); // Custom dialog page
                         },
                       );
                     },
@@ -93,30 +96,31 @@ class _MainPageState extends State<MainPage> {
                       borderRadius: BorderRadius.circular(100),
                       child: users[0].tpicture != null
                           ? Image.network(
-                              users[0].tpicture!,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const CircularProgressIndicator();
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  'assets/user.png',
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            )
+                        users[0].tpicture!,
+                        width: 40, // Adjust width and height as needed
+                        height: 40,
+                        fit: BoxFit.cover, // Adjust fit as needed
+                        loadingBuilder:
+                            (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const CircularProgressIndicator();
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/user.png',
+                            width:
+                            40, // Adjust width and height as needed
+                            height: 40,
+                            fit: BoxFit.cover, // Adjust fit as needed
+                          );
+                        },
+                      )
                           : Image.asset(
-                              'assets/user.png',
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                            ),
+                        'assets/user.png',
+                        width: 40, // Adjust width and height as needed
+                        height: 40,
+                        fit: BoxFit.cover, // Adjust fit as needed
+                      ),
                     ),
                   ),
                 ],
@@ -136,7 +140,7 @@ class _MainPageState extends State<MainPage> {
                       child: Text.rich(
                         TextSpan(
                           text:
-                              'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                          'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
                           style: const TextStyle(
                             color: tdBlue,
                             fontSize: 25,
@@ -154,77 +158,135 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               ),
-              _buildCourseSection(
-                title: 'Most Viewed Courses',
-                courses: courseviews,
-                builder: (i) => CourseView(
-                  cname: courseviews[i].name,
-                  image: 'assets/courseview/image${i + 1}.png',
-                  price: courseviews[i].price,
-                  view: courseviews[i].view,
-                  press: () {},
-                ),
+              courseviews.isEmpty
+                  ? Container() // Display nothing if the array is empty
+                  : Column(
+                children: [
+                  Specialforyou(
+                      text: 'Most Viewed Courses', press: () {}),
+                  SizedBox(height: 5),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: courseviews.isEmpty
+                            ? []
+                            : List.generate(
+                          min(3, courseviews.length),
+                              (i) {
+                            if (courseviews.isNotEmpty) {
+                              return CourseView(
+                                cname: courseviews[i].name,
+                                image: 'assets/courseview/image${i + 1}.png',
+                                price: courseviews[i].price,
+                                view: courseviews[i].view,
+                                press: () {},
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              _buildCourseSection(
-                title: 'Latest Course Added',
-                courses: courseadd,
-                builder: (i) => LatestCourseAdd(
-                  image: 'assets/latestadd/image${i + 1}.png',
-                  price: courseadd[i].price,
-                  name: courseadd[i].name,
-                ),
+              courseadd.isEmpty
+                  ? Container() // Display nothing if the array is empty
+                  : Column(
+                children: [
+                  const SizedBox(height: 5),
+                  Specialforyou(
+                      text: 'Latest Course Added', press: () {}),
+                  const SizedBox(height: 5),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Row(
+                        children: List.generate(
+                          min(4, courseadd.length),
+                              (i) {
+                            if(courseadd.isNotEmpty) {
+                              return LatestCourseAdd(
+                                image:
+                                'assets/latestadd/image${i + 1}.png',
+                                price: courseadd[i].price,
+                                name: courseadd[i].name,
+                              );
+                            }else{
+                              return Container();
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              _buildCourseSection(
-                title: 'Recommended Course',
-                courses: allCourses,
-                builder: (i) => RecommendedCourse(
-                  cname: allCourses[i].name,
-                  image: 'assets/rc/i${i + 1}.png',
-                  price: allCourses[i].price,
-                  press: () {},
-                ),
-              ),
-              _buildCourseSection(
-                title: 'For You',
-                courses: randomcourse,
-                builder: (i) => RandomCourse(
-                  cname: randomcourse[i].name,
-                  image: 'assets/rac/i${i + 1}.png',
-                  price: randomcourse[i].price,
-                  press: () {},
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCourseSection({
-    required String title,
-    required List<Course> courses,
-    required Widget Function(int) builder,
-  }) {
-    return Column(
-      children: [
-        Specialforyou(text: title, press: () {}),
-        SizedBox(height: 5),
-        courses.isEmpty
-            ? Container() // Display nothing if the array is empty
-            : SingleChildScrollView(
+              const SizedBox(height: 10),
+              Specialforyou(text: 'Recommended Course', press: () {}),
+              const SizedBox(height: 5),
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
-                  padding: const EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1.0),
                   child: Row(
-                    children: List.generate(
-                      min(3, courses.length),
-                      (i) => builder(i),
+                    children: allCourses.isEmpty
+                        ? [] // Display nothing if the array is empty
+                        : List.generate(
+                      min(5, allCourses.length),
+                          (i) {
+                        if(allCourses.isNotEmpty) {
+                          return RecommendedCourse(
+                            cname: allCourses[i].name,
+                            image: 'assets/rc/i${i + 1}.png',
+                            price: allCourses[i].price,
+                            press: () {},
+                          );
+                        }else{
+                          return Container();
+                        }
+                      },
                     ),
                   ),
                 ),
               ),
-      ],
+              const SizedBox(height: 10),
+              Specialforyou(text: 'For you', press: () {}),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Row(
+                    children: randomcourse.isEmpty
+                        ? [] // Display nothing if the array is empty
+                        : List.generate(
+                      min(5, randomcourse.length),
+                          (i) {
+                        if(randomcourse.isNotEmpty) {
+                          return RandomCourse(
+                            cname: randomcourse[i].name,
+                            image: 'assets/rac/i${i + 1}.png',
+                            price: randomcourse[i].price,
+                            press: () {},
+                          );
+                        }else{
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
