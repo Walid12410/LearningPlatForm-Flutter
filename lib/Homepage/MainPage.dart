@@ -92,35 +92,10 @@ class _MainPageState extends State<MainPage> {
                         },
                       );
                     },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: users[0].tpicture != null
-                          ? Image.network(
-                        users[0].tpicture!,
-                        width: 40, // Adjust width and height as needed
-                        height: 40,
-                        fit: BoxFit.cover, // Adjust fit as needed
-                        loadingBuilder:
-                            (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const CircularProgressIndicator();
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/user.png',
-                            width:
-                            40, // Adjust width and height as needed
-                            height: 40,
-                            fit: BoxFit.cover, // Adjust fit as needed
-                          );
-                        },
-                      )
-                          : Image.asset(
-                        'assets/user.png',
-                        width: 40, // Adjust width and height as needed
-                        height: 40,
-                        fit: BoxFit.cover, // Adjust fit as needed
-                      ),
+                    child: const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(
+                          'assets/user.png'), // Replace this with your image asset path
                     ),
                   ),
                 ],
