@@ -71,16 +71,16 @@ class _ProfileState extends State<Profile> {
                   borderRadius: BorderRadius.circular(100),
                   child: user.tpicture != null
                       ? Image.network(
-                          user.tpicture!,
+                          user.tpicture!,fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
                             return const CircularProgressIndicator();
                           },
                           errorBuilder: (context, error, stackTrace) {
-                            return Image.asset('assets/user.png');
+                            return Image.asset('assets/user.png',fit: BoxFit.cover,);
                           },
                         )
-                      : Image.asset('assets/user.png'),
+                      : Image.asset('assets/user.png',fit: BoxFit.cover,),
                 ),
               )
             ],
@@ -131,7 +131,9 @@ class _ProfileState extends State<Profile> {
               icon: Icons.person,
               text: 'Information',
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const Information()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>
+                        Information(id: widget.id,)));
               },
               textColor: tdBlue),
           const SizedBox(height: 10),

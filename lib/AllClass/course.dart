@@ -53,7 +53,7 @@ List<Course> randomcourse =[];
 
 Future<void> getAllCourses() async {
   try {
-    Uri url = Uri.parse('http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> AllcourseJsonList = jsonDecode(response.body);
@@ -76,7 +76,7 @@ Future<void> getAllCourses() async {
 
 Future<void> getCourseTrainer(int userid) async {
   try {
-    Uri url = Uri.parse('http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> courseJsonList = jsonDecode(response.body);
@@ -105,7 +105,7 @@ Future<void> getCourseTrainer(int userid) async {
 
 Future<void> getCourse(int portalid) async {
   try {
-    Uri url = Uri.parse('http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> courseJsonList = jsonDecode(response.body);
@@ -131,7 +131,7 @@ Future<void> getCourse(int portalid) async {
 Future<void> getCourseView() async {
   try {
     Uri url = Uri.parse(
-        'http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
+        'http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> CourseJsonList = jsonDecode(response.body);
@@ -156,7 +156,7 @@ Future<void> getCourseView() async {
 Future<void> getCourseNew() async {
   try {
     Uri url = Uri.parse(
-        'http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
+        'http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> CourseJsonList = jsonDecode(response.body);
@@ -181,7 +181,7 @@ Future<void> getCourseNew() async {
 Future<void> getRandomCourse() async {
   try {
     Uri url = Uri.parse(
-        'http://192.168.1.3/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
+        'http://192.168.1.50/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> CourseJsonList = jsonDecode(response.body);
