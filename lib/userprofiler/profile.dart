@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/userprofiler/widget/information.dart';
+import 'package:learningplatformapp/userprofiler/information.dart';
+import 'package:learningplatformapp/userprofiler/widget/editprofile.dart';
 import 'widget/profilemenu.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +9,6 @@ import 'package:learningplatformapp/SignInUp/signin.dart';
 
 class Profile extends StatefulWidget {
   const Profile({required this.id, Key? key}) : super(key: key);
-
   final int id;
 
   @override
@@ -102,7 +102,10 @@ class _ProfileState extends State<Profile> {
           SizedBox(
             width: 200,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                 UpdateProfileScreen(id: widget.id)));
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: tdbrown,
                   side: BorderSide.none,

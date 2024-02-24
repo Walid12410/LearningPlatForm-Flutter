@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPage> {
                       child: Text.rich(
                         TextSpan(
                           text:
-                          'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                              'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
                           style: const TextStyle(
                             color: tdBlue,
                             fontSize: 25,
@@ -136,72 +136,73 @@ class _MainPageState extends State<MainPage> {
               courseviews.isEmpty
                   ? Container() // Display nothing if the array is empty
                   : Column(
-                children: [
-                  Specialforyou(
-                      text: 'Most Viewed Courses', press: () {}),
-                  SizedBox(height: 5),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: courseviews.isEmpty
-                            ? []
-                            : List.generate(
-                          min(3, courseviews.length),
-                              (i) {
-                            if (courseviews.isNotEmpty) {
-                              return CourseView(
-                                cname: courseviews[i].name,
-                                image: 'assets/courseview/image${i + 1}.png',
-                                price: courseviews[i].price,
-                                view: courseviews[i].view,
-                                press: () {},
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
+                      children: [
+                        Specialforyou(
+                            text: 'Most Viewed Courses', press: () {}),
+                        const SizedBox(height: 5),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: courseviews.isEmpty
+                                  ? []
+                                  : List.generate(
+                                      min(3, courseviews.length),
+                                      (i) {
+                                        if (courseviews.isNotEmpty) {
+                                          return CourseView(
+                                            cname: courseviews[i].name,
+                                            image:
+                                                'assets/courseview/image${i + 1}.png',
+                                            price: courseviews[i].price,
+                                            view: courseviews[i].view,
+                                            press: () {},
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
               courseadd.isEmpty
                   ? Container() // Display nothing if the array is empty
                   : Column(
-                children: [
-                  const SizedBox(height: 5),
-                  Specialforyou(
-                      text: 'Latest Course Added', press: () {}),
-                  const SizedBox(height: 5),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Row(
-                        children: List.generate(
-                          min(4, courseadd.length),
-                              (i) {
-                            if(courseadd.isNotEmpty) {
-                              return LatestCourseAdd(
-                                image:
-                                'assets/latestadd/image${i + 1}.png',
-                                price: courseadd[i].price,
-                                name: courseadd[i].name,
-                              );
-                            }else{
-                              return Container();
-                            }
-                          },
+                      children: [
+                        const SizedBox(height: 5),
+                        Specialforyou(
+                            text: 'Latest Course Added', press: () {}),
+                        const SizedBox(height: 5),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: Row(
+                              children: List.generate(
+                                min(4, courseadd.length),
+                                (i) {
+                                  if (courseadd.isNotEmpty) {
+                                    return LatestCourseAdd(
+                                      image:
+                                          'assets/latestadd/image${i + 1}.png',
+                                      price: courseadd[i].price,
+                                      name: courseadd[i].name,
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 10),
               Specialforyou(text: 'Recommended Course', press: () {}),
               const SizedBox(height: 5),
@@ -213,20 +214,20 @@ class _MainPageState extends State<MainPage> {
                     children: allCourses.isEmpty
                         ? [] // Display nothing if the array is empty
                         : List.generate(
-                      min(5, allCourses.length),
-                          (i) {
-                        if(allCourses.isNotEmpty) {
-                          return RecommendedCourse(
-                            cname: allCourses[i].name,
-                            image: 'assets/rc/i${i + 1}.png',
-                            price: allCourses[i].price,
-                            press: () {},
-                          );
-                        }else{
-                          return Container();
-                        }
-                      },
-                    ),
+                            min(5, allCourses.length),
+                            (i) {
+                              if (allCourses.isNotEmpty) {
+                                return RecommendedCourse(
+                                  cname: allCourses[i].name,
+                                  image: 'assets/rc/i${i + 1}.png',
+                                  price: allCourses[i].price,
+                                  press: () {},
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
                   ),
                 ),
               ),
@@ -240,20 +241,20 @@ class _MainPageState extends State<MainPage> {
                     children: randomcourse.isEmpty
                         ? [] // Display nothing if the array is empty
                         : List.generate(
-                      min(5, randomcourse.length),
-                          (i) {
-                        if(randomcourse.isNotEmpty) {
-                          return RandomCourse(
-                            cname: randomcourse[i].name,
-                            image: 'assets/rac/i${i + 1}.png',
-                            price: randomcourse[i].price,
-                            press: () {},
-                          );
-                        }else{
-                          return Container();
-                        }
-                      },
-                    ),
+                            min(5, randomcourse.length),
+                            (i) {
+                              if (randomcourse.isNotEmpty) {
+                                return RandomCourse(
+                                  cname: randomcourse[i].name,
+                                  image: 'assets/rac/i${i + 1}.png',
+                                  price: randomcourse[i].price,
+                                  press: () {},
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
                   ),
                 ),
               ),

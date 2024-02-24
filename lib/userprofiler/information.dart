@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'widget/viewprofile.dart';
 
 class Information extends StatefulWidget {
   const Information({required this.id, super.key});
-
   final int id;
 
   @override
@@ -70,29 +70,10 @@ class _InformationState extends State<Information> {
                     ),
                   ],
                 ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5), color: tdbrown),
-                  child: ListTile(
-                    title: Text(
-                      '${users[0].toString()}',
-                      style:
-                      const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      '${users[0].email}',
-                      style: const TextStyle(color: tdBlue),
-                    ),
-                    trailing: Text(
-                      '\$${users[0].email}',
-                      style: const TextStyle(fontSize: 15, color: tdBlue),
-                    ),
-                    onTap: () {
-                    },
-                  )),
-            )
+                const SizedBox(height: 20),
+                Profileview(title: 'Name', desc: users[0].toString(),id: widget.id),
+                Profileview(title: 'Email', desc: users[0].email,id: widget.id),
+                Profileview(title: 'Phone Number', desc: users[0].telephone,id: widget.id),
               ],
             ),
           ),
