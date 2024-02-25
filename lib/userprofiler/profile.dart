@@ -147,6 +147,7 @@ class _ProfileState extends State<Profile> {
               textColor: tdBlue),
           const SizedBox(height: 10),
           const Divider(),
+          ProfileMenuWidget(icon: Icons.password, text: 'Change Password', onPressed: (){},endIcon: false, textColor: Colors.red),
           const SizedBox(height: 10),
           ProfileMenuWidget(
               icon: Icons.logout_outlined,
