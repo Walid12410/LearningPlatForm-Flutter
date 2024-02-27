@@ -1,57 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/GetStart/pageview.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
-import 'package:learningplatformapp/Widget/Courseportal.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool isLoggedIn = false;
-
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
-
-  Future<void> checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    });
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppDataProvider(),
+    return ChangeNotifierProvider( // Provide AppDataProvider to the widget tree
+      create: (context) => AppDataProvider(), // Create an instance of AppDataProvider
       child: MaterialApp(
         title: 'App',
         debugShowCheckedModeBanner: false,
         color: Colors.red,
         home: FutureBuilder<SharedPreferences>(
-          future: SharedPreferences.getInstance(),
+          future: SharedPreferences.getInstance(), // Get SharedPreferences instance asynchronously
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              int uid = snapshot.data?.getInt('uid') ?? 0;
-              return isLoggedIn ? HomePage(uid: uid) :const PageViewScreen();
+              final prefs = snapshot.data; // Retrieve SharedPreferences instance
+              final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false; // Check if user is logged in
+              final userId = prefs?.getInt('uid') ?? 0; // Get user ID from SharedPreferences
+              if (isLoggedIn) {
+                Provider.of<AppDataProvider>(context, listen: false)
+                    .setUserId(userId); // Set user ID in AppDataProvider
+                return const HomePage(); // Navigate to HomePage if user is logged in
+              } else {
+                return const PageViewScreen(); // Navigate to PageViewScreen if user is not logged in
+              }
             } else {
-              return const Scaffold(
+              return const Scaffold( // Show loading indicator while SharedPreferences is being fetched
                 body: Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -59,9 +45,9 @@ class _MyAppState extends State<MyApp> {
             }
           },
         ),
-        routes: {
-          "SignIn" :(context) =>const SignIn(),
-          "portal" :(context) =>const PortalPage(),
+        routes: { // Define named routes
+          "SignIn": (context) => const SignIn(), // SignIn route
+          "portal": (context) => const PortalPage(), // portal route
         },
       ),
     );

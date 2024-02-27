@@ -7,9 +7,8 @@ import 'PortalPage.dart';
 import 'package:learningplatformapp/SearchCourse/Search.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({required this.uid, Key? key});
+  const HomePage({Key? key});
 
-  final int uid;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -23,11 +22,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _pages = [
-      MainPage(userid: widget.uid),
+      const MainPage(),
       const PortalPage(),
       const UserCourse(),
       const SearchCourse(),
-      Profile(id: widget.uid)
+      const Profile()
     ];
   }
 

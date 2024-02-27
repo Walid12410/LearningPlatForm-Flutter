@@ -3,7 +3,9 @@ import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dar
 import 'package:learningplatformapp/Widget/TrainerInfo.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
-
+import 'package:learningplatformapp/futureapi/TrainerApi.dart';
+import 'package:provider/provider.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
 
 class TrainerPage extends StatefulWidget {
   const TrainerPage({Key? key}) : super(key: key);
@@ -13,42 +15,41 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchTrainer();
   }
 
-  Future<void> _fetchTrainer() async {
-    if (!mounted) return;
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      await getTrainer();
-    } catch (e) {
-      print(e);
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+
+  void getData(context){
+    getTrainer(context).then((_) {
+      if (_searchText.isNotEmpty) {
+        filterTrainers(context, _searchText);
       }
-    }
+    });
   }
 
-  void filterTrainers(String searchText) {
-    setState(() {
-      filteredTrainers = trainers.where((trainer) =>
+  void filterTrainers(BuildContext context ,String searchText) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    List<Trainer> trainers = appDataProvider.trainers;
+    List<Trainer> filteredTraine = trainers
+    .where((trainer) =>
       trainer.fname.toLowerCase().contains(searchText.toLowerCase()) ||
           trainer.lname.toLowerCase().contains(searchText.toLowerCase())).toList();
-    });
+    appDataProvider.setFilteredTrainers(filteredTraine);
   }
+
+  String _searchText = ''; // Store the entered search text
+
 
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    getData(context);
+    var filteredTrainers = appDataProvider.filteredTrainers;
+    var trainers = appDataProvider.trainers;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -103,7 +104,10 @@ class _TrainerPageState extends State<TrainerPage> {
                         prefixIcon: Icon(Icons.search, color: tdBlue),
                       ),
                       onChanged: (value) {
-                        filterTrainers(value);
+                        setState(() {
+                          _searchText = value;
+                        });
+                        filterTrainers(context,value);
                       },
                     ),
                   ),
@@ -111,12 +115,19 @@ class _TrainerPageState extends State<TrainerPage> {
               ],
             ),
           ),
-          if (_isLoading) // Show CircularProgressIndicator if isLoading is true
+          // if (_isLoading) // Show CircularProgressIndicator if isLoading is true
+          //   const Center(
+          //       child: SizedBox(width: 150, height: 150,
+          //           child: CircularProgressIndicator(
+          //             color: tdbrown,
+          //           ))
+          //   )
+          if(trainers.isEmpty)
             const Center(
-                child: SizedBox(width: 150, height: 150,
-                    child: CircularProgressIndicator(
-                      color: tdbrown,
-                    ))
+              child: Text(
+                'No Instructor available',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
             )
           else
             Padding(

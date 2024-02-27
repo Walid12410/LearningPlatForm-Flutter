@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/Homepage/widget/RecommendedCourse.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
+import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'widget/specialforyou.dart';
@@ -15,38 +15,34 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({required this.userid, Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
-  final int userid;
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  late Future<List<Trainer>> _futureTrainers;
+
 
   @override
   void initState() {
     super.initState();
-    _fetchTrainers();
   }
 
-
-  void getData(context) {
-     getCourseView(context);
-     getCourseNew(context);
-     getAllCourses(context);
-     getRandomCourse(context);
+  Future<void> getData(BuildContext context) async {
+    final provider = Provider.of<AppDataProvider>(context, listen: true);
+    final userId = provider.userId;
+    await Future.wait([
+      getCourseView(context),
+      getCourseNew(context),
+      getAllCourses(context),
+      getRandomCourse(context),
+      getTrainer(context),
+      fetchTrainers(context, userId),
+    ]);
   }
 
-  void _fetchTrainers() async {
-    try {
-      await fetchTrainers(widget.userid);
-    } catch (e) {
-      showNoConnectionSnackBar(context);
-    }
-  }
 
   Future<bool> checkInternetConnectivity() async {
     var connectivityResult = await Connectivity().checkConnectivity();
@@ -70,13 +66,15 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? tpictureUrl = users.isNotEmpty && users[0].tpicture != null ? users[0].tpicture.toString() : null;
     getData(context);
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
     var courseviews = appDataProvider.courseviews;
     var courseadd = appDataProvider.courseadd;
     var allCourses = appDataProvider.allCourses;
     var randomcourse = appDataProvider.randomcourse;
+    var users = appDataProvider.users;
+    String? tpictureUrl = users.isNotEmpty && users[0].tpicture != null ? users[0].tpicture.toString() : null;
+
 
     return Scaffold(
       body: SafeArea(

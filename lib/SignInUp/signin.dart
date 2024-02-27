@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:learningplatformapp/SignInUp/WidgetsForSignIn/siginform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -26,15 +28,17 @@ class _SignInState extends State<SignIn> {
     });
   }
 
-  Future<void> saveLoginInfo(String username, int uid) async {
+
+  Future<void> saveLoginInfo(BuildContext context, String username, int uid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', true);
     prefs.setString('username', username);
     prefs.setInt('uid', uid);
+    Provider.of<AppDataProvider>(context, listen: false).setUserId(uid); // Update the user ID in the provider
   }
 
   Future<void> checkLogin(BuildContext context, String username, String password) async {
-    String apiUrl = 'http://192.168.1.34/EduPlatform/CMS/api/LoginPage.php';
+    String apiUrl = 'http://192.168.1.13/EduPlatform/CMS/api/LoginPage.php';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {
@@ -49,10 +53,10 @@ class _SignInState extends State<SignIn> {
         int? userID = responseData['userID']?.toInt();
         if (userID != null) {
           if (rememberMe) {
-            await saveLoginInfo(username, userID);
+            await saveLoginInfo(context, username, userID);
           }
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage(uid: userID)));
+              context, MaterialPageRoute(builder: (context) =>const HomePage()));
         }
       } else {
         ShowDialog(context, 'Login Failed', responseData['message']);

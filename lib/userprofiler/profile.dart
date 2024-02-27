@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/userprofiler/information.dart';
-import 'package:learningplatformapp/userprofiler/widget/editprofile.dart';
+import 'package:learningplatformapp/userprofiler/editprofile.dart';
 import 'widget/profilemenu.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:provider/provider.dart';
+
 
 class Profile extends StatefulWidget {
-  const Profile({required this.id, Key? key}) : super(key: key);
-  final int id;
+  const Profile({Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -18,14 +21,16 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Future<List<Trainer>>? _userFuture;
 
-  @override
-  void initState() {
-    super.initState();
-    _userFuture = fetchTrainers(widget.id);
+
+  void getData(BuildContext context) {
+    final provider = Provider.of<AppDataProvider>(context, listen: true);
+    _userFuture = fetchTrainers(context, provider.userId);
   }
 
   @override
   Widget build(BuildContext context) {
+    getData(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -104,7 +109,7 @@ class _ProfileState extends State<Profile> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                 UpdateProfileScreen(id: widget.id)));
+                 UpdateProfileScreen()));
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: tdbrown,
@@ -136,7 +141,7 @@ class _ProfileState extends State<Profile> {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context)=>
-                        Information(id: widget.id,)));
+                        Information()));
               },
               textColor: tdBlue),
           const SizedBox(height: 10),

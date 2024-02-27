@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:http/http.dart' as http;
+import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
+import 'package:provider/provider.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
+
 
 class UpdateProfileScreen extends StatefulWidget {
-  const UpdateProfileScreen({required this.id, super.key});
-  final int id;
+  const UpdateProfileScreen({super.key});
 
   @override
   State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  TextEditingController fnameController =
-      TextEditingController(text: users[0].fname);
-  TextEditingController lnameController =
-      TextEditingController(text: users[0].lname);
-  TextEditingController emailController =
-      TextEditingController(text: users[0].email);
-  TextEditingController phoneController =
-      TextEditingController(text: users[0].telephone);
+  TextEditingController fnameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
-  Future<void> updateProfile() async {
+
+  Future<void> updateProfile(int userId) async {
     final url = Uri.parse(
-        'http://192.168.1.5/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
+        'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
     final response = await http.post(
       url,
       body: {
-        "UserID": widget.id.toString(),
+        "UserID": userId.toString(),
         "UserFirstName": fnameController.text,
         "UserLastName": lnameController.text,
         "UserEmail": emailController.text,
@@ -53,9 +53,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => HomePage(
-                        uid: widget
-                            .id)), // Replace HomePage() with your actual homepage widget
+                    builder: (context) => HomePage()), // Replace HomePage() with your actual homepage widget
                 (route) => false, // Pop until the homepage is at the top
               );
             },
@@ -69,14 +67,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
-  @override
-  void initState() {
-    fetchTrainers(widget.id);
-    super.initState();
+  void getData(BuildContext context) {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    fetchTrainers(context, provider.userId).then((users) {
+      setState(() {
+        fnameController.text = users.isNotEmpty ? users[0].fname : '';
+        lnameController.text = users.isNotEmpty ? users[0].lname : '';
+        emailController.text = users.isNotEmpty ? users[0].email : '';
+        phoneController.text = users.isNotEmpty ? users[0].telephone : '';
+      });
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    getData(context);
+    var users = appDataProvider.users;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -214,7 +223,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          updateProfile();
+                          updateProfile(users[0].id);
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: tdbrown,

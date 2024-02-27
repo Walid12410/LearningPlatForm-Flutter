@@ -1,5 +1,4 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 class Trainer {
   final int id;
@@ -53,38 +52,5 @@ class Trainer {
     return '$fname $lname';
   }
 }
-List<Trainer> users = []; // Define list to store trainers
-List<Trainer> trainers = [];
-List<Trainer> filteredTrainers = [];
 
 
-Future<List<Trainer>> fetchTrainers(int userId) async {
-  final response = await http.get(Uri.parse(
-      'http://192.168.1.34/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
-  if (response.statusCode == 200) {
-    final jsonData = jsonDecode(response.body) as List<dynamic>;
-    List<Trainer> trainers =
-    jsonData.map((json) => Trainer.fromJson(json)).toList();
-      users = trainers; // Store fetched trainers in users list
-    return trainers;
-  } else {
-    throw Exception('Failed to load trainers');
-  }
-}
-
-Future<void> getTrainer() async {
-  try {
-    Uri url = Uri.parse('http://192.168.1.34/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> portalJsonList = jsonDecode(response.body);
-      List<Trainer> fetchedPortals = portalJsonList.map((json) => Trainer.fromJson(json)).toList();
-        trainers = fetchedPortals;
-        filteredTrainers = fetchedPortals;
-    } else {
-      throw Exception('Failed to load trainer');
-    }
-  } catch (e) {
-    print('Error fetching trainer: $e');
-  }
-}

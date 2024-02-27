@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/userprofiler/widget/editprofile.dart';
+import 'package:learningplatformapp/userprofiler/editprofile.dart';
 
 
 class Profileview extends StatelessWidget {
@@ -8,12 +8,10 @@ class Profileview extends StatelessWidget {
     super.key,
     required this.title,
     required this.desc,
-    required this.id
   });
 
   final String title;
   final String desc;
-  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class Profileview extends StatelessWidget {
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfileScreen(id: id)));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfileScreen()));
             },
           ),
         ),

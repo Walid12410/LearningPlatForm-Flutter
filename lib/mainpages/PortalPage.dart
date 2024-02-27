@@ -3,8 +3,11 @@ import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/Widget/Courseportal.dart';
+import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
 import 'Trainer.dart';
+import 'package:provider/provider.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
 
 class PortalPage extends StatefulWidget {
   const PortalPage({super.key});
@@ -14,47 +17,32 @@ class PortalPage extends StatefulWidget {
 }
 
 class _PortalPageState extends State<PortalPage> {
-  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchPortals();
   }
 
-  @override
-  void dispose() {
-    // Dispose of resources like streams, controllers, or listeners here if needed
-    super.dispose();
-  }
 
-  Future<void> _fetchPortals() async {
-    if (!mounted) return; // Check if the widget is still mounted before updating state
-    setState(() {
-      _isLoading = true; // Set isLoading to true when fetching starts
-    });
-    try {
-      await getPortals(); // Wait for getPortals to complete
-    } catch (e) {
-      print('Error fetching portals: $e');
-    } finally {
-      if (mounted) { // Check again if the widget is still mounted before updating state
-        setState(() {
-          _isLoading = false; // Set isLoading to false when fetching completes
-        });
+  void getData(context){
+    getPortals(context).then((_) {
+      if (_searchText.isNotEmpty) {
+        filterPortals(context, _searchText);
       }
-    }
-  }
-
-  void filterPortals(String searchText) {
-    setState(() {
-      filteredPortals = portals
-          .where((portal) => portal.portalName
-              .toLowerCase()
-              .contains(searchText.toLowerCase()))
-          .toList();
     });
   }
+
+
+  void filterPortals(BuildContext context, String searchText) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    List<Portal> portal = appDataProvider.portals;
+    List<Portal> filteredPortal = portal
+    .where((portal) => portal.portalName.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+    appDataProvider.setFilterPortalCourse(filteredPortal);
+  }
+  String _searchText = ''; // Store the entered search text
+
 
   double calculateMaxCrossAxisExtent(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -63,6 +51,11 @@ class _PortalPageState extends State<PortalPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    getData(context);
+    var portals = appDataProvider.portals;
+    var filteredPortals = appDataProvider.filteredPortals;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -109,22 +102,25 @@ class _PortalPageState extends State<PortalPage> {
                   ),
                 ),
                 onChanged: (value) {
-                  filterPortals(value);
+                  setState(() {
+                    _searchText = value;
+                  });
+                  filterPortals(context,value);
                 },
               ),
             ),
           ),
-          if (_isLoading)
-            const Center(
-              child: SizedBox(
-                width: 150,
-                height: 150,
-                child: CircularProgressIndicator(
-                  color: tdbrown,
-                ),
-              ),
-            )
-          else if (filteredPortals.isEmpty)
+          // if (_isLoading)
+          //   const Center(
+          //     child: SizedBox(
+          //       width: 150,
+          //       height: 150,
+          //       child: CircularProgressIndicator(
+          //         color: tdbrown,
+          //       ),
+          //     ),
+          //   )
+           if (portals.isEmpty)
             const Center(
               child: Text(
                 'No Categories available',
