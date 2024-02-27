@@ -3,7 +3,9 @@ import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dar
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/Widget/CourseOfPortal.dart';
-
+import 'package:learningplatformapp/futureapi/CourseApi.dart';
+import 'package:provider/provider.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
 
 class CourseListView extends StatefulWidget {
   int portalid;
@@ -14,40 +16,37 @@ class CourseListView extends StatefulWidget {
 }
 
 class _CourseListViewState extends State<CourseListView> {
-  bool _isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchCourses(widget.portalid);
-  }
 
-  Future<void> _fetchCourses(int portalid) async {
-    setState(() {
-      _isLoading = true; // Set isLoading to true when fetching starts
-    });
-    try {
-      await getCourse(portalid); // Wait for getCourse to complete
-    } catch (e) {
-      print('Error fetching courses: $e');
-    } finally {
-      setState(() {
-        _isLoading = false; // Set isLoading to false when fetching completes
-      });
-    }
-  }
 
-  void filterCourse(String searchText) {
-    setState(() {
-      filteredCourse = courses
-          .where((course) => course.name.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
+  void getData(context){
+    getCourse(widget.portalid,context).then((_) {
+      if (_searchText.isNotEmpty) {
+        filterCourse(context, _searchText);
+      }
     });
   }
+
+  void filterCourse(BuildContext context, String searchText) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    List<Course> courses = appDataProvider.courses;
+    List<Course> filteredCourses = courses
+        .where((course) => course.name.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+    appDataProvider.setFilterCourse(filteredCourses);
+  }
+
+  String _searchText = ''; // Store the entered search text
 
 
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    getData(context);
+    var courses = appDataProvider.courses;
+    var filteredCourse = appDataProvider.filteredCourse;
+
+
     return Scaffold(
       body: Stack(
         children: [
@@ -100,7 +99,10 @@ class _CourseListViewState extends State<CourseListView> {
                         prefixIcon: Icon(Icons.search, color: tdBlue),
                       ),
                       onChanged: (value) {
-                        filterCourse(value);
+                        setState(() {
+                          _searchText = value; // Update the search text
+                        });
+                        filterCourse(context, value); // Perform search
                       },
                     ),
                   ),
@@ -108,17 +110,7 @@ class _CourseListViewState extends State<CourseListView> {
               ],
             ),
           ),
-          if (_isLoading)
-            const Center(
-              child: SizedBox(
-                width: 150,
-                height: 150,
-                child: CircularProgressIndicator(
-                  color: tdbrown,
-                ),
-              ),
-            )
-          else if (filteredCourse.isEmpty)
+          if (filteredCourse.isEmpty)
             const Center(
               child: Text(
                 'No Course available',

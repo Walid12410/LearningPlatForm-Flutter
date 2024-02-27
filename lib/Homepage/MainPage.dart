@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/Homepage/widget/RecommendedCourse.dart';
+import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'widget/specialforyou.dart';
@@ -11,6 +11,8 @@ import 'dart:math';
 import 'widget/RandomCourse.dart';
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({required this.userid, Key? key}) : super(key: key);
@@ -23,31 +25,19 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late Future<List<Trainer>> _futureTrainers;
-  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
-    _startConnectivityTimer(); // Start timer on initState
-    _random();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel(); // Cancel timer on dispose
-    super.dispose();
-  }
-
-  void _fetchData() async {
     _fetchTrainers();
-    await getCourseView();
-    await getCourseNew();
-    await getAllCourses();
   }
 
-  void _random() async{
-    await getRandomCourse();
+
+  void getData(context) {
+     getCourseView(context);
+     getCourseNew(context);
+     getAllCourses(context);
+     getRandomCourse(context);
   }
 
   void _fetchTrainers() async {
@@ -73,25 +63,20 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> reloadPage() async {
     setState(() {
-      _fetchData();
+      getData(context);
     });
     await Future.delayed(const Duration(seconds: 3));
-  }
-
-  void _startConnectivityTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      bool isConnected = await checkInternetConnectivity();
-      if (!isConnected) {
-        showNoConnectionSnackBar(context);
-      } else {
-        reloadPage();
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     String? tpictureUrl = users.isNotEmpty && users[0].tpicture != null ? users[0].tpicture.toString() : null;
+    getData(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    var courseviews = appDataProvider.courseviews;
+    var courseadd = appDataProvider.courseadd;
+    var allCourses = appDataProvider.allCourses;
+    var randomcourse = appDataProvider.randomcourse;
 
     return Scaffold(
       body: SafeArea(

@@ -28,7 +28,7 @@ List<Portal> filteredPortals = [];
 
 Future<void> getPortals() async {
   try {
-    Uri url = Uri.parse('http://192.168.1.5/EduPlatForm/CMS/api/PortalCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.34/EduPlatForm/CMS/api/PortalCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> portalJsonList = jsonDecode(response.body);
