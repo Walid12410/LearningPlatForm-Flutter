@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
+import 'package:learningplatformapp/userprofiler/information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DialogPage extends StatelessWidget {
@@ -15,11 +16,10 @@ class DialogPage extends StatelessWidget {
               leading:const Icon(Icons.person),
               title: const Text('Personal Info'),
               onTap: () {
-                // Navigate to personal info page
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => PersonalInfoPage()),
-                // );
+                 Navigator.push(
+                  context,
+                   MaterialPageRoute(builder: (context) =>const Information()),
+                 );
               },
             ),
             ListTile(

@@ -17,30 +17,35 @@ import 'package:provider/provider.dart';
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
 
-
   @override
   void initState() {
     super.initState();
+    getData(context);
   }
 
   Future<void> getData(BuildContext context) async {
-    final provider = Provider.of<AppDataProvider>(context, listen: true);
-    final userId = provider.userId;
-    await Future.wait([
-      getCourseView(context),
-      getCourseNew(context),
-      getAllCourses(context),
-      getRandomCourse(context),
-      getTrainer(context),
-      fetchTrainers(context, userId),
-    ]);
+    try {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      final userId = provider.userId;
+      await Future.wait([
+        getAllCourses(context),
+        getCourseNew(context),
+        getCourseView(context),
+        getRandomCourse(context),
+        getTrainer(context),
+        fetchTrainers(context, userId),
+      ]);
+      provider.notifyListeners(); // Notify listeners about data change
+      setState(() {});
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
   }
 
 
@@ -51,22 +56,26 @@ class _MainPageState extends State<MainPage> {
 
   void showNoConnectionSnackBar(BuildContext context) {
     final snackBar = SnackBar(
-      content:const Text('No internet connection'),
-      duration:const Duration(seconds: 3),
+      content: const Text('No internet connection'),
+      duration: const Duration(seconds: 3),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> reloadPage() async {
-    setState(() {
-      getData(context);
-    });
-    await Future.delayed(const Duration(seconds: 3));
+    try {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      provider.deleteAllItems(); // Delete all items before fetching new data
+      await getData(context);
+    } catch (e) {
+      showNoConnectionSnackBar(context);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
-    getData(context);
+    //getData(context);
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
     var courseviews = appDataProvider.courseviews;
     var courseadd = appDataProvider.courseadd;
@@ -75,12 +84,11 @@ class _MainPageState extends State<MainPage> {
     var users = appDataProvider.users;
     String? tpictureUrl = users.isNotEmpty && users[0].tpicture != null ? users[0].tpicture.toString() : null;
 
-
     return Scaffold(
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: reloadPage,
-          child: SingleChildScrollView(
+       child: RefreshIndicator(
+         onRefresh: reloadPage,
+         child: SingleChildScrollView(
             child: Column(
               children: [
                 Row(
@@ -120,7 +128,8 @@ class _MainPageState extends State<MainPage> {
                         radius: 20,
                         backgroundImage: tpictureUrl != null
                             ? NetworkImage(tpictureUrl)
-                            : const AssetImage('assets/user.png') as ImageProvider<Object>?,
+                            : const AssetImage('assets/user.png')
+                                as ImageProvider<Object>?,
                       ),
                     ),
                   ],

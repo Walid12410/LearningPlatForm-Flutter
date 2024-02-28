@@ -3,7 +3,7 @@ import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 
-class AppDataProvider extends ChangeNotifier {
+class AppDataProvider extends ChangeNotifier  {
   int _userId = 0;
   int get userId => _userId;
 
@@ -12,7 +12,22 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
+  void deleteAllItems() {
+    courses.clear();
+    filteredCourse.clear();
+    courseviews.clear();
+    courseadd.clear();
+    coursestrainer.clear();
+    filterCoursestrainer.clear();
+    allCourses.clear();
+    randomcourse.clear();
+    users.clear();
+    trainers.clear();
+    filteredTrainers.clear();
+    portals.clear();
+    filteredPortals.clear();
+    notifyListeners();
+  }
   List<Course> courses = [];
   List<Course> filteredCourse = [];
   List<Course> courseviews = [];
@@ -80,7 +95,7 @@ class AppDataProvider extends ChangeNotifier {
   List<Trainer> trainers = [];
   List<Trainer> filteredTrainers = [];
 
-  void setTrainer(List<Trainer> trainer){
+  void setTrainer(trainer){
     users = trainer;
     notifyListeners();
   }

@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 
-Future<void> getPortals(context) async {
+Future<void> getPortals(BuildContext context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/PortalCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {

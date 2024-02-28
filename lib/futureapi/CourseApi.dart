@@ -4,9 +4,10 @@ import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
+
 Future<void> getAllCourses(context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
@@ -33,7 +34,7 @@ Future<void> getAllCourses(context) async {
 
 Future<void> getCourseTrainer(int userId, context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
@@ -70,7 +71,7 @@ Future<void> getCourseTrainer(int userId, context) async {
 
 Future<void> getCourse(int portalId, context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
@@ -111,7 +112,7 @@ Future<void> getCourse(int portalId, context) async {
 
 Future<void> getCourseView(context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
     final response = await http.get(url);
@@ -144,7 +145,7 @@ Future<void> getCourseView(context) async {
 
 Future<void> getCourseNew(context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
     final response = await http.get(url);
@@ -172,7 +173,7 @@ Future<void> getCourseNew(context) async {
 
 Future<void> getRandomCourse(context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
         'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
     final response = await http.get(url);

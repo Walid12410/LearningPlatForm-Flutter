@@ -10,7 +10,6 @@ import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 
-
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -19,18 +18,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Future<List<Trainer>>? _userFuture;
+  late Future<List<Trainer>> _userFuture;
 
-
-  void getData(BuildContext context) {
-    final provider = Provider.of<AppDataProvider>(context, listen: true);
+  Future<void> getData(context) async {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
     _userFuture = fetchTrainers(context, provider.userId);
   }
 
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider =
+        Provider.of<AppDataProvider>(context, listen: false);
+    List<Trainer> user = appDataProvider.users;
     getData(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -42,23 +42,13 @@ class _ProfileState extends State<Profile> {
         backgroundColor: tdbrown,
       ),
       body: SingleChildScrollView(
-        child: FutureBuilder<List<Trainer>>(
-          future: _userFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              return _buildProfile(snapshot.data![0]);
-            } else {
-              return const Center(child: Text('No user data available'));
-            }
-          },
-        ),
+        child: user != null && user.isNotEmpty
+            ? _buildProfile(user[0])
+            : const Center(child: Text('Loading profile...')),
       ),
     );
   }
+
   Widget _buildProfile(Trainer user) {
     return Container(
       child: Column(
@@ -76,16 +66,23 @@ class _ProfileState extends State<Profile> {
                   borderRadius: BorderRadius.circular(100),
                   child: user.tpicture != null
                       ? Image.network(
-                          user.tpicture!,fit: BoxFit.cover,
+                          user.tpicture!,
+                          fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
                             return const CircularProgressIndicator();
                           },
                           errorBuilder: (context, error, stackTrace) {
-                            return Image.asset('assets/user.png',fit: BoxFit.cover,);
+                            return Image.asset(
+                              'assets/user.png',
+                              fit: BoxFit.cover,
+                            );
                           },
                         )
-                      : Image.asset('assets/user.png',fit: BoxFit.cover,),
+                      : Image.asset(
+                          'assets/user.png',
+                          fit: BoxFit.cover,
+                        ),
                 ),
               )
             ],
@@ -108,8 +105,10 @@ class _ProfileState extends State<Profile> {
             width: 200,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                 UpdateProfileScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UpdateProfileScreen()));
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: tdbrown,
@@ -140,8 +139,7 @@ class _ProfileState extends State<Profile> {
               text: 'Information',
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>
-                        Information()));
+                    MaterialPageRoute(builder: (context) => Information()));
               },
               textColor: tdBlue),
           const SizedBox(height: 10),
@@ -152,7 +150,12 @@ class _ProfileState extends State<Profile> {
               textColor: tdBlue),
           const SizedBox(height: 10),
           const Divider(),
-          ProfileMenuWidget(icon: Icons.password, text: 'Change Password', onPressed: (){},endIcon: false, textColor: Colors.red),
+          ProfileMenuWidget(
+              icon: Icons.password,
+              text: 'Change Password',
+              onPressed: () {},
+              endIcon: false,
+              textColor: Colors.red),
           const SizedBox(height: 10),
           ProfileMenuWidget(
               icon: Icons.logout_outlined,
