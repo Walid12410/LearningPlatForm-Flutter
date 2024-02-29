@@ -5,6 +5,8 @@ import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
 import 'package:learningplatformapp/mainpages/Trainer.dart';
 import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
+import 'package:learningplatformapp/userprofiler/information.dart';
+import 'package:learningplatformapp/userprofiler/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -48,9 +50,11 @@ class MyApp extends StatelessWidget {
           },
         ),
         routes: { // Define named routes
-          "SignIn": (context) => const SignIn(), // SignIn route
-          "portal": (context) => const PortalPage(), // portal route
-          "trainer" : (context) => const TrainerPage(),
+          "/SignIn": (context) => const SignIn(), // SignIn route
+          "/portal": (context) => const PortalPage(), // portal route
+          "/trainer" : (context) => const TrainerPage(),
+          "/profile" : (context) => const Profile(),
+          "/information" : (context) =>const Information()
         },
       ),
     );

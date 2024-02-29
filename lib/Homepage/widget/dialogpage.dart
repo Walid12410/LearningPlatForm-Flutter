@@ -16,10 +16,7 @@ class DialogPage extends StatelessWidget {
               leading:const Icon(Icons.person),
               title: const Text('Personal Info'),
               onTap: () {
-                 Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) =>const Information()),
-                 );
+                 Navigator.pushNamed(context, '/information');
               },
             ),
             ListTile(

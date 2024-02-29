@@ -14,7 +14,7 @@ class DetailsForPortal_Instructor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 60.0,
+      top: 10.0,
       left: 20.0,
       right: 20.0,
       child: Container(

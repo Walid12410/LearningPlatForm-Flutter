@@ -99,19 +99,9 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            color: tdbrown,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: const TextField(
-                            cursorColor: tdBlue,
-                            decoration: InputDecoration(
-                              hintText: 'Search',
-                              border: InputBorder.none,
-                              prefixIcon: Icon(Icons.search, color: tdBlue),
-                            ),
-                            style: TextStyle(color: tdBlue),
-                          ),
+                          child:const Text('Learning PlatForm App',style: TextStyle(
+                            fontWeight: FontWeight.bold,color: tdbrown,fontSize: 25
+                          ),),
                         ),
                       ),
                     ),
