@@ -142,9 +142,9 @@ class _CourseCardState extends State<CourseCard> {
                       ),
                       IconButton(
                         icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          isFavorite ? Icons.bookmark : Icons.bookmark_border,
                           size: 30,
-                          color: Colors.red,
+                          color: tdBlue,
                         ),
                         onPressed: () {
                           if (userId != null) {
