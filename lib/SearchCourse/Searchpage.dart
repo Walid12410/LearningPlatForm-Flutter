@@ -58,8 +58,6 @@ class _SearchPageState extends State<SearchPage> {
         return Consumer<AppDataProvider>(
           builder: (context, appDataProvider, _) {
             List<Portal>? portals = appDataProvider.portals;
-            print('Portals length: ${portals?.length}');
-            print('Portals content: $portals');
             if (portals == null || portals.isEmpty) {
               return AlertDialog(
                 title: const Text('No Category found'),
@@ -123,7 +121,7 @@ class _SearchPageState extends State<SearchPage> {
                             child: Text(portal.portalName),
                           );
                         } else {
-                          return DropdownMenuItem<String>(value: '', child: SizedBox.shrink());
+                          return const DropdownMenuItem<String>(value: '', child: SizedBox.shrink());
                         }
                       }).whereType<DropdownMenuItem<String>>().toList(), // Filter out null values
                     ],

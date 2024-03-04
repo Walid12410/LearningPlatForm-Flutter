@@ -34,7 +34,8 @@ class Profileview extends StatelessWidget {
           trailing: IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfileScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>const UpdateProfileScreen()));
             },
           ),
         ),

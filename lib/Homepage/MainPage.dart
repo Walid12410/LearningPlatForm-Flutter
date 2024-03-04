@@ -22,7 +22,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   @override
   void initState() {
     super.initState();
@@ -48,7 +47,6 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-
   Future<bool> checkInternetConnectivity() async {
     var connectivityResult = await Connectivity().checkConnectivity();
     return connectivityResult != ConnectivityResult.none;
@@ -72,7 +70,6 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     //getData(context);
@@ -82,13 +79,12 @@ class _MainPageState extends State<MainPage> {
     var allCourses = appDataProvider.allCourses;
     var randomcourse = appDataProvider.randomcourse;
     var users = appDataProvider.users;
-    String? tpictureUrl = users.isNotEmpty && users[0].tpicture != null ? users[0].tpicture.toString() : null;
 
     return Scaffold(
       body: SafeArea(
-       child: RefreshIndicator(
-         onRefresh: reloadPage,
-         child: SingleChildScrollView(
+        child: RefreshIndicator(
+          onRefresh: reloadPage,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Row(
@@ -99,9 +95,13 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child:const Text('Learning PlatForm App',style: TextStyle(
-                            fontWeight: FontWeight.bold,color: tdbrown,fontSize: 25
-                          ),),
+                          child: const Text(
+                            'Learning PlatForm App',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: tdbrown,
+                                fontSize: 25),
+                          ),
                         ),
                       ),
                     ),
@@ -114,12 +114,34 @@ class _MainPageState extends State<MainPage> {
                           },
                         );
                       },
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundImage: tpictureUrl != null
-                            ? NetworkImage(tpictureUrl)
-                            : const AssetImage('assets/user.png')
-                                as ImageProvider<Object>?,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: user != null &&
+                                  user.isNotEmpty &&
+                                  user[0].tpicture != null
+                              ? Image.network(
+                                  user[0].tpicture!,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return CircularProgressIndicator();
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/user.png',
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                )
+                              : Image.asset(
+                                  'assets/user.png',
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
                     ),
                   ],

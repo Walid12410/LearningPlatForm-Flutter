@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/TrainerPage/Homepage/homepage.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
 import 'package:http/http.dart' as http;
@@ -51,18 +52,23 @@ class _SignInState extends State<SignIn> {
       if (responseData['status'] != null && responseData['status'] is bool &&
           responseData['status']) {
         int? userID = responseData['userID']?.toInt();
+        String? userType = responseData['usertype']; // Assuming 'usertype' is the key for the user type in the response
         if (userID != null) {
           if (rememberMe) {
             await saveLoginInfo(context, username, userID);
           }
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) =>const HomePage()));
+          if (userType == 'TR') {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageTrainer()));
+          } else if (userType == 'ST') {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomePage()));
+          }
         }
       } else {
         ShowDialog(context, 'Login Failed', responseData['message']);
       }
     }
   }
+
 
 
   @override

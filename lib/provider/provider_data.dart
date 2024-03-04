@@ -24,10 +24,21 @@ class AppDataProvider extends ChangeNotifier  {
     users.clear();
     trainers.clear();
     filteredTrainers.clear();
+    notifyListeners();
+  }
+
+  void deletePortal(){
     portals.clear();
     filteredPortals.clear();
     notifyListeners();
   }
+
+  void searchdelete(){
+  allCourses.clear();
+  portals.clear();
+  notifyListeners();
+  }
+
   List<Course> courses = [];
   List<Course> filteredCourse = [];
   List<Course> courseviews = [];

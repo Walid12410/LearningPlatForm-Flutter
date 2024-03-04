@@ -32,19 +32,12 @@ class _ProfileState extends State<Profile> {
     List<Trainer> user = appDataProvider.users;
     getData(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.bold, color: tdBlue),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: user != null && user.isNotEmpty
+              ? _buildProfile(user[0])
+              : const Center(child: Text('Loading profile...')),
         ),
-        centerTitle: true,
-        backgroundColor: tdbrown,
-      ),
-      body: SingleChildScrollView(
-        child: user != null && user.isNotEmpty
-            ? _buildProfile(user[0])
-            : const Center(child: Text('Loading profile...')),
       ),
     );
   }

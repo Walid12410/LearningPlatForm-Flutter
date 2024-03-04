@@ -4,7 +4,6 @@ import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
 import 'package:learningplatformapp/mainpages/Trainer.dart';
-import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/userprofiler/information.dart';
 import 'package:learningplatformapp/userprofiler/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
