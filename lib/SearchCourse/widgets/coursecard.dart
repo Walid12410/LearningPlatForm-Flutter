@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CourseCard extends StatefulWidget {
   final Course course;
@@ -18,68 +19,58 @@ class CourseCard extends StatefulWidget {
 
 class _CourseCardState extends State<CourseCard> {
   late bool isFavorite = false;
+  double averageRating = 0.0; // Add this line
 
   @override
   void initState() {
     super.initState();
     final userId = Provider.of<AppDataProvider>(context, listen: false).userId;
     if (userId != null) {
-      // Fetch favorite status asynchronously
       fetchFavoriteStatus(userId);
     }
+    fetchAverageRating(); // Call method to fetch average rating
   }
 
   // Asynchronously fetches favorite status
   Future<void> fetchFavoriteStatus(int userId) async {
     try {
-      final isFavoriteValue = await checkFavorite(userId, widget.course.id);
+      final isFavoriteValue = await FavoriteService.checkFavorite(userId, widget.course.id);
       setState(() {
         isFavorite = isFavoriteValue;
       });
     } catch (e) {
-      // Handle error
+      // Handle errorhttp://192.168.1.13/EduPlatForm/CMS/api/feedback.php
       print('Error fetching favorite status: $e');
     }
   }
 
-  // Asynchronously checks if the course is a favorite
-  Future<bool> checkFavorite(int userId, int courseId) async {
-    final url = 'http://192.168.1.13/EduPlatForm/CMS/api/favorite.php';
-    final response = await http.post(
-      Uri.parse(url),
-      body: {
-        'operation': 'check',
-        'user_id': userId.toString(),
-        'course_id': courseId.toString(),
-      },
-    );
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      final isFavoriteValue = responseData['is_favorite'];
-      return isFavoriteValue;
-    } else {
-      throw Exception('Failed to check favorite: ${response.statusCode}');
-    }
-  }
-
-  // Asynchronously toggles favorite status
-  Future<void> toggleFavorite(int userId, int courseId, bool isFavorite) async {
-    final url = 'http://192.168.1.13/EduPlatForm/CMS/api/favorite.php';
-    final operation = isFavorite ? 'delete' : 'add';
-    final response = await http.post(
-      Uri.parse(url),
-      body: {
-        'operation': operation,
-        'user_id': userId.toString(),
-        'course_id': courseId.toString(),
-      },
-    );
-    if (response.statusCode == 200) {
-      setState(() {
-        this.isFavorite = !isFavorite;
-      });
-    } else {
-      throw Exception('Failed to toggle favorite: ${response.statusCode}');
+  Future<void> fetchAverageRating() async {
+    try {
+      final apiUrl = 'http://192.168.1.13/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=${widget.course.id}';
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data['status'] == 'success') {
+          final averageRatingValue = data['average_rating'];
+          if (averageRatingValue != null) {
+            setState(() {
+              averageRating = double.parse(averageRatingValue.toString());
+             // print('Average Rating: $averageRating');
+            });
+          } else {
+           // print('Average rating is null');
+          }
+        } else {
+          // Handle error
+          //print('Error: ${data['message']}');
+        }
+      } else {
+        // Handle errors
+       // print('Failed to load data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle error
+      print('Error fetching average rating: $e');
     }
   }
 
@@ -129,14 +120,13 @@ class _CourseCardState extends State<CourseCard> {
                   const SizedBox(height: 4),
                   RatingBar.builder(
                     direction: Axis.horizontal,
-                    itemBuilder: (context, _) =>
-                        const Icon(Icons.star, color: Colors.red),
+                    itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.red),
                     onRatingUpdate: (index) {},
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4),
                     minRating: 1,
                     itemCount: 5,
                     itemSize: 18,
-                    initialRating: 1,
+                    initialRating: averageRating, // Use fetched average rating
                     ignoreGestures: true,
                   ),
                   const SizedBox(height: 4),
@@ -158,8 +148,7 @@ class _CourseCardState extends State<CourseCard> {
                         ),
                         onPressed: () {
                           if (userId != null) {
-                            toggleFavorite(
-                                userId, widget.course.id, isFavorite);
+                            toggleFavorite(userId, widget.course.id, isFavorite);
                           } else {
                             // Handle when user ID is not available
                           }
@@ -174,5 +163,17 @@ class _CourseCardState extends State<CourseCard> {
         ),
       ),
     );
+  }
+
+  Future<void> toggleFavorite(int userId, int courseId, bool isFavorite) async {
+    try {
+      final success = await FavoriteService.toggleFavorite(userId, courseId, isFavorite);
+      setState(() {
+        this.isFavorite = success ? !isFavorite : isFavorite;
+      });
+    } catch (e) {
+      // Handle error
+      print('Error toggling favorite: $e');
+    }
   }
 }

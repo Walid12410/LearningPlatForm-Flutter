@@ -24,7 +24,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch user data asynchronously
     fetchUserData();
   }
 
