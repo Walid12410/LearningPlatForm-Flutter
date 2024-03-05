@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/GetStart/pageview.dart';
+import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           "/portal": (context) => const PortalPage(), // portal route
           "/trainer" : (context) => const TrainerPage(),
           "/profile" : (context) => const Profile(),
-          "/information" : (context) =>const Information()
+          "/information" : (context) =>const Information(),
+          "/mostview" : (context) => const MostView()
         },
       ),
     );

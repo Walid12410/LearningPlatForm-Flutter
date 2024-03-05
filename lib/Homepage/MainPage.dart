@@ -184,7 +184,9 @@ class _MainPageState extends State<MainPage> {
                     : Column(
                         children: [
                           Specialforyou(
-                              text: 'Most Viewed Courses', press: () {}),
+                              text: 'Most Viewed Courses', press: () {
+                                Navigator.pushNamed(context, '/mostview');
+                          }),
                           const SizedBox(height: 5),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
