@@ -30,13 +30,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Future<void> fetchUserData() async {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
     userid = provider.userId;
-    final users= provider.users;
+    final users = provider.users;
     await fetchTrainers(context, userid);
     setState(() {
-      fnameController = TextEditingController(text: users.isNotEmpty ? users[0].fname : '');
-      lnameController = TextEditingController(text: users.isNotEmpty ? users[0].lname : '');
-      emailController = TextEditingController(text: users.isNotEmpty ? users[0].email : '');
-      phoneController = TextEditingController(text: users.isNotEmpty ? users[0].telephone : '');
+      fnameController =
+          TextEditingController(text: users.isNotEmpty ? users[0].fname : '');
+      lnameController =
+          TextEditingController(text: users.isNotEmpty ? users[0].lname : '');
+      emailController =
+          TextEditingController(text: users.isNotEmpty ? users[0].email : '');
+      phoneController = TextEditingController(
+          text: users.isNotEmpty ? users[0].telephone : '');
       _isLoading = false;
     });
   }
@@ -74,7 +78,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomePage()),
-                    (route) => false,
+                (route) => false,
               );
             },
             child: const Text(
@@ -90,7 +94,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
-    final users= provider.users;
+    final users = provider.users;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -110,138 +114,160 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         backgroundColor: tdbrown,
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator()) // Show loading indicator while data is being fetched
+          ? const Center(
+              child:
+                  CircularProgressIndicator()) // Show loading indicator while data is being fetched
           : SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.network(
-                        '${users.isNotEmpty ? users[0].tpicture : ''}',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: tdBlue,
-                      ),
-                      child: const Icon(Icons.account_circle, color: Colors.white, size: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 50),
-              Form(
+              child: Container(
+                padding: const EdgeInsets.all(5),
                 child: Column(
                   children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'First Name',
-                        labelStyle: const TextStyle(color: tdBlue),
-                        prefixIcon: const Icon(Icons.account_circle),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                      ),
-                      controller: fnameController,
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        labelStyle: const TextStyle(color: tdBlue),
-                        prefixIcon: const Icon(Icons.account_circle),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                      ),
-                      controller: lnameController,
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        labelStyle: const TextStyle(color: tdBlue),
-                        prefixIcon: const Icon(Icons.email),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                      ),
-                      controller: emailController,
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        labelStyle: const TextStyle(color: tdBlue),
-                        prefixIcon: const Icon(Icons.phone),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(color: tdBlue),
-                        ),
-                      ),
-                      controller: phoneController,
-                    ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          updateProfile();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: tdbrown,
-                          side: BorderSide.none,
-                          shape: const StadiumBorder(),
+                    Stack(
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: users.isNotEmpty && users[0].tpicture != null
+                                ? Image.network(
+                                    users[0].tpicture!,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const CircularProgressIndicator();
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        'assets/user.png',
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  )
+                                : Image.asset(
+                                    'assets/user.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
                         ),
-                        child: const Text(
-                          'Save Edit',
-                          style: TextStyle(color: tdBlue, fontWeight: FontWeight.bold, fontSize: 20),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: tdBlue,
+                            ),
+                            child: const Icon(Icons.account_circle,
+                                color: Colors.white, size: 20),
+                          ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                    Form(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'First Name',
+                              labelStyle: const TextStyle(color: tdBlue),
+                              prefixIcon: const Icon(Icons.account_circle),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                            ),
+                            controller: fnameController,
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Last Name',
+                              labelStyle: const TextStyle(color: tdBlue),
+                              prefixIcon: const Icon(Icons.account_circle),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                            ),
+                            controller: lnameController,
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              labelStyle: const TextStyle(color: tdBlue),
+                              prefixIcon: const Icon(Icons.email),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                            ),
+                            controller: emailController,
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Phone Number',
+                              labelStyle: const TextStyle(color: tdBlue),
+                              prefixIcon: const Icon(Icons.phone),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                            ),
+                            controller: phoneController,
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                updateProfile();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: tdbrown,
+                                side: BorderSide.none,
+                                shape: const StadiumBorder(),
+                              ),
+                              child: const Text(
+                                'Save Edit',
+                                style: TextStyle(
+                                    color: tdBlue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 10),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

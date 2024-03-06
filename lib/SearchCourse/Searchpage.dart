@@ -141,7 +141,7 @@ class _SearchPageState extends State<SearchPage> {
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              labelText: 'Category',
+                              labelText: 'Minimum Price',
                               labelStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -210,7 +210,7 @@ class _SearchPageState extends State<SearchPage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text('Cancel'),
+                  child: const Text('Cancel',style: TextStyle(color: tdBlue)),
                 ),
                 TextButton(
                   onPressed: () {
@@ -234,7 +234,7 @@ class _SearchPageState extends State<SearchPage> {
                     // Close the dialog
                     Navigator.pop(context);
                   },
-                  child: const Text('Done'),
+                  child: const Text('Done',style: TextStyle(color: tdBlue),),
                 )
               ],
             );
