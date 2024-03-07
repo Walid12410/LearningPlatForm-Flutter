@@ -1,4 +1,3 @@
-
 class Course {
   int id;
   String name;
@@ -32,9 +31,9 @@ class Course {
       price: json['CoursePrice'],
       trainerShareRate: json['TrainerShareRate'],
       createDate: DateTime.parse(json['CreateDate']['date']), // parse the 'date' part of the CreateDate
-      isActive: json['IsActice'],
+      isActive: json['IsActive'],
       portalID: json['PortalID'],
-      trainerID: json['TrainerID'],
+      trainerID: json['UserID'],
       view: json['views']
     );
   }

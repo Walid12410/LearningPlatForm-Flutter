@@ -1,31 +1,32 @@
-class Lesson{
+class Lesson {
   int id;
-  int chpaterID;
-  String title;
+  String name;
+  int number;
   String description;
-  String pdf;
   String video;
-  String image;
+  double videoMin;
+  double videoSec;
+  int chpaterID;
 
-  Lesson({
-    required this.id,
-    required this.chpaterID,
-    required this.title,
+  Lesson({required this.id,
+    required this.name,
+    required this.number,
     required this.description,
-    required this.pdf,
     required this.video,
-    required this.image
-  });
+    required this.videoMin,
+    required this.videoSec,
+    required this.chpaterID});
 
-  factory Lesson.fromJson(Map<String,dynamic>json){
+  factory Lesson.fromJson(Map<String, dynamic> json) {
     return Lesson(
-        id: json['LessonID'],
-        chpaterID: json['ChapterID'],
-        title: json['Title'],
-        description: json['Description'],
-        pdf: json['PDFPath'],
-        video: json['VideoPath'],
-        image: json['ImagePath']
+        id: json['PartID'],
+        name: json['PartName'],
+        number: json['PartNumber'],
+        description: json['PartDescription'],
+        video: json['PartVideo'],
+        videoMin: json['videoMin'],
+        videoSec: json['videoSec'],
+        chpaterID: json['ChapterID']
     );
   }
 }
