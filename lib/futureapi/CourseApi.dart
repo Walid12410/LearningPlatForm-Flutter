@@ -5,38 +5,39 @@ import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
 
-Future<void> getAllCourses(context) async {
+Future<List<Course>> getAllCourses(context) async {
   try {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
-    Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> AllcourseJsonList = jsonDecode(response.body);
-      List<Course> fetchedcourse = AllcourseJsonList.map((json) {
+      final List<dynamic> allCourseJsonList = jsonDecode(response.body);
+      List<Course> fetchedCourses = allCourseJsonList.map((json) {
         final parsedJson = json as Map<String, dynamic>;
         parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate']);
+        parsedJson['TrainerShareRate'] = double.parse(parsedJson['TrainerShareRate']);
         parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
         return Course.fromJson(parsedJson);
       }).toList();
       if (appDataProvider.allCourses.isEmpty) {
-        appDataProvider.setAllCourses(fetchedcourse);
+        appDataProvider.setAllCourses(fetchedCourses);
       }
+      return fetchedCourses; // Return the fetched courses
     } else {
       throw Exception('Failed to load courses');
     }
   } catch (e) {
     print('Error fetching courses: $e');
+    throw e; // Re-throw the error to propagate it
   }
 }
+
 
 Future<void> getCourseTrainer(int userId, context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+        'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> courseJsonList = jsonDecode(response.body);
@@ -73,7 +74,7 @@ Future<void> getCourse(int portalId, context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
+        'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> courseJsonList = jsonDecode(response.body);
@@ -114,7 +115,7 @@ Future<void> getCourseView(context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
+        'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> courseJsonList = jsonDecode(response.body);
@@ -147,7 +148,7 @@ Future<void> getCourseNew(context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
+        'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> CourseJsonList = jsonDecode(response.body);
@@ -175,7 +176,7 @@ Future<void> getRandomCourse(context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context,listen: false);
     Uri url = Uri.parse(
-        'http://192.168.1.52/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
+        'http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> CourseJsonList = jsonDecode(response.body);
