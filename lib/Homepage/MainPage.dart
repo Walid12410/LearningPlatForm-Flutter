@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/Homepage/widget/RecommendedCourse.dart';
+import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'widget/specialforyou.dart';
@@ -73,7 +75,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     //getData(context);
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    AppDataProvider appDataProvider =
+        Provider.of<AppDataProvider>(context, listen: true);
     var courseviews = appDataProvider.courseviews;
     var courseadd = appDataProvider.courseadd;
     var allCourses = appDataProvider.allCourses;
@@ -99,7 +102,7 @@ class _MainPageState extends State<MainPage> {
                             'Learning PlatForm App',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: tdbrown,
+                                color: tdBlue,
                                 fontSize: 25),
                           ),
                         ),
@@ -184,9 +187,11 @@ class _MainPageState extends State<MainPage> {
                     : Column(
                         children: [
                           Specialforyou(
-                              text: 'Most Viewed Courses', press: () {
-                                Navigator.pushNamed(context, '/mostview');
-                          }),
+                              text: 'Most Viewed Courses',
+                              press: () {
+                                Navigator.push(context,
+                                    CustomPageRoute(child: const MostView()));
+                              }),
                           const SizedBox(height: 5),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,

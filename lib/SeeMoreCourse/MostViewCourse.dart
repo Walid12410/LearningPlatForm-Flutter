@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:learningplatformapp/AllClass/course.dart';
 
 class MostView extends StatefulWidget {
   const MostView({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class MostView extends StatefulWidget {
 class _MostViewState extends State<MostView> {
   Map<int, double> averageRatings = {};
   Map<int, bool> isFavorite = {};
-
+  TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -47,6 +50,13 @@ class _MostViewState extends State<MostView> {
     } catch (e) {
       print('Error fetching data: $e');
     }
+  }
+
+  List<Course> _filterCourses(List<Course> courses, String query) {
+    if (query.isEmpty) {
+      return courses;
+    }
+    return courses.where((course) => course.name.toLowerCase().contains(query.toLowerCase())).toList();
   }
 
   @override
@@ -82,7 +92,7 @@ class _MostViewState extends State<MostView> {
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFFEC9D52),
-                    Color(0xFF004296),
+                    Color(0xFF000000),
                   ],
                 ),
               ),
@@ -94,9 +104,10 @@ class _MostViewState extends State<MostView> {
                   color: tdBGColor,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: const TextField(
+                child: TextField(
+                  controller: _searchController,
                   cursorColor: tdbrown,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Search',
                     border: InputBorder.none,
                     prefixIcon: Icon(
@@ -104,6 +115,9 @@ class _MostViewState extends State<MostView> {
                       color: tdBlue,
                     ),
                   ),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                 ),
               ),
             ),
@@ -123,110 +137,119 @@ class _MostViewState extends State<MostView> {
                   padding: const EdgeInsets.all(8),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
+                      var filteredCourses = _filterCourses(coursesview ?? [], _searchController.text);
                       return ResponsiveGridList(
-                        minItemWidth: 150, // Adjust based on your requirement
-                        children: coursesview.map((course) {
+                        minItemWidth: 150,
+                        children:  filteredCourses.map((course)  {
                           final courseId = course.id;
                           final averageRating = averageRatings[courseId] ?? 0.0;
-                          return Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  color: tdbrown,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AspectRatio(
-                                      aspectRatio: 16 / 9,
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topRight: Radius.circular(16.0),
-                                          topLeft: Radius.circular(16.0),
-                                        ),
-                                        child: Image.asset(
-                                          'assets/image1.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            course.name,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              color: tdBlue,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 1),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '\$${course.price}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: tdBlue,
-                                                ),
-                                              ),
-                                              const Spacer(),
-                                              const Icon(Icons.visibility, color: tdBlue),
-                                              const SizedBox(width: 1),
-                                              Text(
-                                                '${course.view}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: tdBlue,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 1),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.star, color: tdBlue),
-                                              Text(
-                                                '$averageRating',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  color: tdBlue,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                top: 8,
-                                right: 8,
-                                child: IconButton(
-                                  icon: Icon(
-                                    isFavorite[courseId] ?? false ? Icons.bookmark : Icons.bookmark_border, // Check if course is favorite
-                                    size: 30,
-                                    color: tdBlue,
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, CustomPageRoute(child: CourseDetails(
+                                courseid: course.id,
+                              )));
+                            },
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    color: tdbrown,
                                   ),
-                                  onPressed: () {
-                                    if (userId != null) {
-                                      final currentFavoriteStatus = isFavorite[courseId] ?? false;
-                                      FavoriteService.toggleFavorite(userId, courseId, currentFavoriteStatus);
-                                      setState(() {
-                                        isFavorite[courseId] = !currentFavoriteStatus; // Update favorite status
-                                      });
-                                    } else {
-                                      // Handle when user ID is not available
-                                    }
-                                  },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 16 / 9,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topRight: Radius.circular(16.0),
+                                            topLeft: Radius.circular(16.0),
+                                          ),
+                                          child: Image.asset(
+                                            'assets/image1.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              course.name,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: tdBlue,
+                                                overflow: TextOverflow.ellipsis, // Specify ellipsis as overflow
+                                              ),
+                                            ),
+                                            const SizedBox(height: 1),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '\$${course.price}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: tdBlue,
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                const Icon(Icons.visibility, color: tdBlue),
+                                                const SizedBox(width: 1),
+                                                Text(
+                                                  '${course.view}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: tdBlue,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 1),
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.star, color: tdBlue),
+                                                Text(
+                                                  '$averageRating',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: tdBlue,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  top: 8,
+                                  right: 8,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      isFavorite[courseId] ?? false ? Icons.bookmark : Icons.bookmark_border, // Check if course is favorite
+                                      size: 30,
+                                      color: tdBlue,
+                                    ),
+                                    onPressed: () {
+                                      if (userId != null) {
+                                        final currentFavoriteStatus = isFavorite[courseId] ?? false;
+                                        FavoriteService.toggleFavorite(userId, courseId, currentFavoriteStatus);
+                                        setState(() {
+                                          isFavorite[courseId] = !currentFavoriteStatus; // Update favorite status
+                                        });
+                                      } else {
+                                        // Handle when user ID is not available
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }).toList(),
                       );

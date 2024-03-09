@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/mainpages/CoursePage.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 
 class CoursePortal extends StatelessWidget {
   const CoursePortal({
@@ -57,10 +58,7 @@ class CoursePortal extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CourseListView(portalid: portals.portalID),
-                      ),
+                      CustomPageRoute(child: CourseListView(portalid: portals.portalID))
                     );
                   },
                   icon: const Icon(Icons.arrow_circle_right_rounded),

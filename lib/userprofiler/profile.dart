@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/userprofiler/information.dart';
 import 'package:learningplatformapp/userprofiler/editprofile.dart';
 import 'widget/profilemenu.dart';
@@ -100,8 +101,7 @@ class _ProfileState extends State<Profile> {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => UpdateProfileScreen()));
+                    CustomPageRoute(child: const UpdateProfileScreen()));
               },
               style: ElevatedButton.styleFrom(
                   backgroundColor: tdbrown,
@@ -132,7 +132,7 @@ class _ProfileState extends State<Profile> {
               text: 'Information',
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Information()));
+                    CustomPageRoute(child: const Information()));
               },
               textColor: tdBlue),
           const SizedBox(height: 10),

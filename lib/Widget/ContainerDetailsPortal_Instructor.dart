@@ -21,7 +21,9 @@ class DetailsForPortal_Instructor extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Color(0xFF004296), Color(0xFFEC9D52)], // Define your gradient colors here
+              colors: [
+                Color(0xFF000000),
+                Color(0xFFEC9D52)], // Define your gradient colors here
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

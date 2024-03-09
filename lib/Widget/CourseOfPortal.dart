@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 
 class Courseofportal extends StatelessWidget {
   const Courseofportal({
@@ -32,6 +34,8 @@ class Courseofportal extends StatelessWidget {
               style: const TextStyle(fontSize: 15, color: tdBlue),
             ),
             onTap: () {
+              Navigator.push(context,
+                  CustomPageRoute(child: CourseDetails(courseid: course.id)));
             },
           )),
     );

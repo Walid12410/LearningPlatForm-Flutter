@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:learningplatformapp/colors/color.dart';
 
 class RandomCourse extends StatelessWidget {
   const RandomCourse({
@@ -49,19 +49,19 @@ class RandomCourse extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text.rich(
                     TextSpan(
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: tdBlue),
                       children: [
                         const TextSpan(
                             text: "Course Name\n",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
-                                color: Colors.white)),
+                                color: tdBlue)),
                         TextSpan(
                           text: '$cname\n',
                           style: const TextStyle(
                               fontSize: 15,
-                              color: Colors.white,
+                              color: tdBlue,
                               fontWeight: FontWeight.bold),
                         ),
                       ],

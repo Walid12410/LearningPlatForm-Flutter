@@ -61,7 +61,8 @@ class _TrainerCourseState extends State<TrainerCourse> {
               width: double.infinity,
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                      colors: [Color(0xFFEC9D52), Color(0xFF004296)])),
+                      colors: [Color(0xFFEC9D52),
+                        Color(0xFF000000)])),
             ),
             DetailsForPortal_Instructor(
                 name: 'Instructor Course', number: coursestrainer.length),

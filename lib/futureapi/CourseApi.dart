@@ -32,6 +32,36 @@ Future<List<Course>> getAllCourses(context) async {
   }
 }
 
+ List<Course> courses= [];
+
+Future<List<Course>?> getCourseByID(int CourseID, context) async {
+  try {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectOne&CourseID=$CourseID');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> courseJsonList = jsonDecode(response.body);
+      List<Course> fetchedCourses = courseJsonList.map((json) {
+        final parsedJson = json as Map<String, dynamic>;
+        // Assuming Course is your model class
+        parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
+        parsedJson['TrainerShareRate'] = double.parse(parsedJson['TrainerShareRate']);
+        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
+        return Course.fromJson(parsedJson);
+      }).toList();
+      if (appDataProvider.CourseByID.isEmpty) {
+        appDataProvider.setCourseByID(fetchedCourses);
+      }
+      return fetchedCourses; // Return the fetched courses
+    } else {
+      throw Exception('No courses found for Course with ID: $CourseID');
+    }
+  } catch (e) {
+    print('Error fetching courses: $e');
+    return null; // Return null in case of error
+  }
+}
+
 
 Future<void> getCourseTrainer(int userId, context) async {
   try {

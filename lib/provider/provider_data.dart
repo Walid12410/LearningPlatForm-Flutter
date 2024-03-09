@@ -47,7 +47,16 @@ class AppDataProvider extends ChangeNotifier  {
   List<Course> filterCoursestrainer = [];
   List<Course> allCourses = [];
   List<Course> randomcourse = [];
+  List<Course> CourseByID = [];
 
+  void deleteCourseByID(){
+    CourseByID.clear();
+    notifyListeners();
+}
+  void setCourseByID(List<Course> courses){
+    CourseByID = courses;
+    notifyListeners();
+  }
   void setAllCourses(courses) {
     allCourses = courses;
     notifyListeners();

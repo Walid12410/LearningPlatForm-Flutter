@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/CouseDetails/details.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
@@ -82,7 +84,9 @@ class _CourseCardState extends State<CourseCard> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
         onTap: () {
-          // Handle onTap event
+          Navigator.push(context, CustomPageRoute(child: CourseDetails(
+            courseid: widget.course.id,
+          )));
         },
         child: SizedBox(
           width: 250,
@@ -107,6 +111,7 @@ class _CourseCardState extends State<CourseCard> {
                       fontSize: 22,
                       color: tdBlue,
                       fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -115,6 +120,7 @@ class _CourseCardState extends State<CourseCard> {
                     style: const TextStyle(
                       fontSize: 16,
                       color: tdBlue,
+                        overflow: TextOverflow.ellipsis
                     ),
                   ),
                   const SizedBox(height: 4),

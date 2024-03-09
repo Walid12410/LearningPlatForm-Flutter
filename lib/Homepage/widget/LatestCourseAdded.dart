@@ -56,7 +56,9 @@ class LatestCourseAdd extends StatelessWidget {
                   ),
                   Text(
                     name,style:const  TextStyle(fontSize: 15,
-                      color: tdBlue),
+                      color: tdBlue,
+                    overflow: TextOverflow.ellipsis, // Specify ellipsis as overflow
+                  ),
                   ),
                 ],
               ),

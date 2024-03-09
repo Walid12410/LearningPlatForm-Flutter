@@ -82,7 +82,7 @@ class _SignInState extends State<SignIn> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Color(0xFFEC9D52),
-                Color(0xFF004296),
+                Color(0xFF000000),
               ]),
             ),
           ),

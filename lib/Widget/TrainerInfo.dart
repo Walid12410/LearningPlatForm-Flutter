@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 
 class TrainerInfo extends StatelessWidget {
   const TrainerInfo({
@@ -37,7 +38,7 @@ class TrainerInfo extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TrainerCourse(userid: trainers.id)),
+                CustomPageRoute(child: TrainerCourse(userid: trainers.id))
               );
             },
             icon: const Icon(

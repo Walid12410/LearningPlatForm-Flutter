@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/SearchCourse/Searchpage.dart';
+import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
 
 
 class SearchTextField extends StatelessWidget {
@@ -11,8 +12,7 @@ class SearchTextField extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SearchPage(),
+          CustomPageRoute2(child: SearchPage()
           ),
         );
       },

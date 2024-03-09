@@ -4,6 +4,7 @@ import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dar
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/Widget/Courseportal.dart';
 import 'package:learningplatformapp/futureapi/PortalApi.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
 import 'Trainer.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +76,7 @@ class _PortalPageState extends State<PortalPage> {
                   gradient: LinearGradient(
                     colors: [
                       Color(0xFFEC9D52),
-                      Color(0xFF004296),
+                      Color(0xFF000000),
                     ],
                   ),
                 ),
@@ -90,8 +91,7 @@ class _PortalPageState extends State<PortalPage> {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const TrainerPage()));
+                        CustomPageRoute(child: const TrainerPage()));
                   },
                   textColor: tdBlue,
                 ),
@@ -128,7 +128,7 @@ class _PortalPageState extends State<PortalPage> {
                 ),
               ),
               if (portals.isEmpty)
-                Center(
+                const Center(
                   child: Text(
                     'No Categories available',
                     style: TextStyle(fontSize: 18, color: Colors.black),

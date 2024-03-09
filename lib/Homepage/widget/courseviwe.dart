@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/colors/color.dart';
 
 
 class CourseView extends StatelessWidget {
@@ -52,20 +53,20 @@ class CourseView extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text.rich(
                     TextSpan(
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: tdBlue),
                       children: [
                         const TextSpan(
                             text: "Course Name\n",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                                 fontSize: 22,
-                                color: Colors.white)),
+                                color: tdBlue)),
                         TextSpan(
                           text: '$cname\n',
                           style: const TextStyle(
                               fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              color: tdBlue,
+                              fontWeight: FontWeight.w900),
                         ),
                       ],
                     ),
@@ -84,14 +85,14 @@ class CourseView extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.remove_red_eye_sharp,
-                          color: Colors.white,
+                          color: tdBlue,
                           size: 18,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           '$view', // This is just a placeholder, you can replace it with your desired number
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: tdBlue,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

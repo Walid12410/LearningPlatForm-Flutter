@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/userprofiler/editprofile.dart';
 
 
@@ -35,7 +36,7 @@ class Profileview extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>const UpdateProfileScreen()));
+                  CustomPageRoute(child: const UpdateProfileScreen()));
             },
           ),
         ),

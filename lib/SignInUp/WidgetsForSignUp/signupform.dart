@@ -71,7 +71,10 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFEC9D52), Color(0xFF004296)],
+                  colors: [
+                    Color(0xFF000000),
+                    Color(0xFFEC9D52),
+                  ],
                 ),
               ),
               child: TextButton(

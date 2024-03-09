@@ -2,154 +2,113 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'pageviewdetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class PageViewScreen extends StatefulWidget {
-  const PageViewScreen({Key? key}) : super(key: key);
+  const PageViewScreen({super.key});
 
   @override
   State<PageViewScreen> createState() => _PageViewScreenState();
 }
 
 class _PageViewScreenState extends State<PageViewScreen> {
+  int currentIndex = 0;
   PageController _controller = PageController();
-  int currentPage = 0;
-
-  final List<Color> pageColors = [tdbrown, tdBlue, tdbrown, tdBlue];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller.addListener(() {
-      setState(() {
-        currentPage = _controller.page!.round();
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
-          PageView.builder(
-            itemCount: pages.length,
-            controller: _controller,
-            itemBuilder: (_, i) {
-              return Container(
-                color: pageColors[i],
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: SingleChildScrollView(
+          Expanded(
+            child: PageView.builder(
+                itemCount: pages.length,
+                controller: _controller,
+                onPageChanged: (int index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                itemBuilder: (_, i) {
+                  return Padding(
+                    padding: const EdgeInsets.all(40.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
                           pages[i].Image,
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          fit: BoxFit.fill,
+                          height: 250,
                         ),
-                        const SizedBox(height: 10),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: pages[i].title,
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 15,),
                         Text(
-                          pages[i].Description,
-                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                          pages[i].title,
+                          style: const TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        Flexible(
+                          child: Text(
+                            pages[i].Description,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.grey),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  );
+                }),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                pages.length,
+                    (index) => buildDot(index, context),
+              ),
+            ),
+          ),
+          Container(
+            height: 60,
+            margin: const EdgeInsets.all(40),
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                if (currentIndex == pages.length - 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignIn(),
+                    ),
+                  );
+                }
+                _controller.nextPage(
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.bounceIn,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: tdbrown,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              );
-            },
-          ),
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (BuildContext context, Widget? child) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(
-                          pages.length,
-                              (i) => IconButton(
-                            onPressed: () {
-                              _controller.animateToPage(i,
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut);
-                            },
-                            icon: SvgPicture.asset(
-                              'assets/icon/fast-forward-svgrepo-com.svg',
-                              width: 30,
-                              height: 50,
-                              color: i == currentPage ? Colors.white : Colors.white54,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: pageColors[currentPage], // Set button background color dynamically
-                      height: 60,
-                      margin: const EdgeInsets.all(40),
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                          const SignIn()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1),
-                          ),
-                        ),
-                        child: const Text(
-                          'GET START',
-                          style: TextStyle(color:tdBlue,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+              ),
+              child: Text(
+                currentIndex == pages.length - 1 ? "Continue" : "Next",
+                style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
+                fontSize: 20),
+              ),
+            ),
+          )
         ],
       ),
+    );
+  }
+
+  Container buildDot(int index, BuildContext context) {
+    return Container(
+      height: 10,
+      width: currentIndex == index ? 25 : 10,
+      margin: const EdgeInsets.only(right: 5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: tdbrown),
     );
   }
 }
