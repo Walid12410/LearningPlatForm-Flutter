@@ -121,7 +121,7 @@ class _CourseDetailsState extends State<CourseDetails>
               CustomTabBarView(
                 tabController: _tabController,
                 tabViews: [
-                  courseinformation(),
+                  courseinformation(courseid: widget.courseid),
                   Chapter(),
                   Quizzes(), // Third tab with the stateful page
                 ],
