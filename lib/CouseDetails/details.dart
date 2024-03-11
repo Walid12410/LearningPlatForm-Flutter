@@ -6,9 +6,9 @@ import 'package:learningplatformapp/CouseDetails/quiz.dart';
 import 'package:learningplatformapp/CouseDetails/tabcontroller.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:learningplatformapp/futureapi/VideoPart.dart';
 
 class CourseDetails extends StatefulWidget {
   const CourseDetails({required this.courseid, super.key});
@@ -24,17 +24,19 @@ class _CourseDetailsState extends State<CourseDetails>
   List<Course> courseDetail = [];
   late TabController _tabController;
 
+
   @override
   void initState() {
     super.initState();
     appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     getData();
     _tabController = TabController(length: 3, vsync: this);
+    getVideo(context);
   }
 
   Future<void> getData() async {
     final List<Course>? fetchedCourses =
-        await getCourseByID(widget.courseid, context);
+    await getCourseByID(widget.courseid, context);
     setState(() {
       courseDetail = fetchedCourses ?? [];
     });
@@ -43,11 +45,21 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void dispose() {
     _tabController.dispose();
+    appDataProvider.deletefirstvideo();
+
     super.dispose();
   }
 
+  void getVideo(context) {
+    fetchVideo(widget.courseid, context);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    var firstvideo = appDataProvider.firstvideo;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,6 +72,7 @@ class _CourseDetailsState extends State<CourseDetails>
                   children: [
                     IconButton(
                       onPressed: () {
+                        appDataProvider.deletefirstvideo();
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back_ios),
@@ -121,11 +134,14 @@ class _CourseDetailsState extends State<CourseDetails>
               CustomTabBarView(
                 tabController: _tabController,
                 tabViews: [
-                  courseinformation(courseid: widget.courseid),
+                  CourseInformation(courseid: widget.courseid,
+                    fvideo: firstvideo.isNotEmpty ? firstvideo[0].video : '',
+                  ),
                   Chapter(),
                   Quizzes(), // Third tab with the stateful page
                 ],
               ),
+
             ],
           ),
         ),

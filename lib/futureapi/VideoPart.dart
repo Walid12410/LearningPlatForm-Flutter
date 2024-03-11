@@ -1,31 +1,31 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
+import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:provider/provider.dart';
 
-Future<List<String>?> fetchVideos(int courseId) async {
+Future<void> fetchVideo(int courseId,context) async {
+  AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
   final url = 'http://192.168.1.13/EduPlatForm/CMS/api/part.php';
   try {
     final response = await http.post(
       Uri.parse(url),
       body: {
         'operation': 'VideoShow',
-        'courseid': courseId.toString(), // Convert courseId to String
+        'CourseID': courseId.toString(), // Convert courseId to String
       },
     );
-
-    print('Response body: ${response.body}'); // Print the response body
-
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-
-      if (data is List<String>) {
-        return data;
-      } else {
-        return ['Invalid data format'];
+      final List<dynamic> data = json.decode(response.body) as List;
+      final List<ShowFirstVideo> videoList = data.map((videoJson) => ShowFirstVideo.fromJson(videoJson)).toList();
+      if(appDataProvider.firstvideo.isEmpty){
+        appDataProvider.setFirstVideo(videoList);
+        print(videoList);
       }
     } else {
-      return ['Failed to load videos'];
+      throw Exception('Failed to load videos');
     }
   } catch (e) {
-    return ['Error: $e'];
+    throw Exception('Error: $e');
   }
 }

@@ -29,6 +29,7 @@ Future<List<Trainer>> fetchTrainers(BuildContext context, int userId) async {
 }
 
 
+
 Future<void> getTrainer(BuildContext context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);

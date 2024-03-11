@@ -1,59 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/futureapi/VideoPart.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class courseinformation extends StatefulWidget {
-  const courseinformation({super.key, required this.courseid});
+class CourseInformation extends StatefulWidget {
+  const CourseInformation({required this.courseid, required this.fvideo});
 
   final int courseid;
+  final String fvideo;
+
   @override
-  State<courseinformation> createState() => _courseinformationState();
+  State<CourseInformation> createState() => _CourseInformationState();
 }
 
-class _courseinformationState extends State<courseinformation> {
-  late List<String> video;
-  late String errorMessage;
+class _CourseInformationState extends State<CourseInformation> {
+  late YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
-    getVideo();
+    final videoID = YoutubePlayer.convertUrlToId(widget.fvideo);
+    setState(() {
+      _controller = YoutubePlayerController(
+        initialVideoId: videoID!,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+        ),
+      );
+    });
   }
 
-  Future<void> getVideo() async {
-    try {
-      List<String>? fetchvideo = await fetchVideos(widget.courseid);
-      setState(() {
-        if (fetchvideo != null) {
-          video = fetchvideo.map((e) => e ?? '').toList(); // Convert nullable String? to non-nullable String
-          print("gell $video");
-          errorMessage = '';
-        } else {
-          video = [];
-          errorMessage = 'Failed to load videos';
-        }
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Error: $e';
-      });
-    }
+  @override
+  void dispose() {
+    _controller?.dispose(); // Dispose the controller only if it's not null
+    super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                  ],
-                ),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                if (widget.fvideo.isNotEmpty && _controller != null)
+                  YoutubePlayer(
+                    controller: _controller!,
+                    showVideoProgressIndicator: true,
+                    bottomActions: [
+                      CurrentPosition(),
+                      ProgressBar(isExpanded: true),
+                    ],
+                  )
+                else
+                  const Center(
+                    child: Text(
+                      'No Video Yet',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
