@@ -45,8 +45,6 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void dispose() {
     _tabController.dispose();
-    appDataProvider.deletefirstvideo();
-
     super.dispose();
   }
 
@@ -58,8 +56,8 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
-    var firstvideo = appDataProvider.firstvideo;
+    // AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    // var firstvideo = appDataProvider.firstvideo;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -72,7 +70,6 @@ class _CourseDetailsState extends State<CourseDetails>
                   children: [
                     IconButton(
                       onPressed: () {
-                        appDataProvider.deletefirstvideo();
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back_ios),
@@ -135,7 +132,7 @@ class _CourseDetailsState extends State<CourseDetails>
                 tabController: _tabController,
                 tabViews: [
                   CourseInformation(courseid: widget.courseid,
-                    fvideo: firstvideo.isNotEmpty ? firstvideo[0].video : '',
+                    fvideo: fvideo.isNotEmpty ? fvideo[0].video : '',
                   ),
                   Chapter(),
                   Quizzes(), // Third tab with the stateful page

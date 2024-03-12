@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
-import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
-
 
 class AppDataProvider extends ChangeNotifier  {
   int _userId = 0;
@@ -13,6 +11,7 @@ class AppDataProvider extends ChangeNotifier  {
     _userId = userId;
     notifyListeners();
   }
+
 
   void deleteAllItems() {
     courses.clear();
@@ -51,16 +50,8 @@ class AppDataProvider extends ChangeNotifier  {
   List<Course> randomcourse = [];
   List<Course> CourseByID = [];
 
-  List<ShowFirstVideo> firstvideo = [];
 
-  void setFirstVideo(List<ShowFirstVideo> video){
-    firstvideo = video;
-    notifyListeners();
-  }
-  void deletefirstvideo(){
-    firstvideo.clear();
-    notifyListeners();
-  }
+
   void deleteCourseByID(){
     CourseByID.clear();
     notifyListeners();
