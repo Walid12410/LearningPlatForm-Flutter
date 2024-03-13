@@ -15,33 +15,12 @@ class CourseInformation extends StatefulWidget {
 }
 
 class _CourseInformationState extends State<CourseInformation> {
-  late YoutubePlayerController _controller; // Initialize with empty controller
+  late YoutubePlayerController _controller;
   double? _averageRating;
 
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: '', // Empty video ID
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
-    if (widget.fvideo.isNotEmpty) {
-      final videoID = YoutubePlayer.convertUrlToId(widget.fvideo);
-      if (videoID != null) {
-        setState(() {
-          _controller = YoutubePlayerController(
-            initialVideoId: videoID,
-            flags: const YoutubePlayerFlags(
-              autoPlay: false,
-            ),
-          );
-        });
-      } else {
-        print("Invalid video URL: ${widget.fvideo}");
-      }
-    }
     getData(context);
   }
 
@@ -56,12 +35,28 @@ class _CourseInformationState extends State<CourseInformation> {
 
   @override
   void dispose() {
-    _controller.dispose(); // Dispose the controller
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    String? videoId;
+    if (widget.fvideo.isNotEmpty) {
+      videoId = YoutubePlayer.convertUrlToId(widget.fvideo);
+      _controller = YoutubePlayerController(
+        initialVideoId: videoId!,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+          disableDragSeek: false,
+          loop: false,
+          isLive: false,
+          forceHD: false,
+        ),
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,19 +66,18 @@ class _CourseInformationState extends State<CourseInformation> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (widget.fvideo.isNotEmpty && _controller != null)
+                if (widget.fvideo.isNotEmpty && videoId != null)
                   YoutubePlayer(
-                    controller: _controller!,
+                    controller: _controller,
                     showVideoProgressIndicator: true,
                     bottomActions: [
                       CurrentPosition(),
                       ProgressBar(isExpanded: true),
                     ],
                   )
-                else if (widget.fvideo.isNotEmpty && _controller == null)
+                else if (widget.fvideo.isNotEmpty && videoId == null)
                   const Center(
-                    child:
-                        CircularProgressIndicator(), // or any other loading indicator
+                    child: CircularProgressIndicator(),
                   )
                 else
                   const Center(
@@ -107,20 +101,23 @@ class _CourseInformationState extends State<CourseInformation> {
                             border: Border.all(color: Colors.black, width: 2),
                           ),
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(data[0]
-                                .ProfilePicture), // Replace with your image path
+                            backgroundImage:
+                                NetworkImage(data[0].ProfilePicture),
                             radius: 15,
                           ),
                         ),
                       const SizedBox(
                         width: 2,
                       ),
-                      Text(
-                        data[0].toString(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      Spacer(),
+                      if (data.isNotEmpty)
+                        Text(
+                          data[0].toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      const Spacer(),
                       RatingBar.builder(
                         direction: Axis.horizontal,
                         itemBuilder: (context, _) =>
@@ -130,8 +127,7 @@ class _CourseInformationState extends State<CourseInformation> {
                         minRating: 1,
                         itemCount: 5,
                         itemSize: 18,
-                        initialRating:
-                            _averageRating ?? 1, // Use fetched average rating
+                        initialRating: _averageRating ?? 1,
                         ignoreGestures: true,
                       ),
                     ],

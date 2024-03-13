@@ -7,7 +7,7 @@ List<TrainerCourseShow> data= [];
 
 Future<void> getDataTrainerCourse(BuildContext context, int courseid) async {
   try {
-    Uri url = Uri.parse('http://192.168.1.13/EduPlatForm/CMS/api/TrainerCourse.php?operation=TrainerCourse&CourseID=$courseid');
+    Uri url = Uri.parse('http://192.168.1.5/EduPlatForm/CMS/api/TrainerCourse.php?operation=TrainerCourse&CourseID=$courseid');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> trainerJsonList = jsonDecode(response.body);

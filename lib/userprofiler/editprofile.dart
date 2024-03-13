@@ -47,7 +47,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> updateProfile() async {
     final url = Uri.parse(
-        'http://192.168.1.13/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
+        'http://192.168.1.5/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
     final response = await http.post(
       url,
       body: {

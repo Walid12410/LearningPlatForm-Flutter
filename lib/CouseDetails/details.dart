@@ -45,6 +45,7 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void dispose() {
     _tabController.dispose();
+    fvideo.clear();
     super.dispose();
   }
 
@@ -56,8 +57,6 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    // AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
-    // var firstvideo = appDataProvider.firstvideo;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
