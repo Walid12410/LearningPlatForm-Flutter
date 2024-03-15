@@ -52,6 +52,7 @@ Future<List<Course>?> getCourseByID(int CourseID, context) async {
       if (appDataProvider.CourseByID.isEmpty) {
         appDataProvider.setCourseByID(fetchedCourses);
       }
+      courses = fetchedCourses;
       return fetchedCourses; // Return the fetched courses
     } else {
       throw Exception('No courses found for Course with ID: $CourseID');

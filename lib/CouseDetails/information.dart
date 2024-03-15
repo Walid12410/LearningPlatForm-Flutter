@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/futureapi/CourseApi.dart';
+import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
+import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -31,6 +34,9 @@ class _CourseInformationState extends State<CourseInformation> {
         _averageRating = value;
       });
     });
+    TotalCourseTime(context, 1);
+    fetchPartNumbers(widget.courseid);
+    getCourseByID(widget.courseid, context);
   }
 
   @override
@@ -132,7 +138,62 @@ class _CourseInformationState extends State<CourseInformation> {
                       ),
                     ],
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40, top: 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.access_time_outlined),
+                          const SizedBox(width: 3),
+                          if (TotalCoureTime.isNotEmpty)
+                            Text(
+                                '${TotalCoureTime[0].getTotalHours()} Hours (${partNumbers.length} Lessons)')
+                        ],
+                      ),
+                      const Row(
+                        children: [
+                          Icon(Icons.school),
+                          SizedBox(width: 3),
+                          Text('Certification Available')
+                        ],
+                      ),
+                      const Row(
+                        children: [
+                          Icon(Icons.language),
+                          SizedBox(width: 3),
+                          Text('Arabic')
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'About The Course',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                if (courses.isNotEmpty)
+                  Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('${courses[0].name} ${courses[0].description}')
+                        ],
+                      ))
+                else
+                  const Center(
+                    child: Text(
+                      "No Details Yet",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  )
               ],
             ),
           ),
