@@ -5,7 +5,7 @@ import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
 List<ShowFirstVideo> fvideo = [];
 
 Future<void> fetchVideo(int courseId,context) async {
-  final url = 'http://192.168.1.5/EduPlatForm/CMS/api/part.php';
+  final url = 'http://192.168.1.3/EduPlatForm/CMS/api/part.php';
   try {
     final response = await http.post(
       Uri.parse(url),

@@ -11,7 +11,7 @@ Future<List<Trainer>> fetchTrainers(BuildContext context, int userId) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     final response = await http.get(Uri.parse(
-        'http://192.168.1.5/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
+        'http://192.168.1.3/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectOne&UserID=$userId'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as List<dynamic>;
       List<Trainer> trainers = jsonData.map((json) => Trainer.fromJson(json)).toList();
@@ -33,7 +33,7 @@ Future<List<Trainer>> fetchTrainers(BuildContext context, int userId) async {
 Future<void> getTrainer(BuildContext context) async {
   try {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
-    Uri url = Uri.parse('http://192.168.1.5/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
+    Uri url = Uri.parse('http://192.168.1.3/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> trainerJsonList = jsonDecode(response.body);

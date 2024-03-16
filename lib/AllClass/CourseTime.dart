@@ -9,8 +9,8 @@ class CourseTime{
 
   factory CourseTime.fromJson(Map<String,dynamic> json){
     return CourseTime(
-        totalMinutes : json['TotalMinutes'],
-        totalSecond : json['TotalSeconds']
+        totalMinutes : json['TotalMinutes'] ?? 0,
+        totalSecond : json['TotalSeconds'] ?? 0
     );
   }
 

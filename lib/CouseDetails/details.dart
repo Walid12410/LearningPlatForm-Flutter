@@ -6,6 +6,7 @@ import 'package:learningplatformapp/CouseDetails/quiz.dart';
 import 'package:learningplatformapp/CouseDetails/tabcontroller.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
+import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/futureapi/VideoPart.dart';
@@ -32,6 +33,7 @@ class _CourseDetailsState extends State<CourseDetails>
     getData();
     _tabController = TabController(length: 3, vsync: this);
     getVideo(context);
+
   }
 
   Future<void> getData() async {
@@ -46,6 +48,8 @@ class _CourseDetailsState extends State<CourseDetails>
   void dispose() {
     _tabController.dispose();
     fvideo.clear();
+    TotalCoureTime.clear();
+    courses.clear();
     super.dispose();
   }
 
