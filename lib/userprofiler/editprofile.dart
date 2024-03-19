@@ -5,6 +5,7 @@ import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key});
@@ -128,29 +129,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         SizedBox(
                           width: 120,
                           height: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: users.isNotEmpty && users[0].tpicture != null
-                                ? Image.network(
-                                    users[0].tpicture!,
-                                    fit: BoxFit.cover,
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return const CircularProgressIndicator();
-                                    },
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Image.asset(
-                                        'assets/user.png',
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
-                                  )
-                                : Image.asset(
-                                    'assets/user.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                          ),
+                          child: users.isNotEmpty? ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl: users[0].tpicture,
+                              placeholder: (context, url) =>const CircularProgressIndicator(
+                                color: tdbrown,
+                              ),
+                              errorWidget: (context, url, error) => Image.asset('assets/user.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ):const CircularProgressIndicator(color: tdbrown),
                         ),
                         Positioned(
                           bottom: 0,

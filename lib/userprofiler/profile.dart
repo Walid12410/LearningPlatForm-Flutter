@@ -64,7 +64,7 @@ class _ProfileState extends State<Profile> {
                           fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
-                            return const CircularProgressIndicator();
+                            return const CircularProgressIndicator(color: tdbrown,);
                           },
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
