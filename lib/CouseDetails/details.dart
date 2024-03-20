@@ -10,6 +10,7 @@ import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/futureapi/VideoPart.dart';
+import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
 
 class CourseDetails extends StatefulWidget {
   const CourseDetails({required this.courseid, super.key});
@@ -24,7 +25,8 @@ class _CourseDetailsState extends State<CourseDetails>
   late AppDataProvider appDataProvider;
   List<Course> courseDetail = [];
   late TabController _tabController;
-
+  bool _isLoading = true;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -33,12 +35,19 @@ class _CourseDetailsState extends State<CourseDetails>
     getData();
     _tabController = TabController(length: 3, vsync: this);
     getVideo(context);
-
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    int userid = provider.userId;
+    fetchFavoriteStatus(userid, widget.courseid);
   }
 
   Future<void> getData() async {
     final List<Course>? fetchedCourses =
-    await getCourseByID(widget.courseid, context);
+        await getCourseByID(widget.courseid, context);
     setState(() {
       courseDetail = fetchedCourses ?? [];
     });
@@ -57,93 +66,113 @@ class _CourseDetailsState extends State<CourseDetails>
     fetchVideo(widget.courseid, context);
   }
 
-
+  Future<void> fetchFavoriteStatus(int userId, int courseId) async {
+    try {
+      bool isFavorite = await FavoriteService.checkFavorite(userId, courseId);
+      setState(() {
+        _isFavorite = isFavorite;
+      });
+    } catch (e) {
+      print('Error fetching favorite status: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
+        child: Stack(
+          children: [
+            if (_isLoading)
+              const Center(
+                child: CircularProgressIndicator(color: tdbrown),
+              )
+            else
+              SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back_ios),
-                    ),
-                    if (courseDetail.isNotEmpty)
-                      Row(
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Text(
-                              '${courseDetail[0].name}',
-                              style: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w900,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
                           IconButton(
                             onPressed: () {
-                              // Handle onPressed for feedback button
+                              Navigator.pop(context);
                             },
-                            icon: const Icon(
-                              Icons.feedback,
-                              color: tdBlue,
-                              size: 25,
-                            ),
+                            icon: const Icon(Icons.arrow_back_ios),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              // Handle onPressed for bookmark button
-                            },
-                            icon: const Icon(
-                              Icons.bookmark_border,
-                              color: tdBlue,
-                              size: 25,
+                          if (courseDetail.isNotEmpty)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    '${courseDetail[0].name}',
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    // Handle onPressed for feedback button
+                                  },
+                                  icon: const Icon(
+                                    Icons.feedback,
+                                    color: tdBlue,
+                                    size: 25,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    // Handle onPressed for bookmark button
+                                  },
+                                  icon: Icon(
+                                    _isFavorite
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: tdBlue,
+                                    size: 25,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    // Handle onPressed for more options button
+                                  },
+                                  icon: const Icon(
+                                    Icons.more_vert,
+                                    color: tdBlue,
+                                    size: 25,
+                                  ),
+                                ),
+                              ],
                             ),
+                          const Text(
+                            'Unlock your potential today and take the next step towards success by purchasing our comprehensive course',
                           ),
-                          IconButton(
-                            onPressed: () {
-                              // Handle onPressed for more options button
-                            },
-                            icon: const Icon(
-                              Icons.more_vert,
-                              color: tdBlue,
-                              size: 25,
-                            ),
+                          const SizedBox(
+                            height: 10,
                           ),
                         ],
                       ),
-                    const Text(
-                      'Unlock your potential today and take the next step towards success by purchasing our comprehensive course',
                     ),
-                    const SizedBox(
-                      height: 10,
+                    CustomTabBarView(
+                      tabController: _tabController,
+                      tabViews: [
+                        CourseInformation(
+                          courseid: widget.courseid,
+                          fvideo: fvideo.isNotEmpty ? fvideo[0].video : '',
+                        ),
+                        Chapter(),
+                        Quizzes(), // Third tab with the stateful page
+                      ],
                     ),
                   ],
                 ),
               ),
-              CustomTabBarView(
-                tabController: _tabController,
-                tabViews: [
-                  CourseInformation(courseid: widget.courseid,
-                    fvideo: fvideo.isNotEmpty ? fvideo[0].video : '',
-                  ),
-                  Chapter(),
-                  Quizzes(), // Third tab with the stateful page
-                ],
-              ),
-
-            ],
-          ),
+          ],
         ),
       ),
     );

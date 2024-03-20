@@ -22,7 +22,6 @@ class CourseInformation extends StatefulWidget {
 class _CourseInformationState extends State<CourseInformation> {
   YoutubePlayerController? _controller;
   double? _averageRating;
-  bool _isLoading = true;
 
   @override
   void initState() {
@@ -42,11 +41,6 @@ class _CourseInformationState extends State<CourseInformation> {
     fetchPartNumbers(widget.courseid);
     getCourseByID(widget.courseid, context);
     getDataTrainerCourse(context, widget.courseid);
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
   }
 
   @override
@@ -59,6 +53,8 @@ class _CourseInformationState extends State<CourseInformation> {
   Widget build(BuildContext context) {
     String? videoId;
     if (widget.fvideo.isNotEmpty) {
+      setState(() {
+      });
       videoId = YoutubePlayer.convertUrlToId(widget.fvideo);
       _controller ??= YoutubePlayerController(
         initialVideoId: videoId!,
@@ -71,17 +67,14 @@ class _CourseInformationState extends State<CourseInformation> {
           forceHD: false,
         ),
       );
+      setState(() {
+      });
     }
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            if (_isLoading)
-              const Center(
-                child: CircularProgressIndicator(color: tdbrown),
-              )
-            else
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20),

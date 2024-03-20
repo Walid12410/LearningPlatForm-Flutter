@@ -39,7 +39,7 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> checkLogin(BuildContext context, String username, String password) async {
-    String apiUrl = 'http://192.168.1.13/EduPlatform/CMS/api/LoginPage.php';
+    String apiUrl = 'http://192.168.1.3/EduPlatform/CMS/api/LoginPage.php';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {

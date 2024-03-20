@@ -129,16 +129,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         SizedBox(
                           width: 120,
                           height: 120,
-                          child: users.isNotEmpty? ClipOval(
+                          child: users[0].tpicture.isNotEmpty? ClipOval(
                             child: CachedNetworkImage(
                               imageUrl: users[0].tpicture,
                               placeholder: (context, url) =>const CircularProgressIndicator(
                                 color: tdbrown,
                               ),
-                              errorWidget: (context, url, error) => Image.asset('assets/user.png'),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
                               fit: BoxFit.cover,
                             ),
-                          ):const CircularProgressIndicator(color: tdbrown),
+                          ): ClipOval(
+                            child: Image.asset('assets/user.png',fit: BoxFit.fill ),
+                          )
                         ),
                         Positioned(
                           bottom: 0,
