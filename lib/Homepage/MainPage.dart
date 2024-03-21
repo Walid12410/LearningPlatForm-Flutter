@@ -26,21 +26,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool _isRefreshing = false;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        getData(context);
-      }
-    });
-  }
+
 
   Future<void> getData(BuildContext context) async {
     try {
-      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      final provider = Provider.of<AppDataProvider>(context, listen: true);
       final userId = provider.userId;
       await Future.wait([
         getAllCourses(context),
@@ -50,7 +41,6 @@ class _MainPageState extends State<MainPage> {
         getTrainer(context),
         fetchTrainers(context, userId),
       ]);
-      setState(() {});
     } catch (e) {
       print('Error fetching data: $e');
     }
@@ -63,25 +53,26 @@ class _MainPageState extends State<MainPage> {
 
   void showNoConnectionSnackBar(BuildContext context) {
     final snackBar = SnackBar(
-      content: const Text('No internet connection'),
-      duration: const Duration(seconds: 3),
+      content: Text('No internet connection'),
+      duration: Duration(seconds: 3),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> reloadPage() async {
-    try {
-      final provider = Provider.of<AppDataProvider>(context, listen: false);
-      provider.deleteAllItems(); // Delete all items before fetching new data
-      await getData(context);
-    } catch (e) {
-      showNoConnectionSnackBar(context);
-    }
+    // try {
+    //   final provider = Provider.of<AppDataProvider>(context, listen: true);
+    //   provider.deleteAllItems(); // Delete all items before fetching new data
+    //   await getData(context);
+    // } catch (e) {
+    //   showNoConnectionSnackBar(context);
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppDataProvider>(builder: (context, provider, child) {
+      getData(context);
       var courseviews = provider.courseviews;
       var courseadd = provider.courseadd;
       var allCourses = provider.allCourses;
@@ -91,17 +82,7 @@ class _MainPageState extends State<MainPage> {
       return Scaffold(
         body: SafeArea(
           child: RefreshIndicator(
-            onRefresh: () async {
-              if (!_isRefreshing) {
-                setState(() {
-                  _isRefreshing = true;
-                });
-                await reloadPage();
-                setState(() {
-                  _isRefreshing = false;
-                });
-              }
-            },
+            onRefresh: reloadPage,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -134,23 +115,23 @@ class _MainPageState extends State<MainPage> {
                           );
                         },
                         child: Container(
-                            width: 50,
-                            height: 50,
-                            child: users.isNotEmpty
-                                ? ClipOval(
-                                    child: CachedNetworkImage(
-                                      imageUrl: users[0].tpicture,
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(
-                                        color: tdbrown,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset('assets/user.png'),
-                                      fit: BoxFit.cover,
+                          width: 50,
+                          height: 50,
+                          child: users.isNotEmpty && users[0].tpicture !=null
+                              ? ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: users[0].tpicture!,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(
+                                      color: tdbrown,
                                     ),
-                                  )
-                                : const CircularProgressIndicator(
-                                    color: tdbrown)),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset('assets/user.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : const CircularProgressIndicator(color: tdbrown),
+                        ),
                       ),
                     ],
                   ),

@@ -23,7 +23,6 @@ class CourseDetails extends StatefulWidget {
 class _CourseDetailsState extends State<CourseDetails>
     with SingleTickerProviderStateMixin {
   late AppDataProvider appDataProvider;
-  List<Course> courseDetail = [];
   late TabController _tabController;
   bool _isLoading = true;
   bool _isFavorite = false;
@@ -31,8 +30,6 @@ class _CourseDetailsState extends State<CourseDetails>
   @override
   void initState() {
     super.initState();
-    appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
-    getData();
     _tabController = TabController(length: 3, vsync: this);
     getVideo(context);
     Future.delayed(const Duration(seconds: 2), () {
@@ -45,20 +42,29 @@ class _CourseDetailsState extends State<CourseDetails>
     fetchFavoriteStatus(userid, widget.courseid);
   }
 
-  Future<void> getData() async {
-    final List<Course>? fetchedCourses =
-        await getCourseByID(widget.courseid, context);
-    setState(() {
-      courseDetail = fetchedCourses ?? [];
-    });
+  // void getData(context)  {
+  //   // final List<Course>? fetchedCourses =
+  //   //     await getCourseByID(widget.courseid, context);
+  //   // setState(() {
+  //   //   courseDetail = fetchedCourses ?? [];
+  //   // });
+  //   getCourseByID(widget.courseid, context);
+  // }
+  void getData(context) async {
+    try {
+      await getCourseByID(widget.courseid);
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     fvideo.clear();
-    TotalCoureTime.clear();
-    courses.clear();
     super.dispose();
   }
 
@@ -79,6 +85,10 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
+    getData(context);
+    final provider = Provider.of<AppDataProvider>(context, listen: true);
+    var courseDetail = provider.CourseByID;
+
     return Scaffold(
       body: SafeArea(
         child: Stack(

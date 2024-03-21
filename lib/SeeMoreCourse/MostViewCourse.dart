@@ -61,7 +61,7 @@ class _MostViewState extends State<MostView> {
 
   @override
   Widget build(BuildContext context) {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
     var coursesview = appDataProvider.allCourses;
     if (coursesview != null && coursesview.isNotEmpty) {
       coursesview.sort((a, b) => b.view.compareTo(a.view));

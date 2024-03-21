@@ -1,15 +1,57 @@
 import 'package:flutter/cupertino.dart';
+import 'package:learningplatformapp/AllClass/CourseTime.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
+import 'package:learningplatformapp/AllClass/TainerCourseShow.dart';
+import 'package:learningplatformapp/futureapi/CourseApi.dart';
+import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
+import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
+import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 
-class AppDataProvider extends ChangeNotifier  {
+class AppDataProvider extends ChangeNotifier {
   int _userId = 0;
   int get userId => _userId;
 
   void setUserId(int userId) {
     _userId = userId;
     notifyListeners();
+  }
+
+  List<CourseTime> _courseTime = [];
+  List<CourseTime> get courseTime => _courseTime;
+  getCourseTine(int courseid) async {
+    final res = await TotalCourseTime(courseid);
+    _courseTime = res;
+    notifyListeners();
+  }
+
+  List<TrainerCourseShow> _data = [];
+  List<TrainerCourseShow> get data => _data;
+  getTrainerCourseShow(int courseid) async {
+    final res = await getDataTrainerCourse(courseid);
+    _data = res;
+    notifyListeners();
+  }
+
+  List<String> _partNumbers = [];
+  List<String> get partNumber => _partNumbers;
+  Future<void> getPartNumber(int courseid) async {
+    final res = await fetchPartNumbers(courseid);
+    _partNumbers = res.map((item) => item.toString()).toList();
+    notifyListeners();
+  }
+
+  List<Course> _CourseByID = [];
+  List<Course> get CourseByID => _CourseByID;
+  Future<void> fetchCourseByID(int courseId) async {
+    final courses = await getCourseByID(courseId);
+    if (courses != null) {
+      _CourseByID = courses;
+      notifyListeners();
+    } else {
+      print('Error: Courses is null');
+    }
   }
 
 
@@ -28,16 +70,16 @@ class AppDataProvider extends ChangeNotifier  {
     notifyListeners();
   }
 
-  void deletePortal(){
+  void deletePortal() {
     portals.clear();
     filteredPortals.clear();
     notifyListeners();
   }
 
-  void searchdelete(){
-  allCourses.clear();
-  portals.clear();
-  notifyListeners();
+  void searchdelete() {
+    allCourses.clear();
+    portals.clear();
+    notifyListeners();
   }
 
   List<Course> courses = [];
@@ -48,18 +90,12 @@ class AppDataProvider extends ChangeNotifier  {
   List<Course> filterCoursestrainer = [];
   List<Course> allCourses = [];
   List<Course> randomcourse = [];
-  List<Course> CourseByID = [];
 
-
-
-  void deleteCourseByID(){
+  void deleteCourseByID() {
     CourseByID.clear();
     notifyListeners();
-}
-  void setCourseByID(List<Course> courses){
-    CourseByID = courses;
-    notifyListeners();
   }
+
   void setAllCourses(courses) {
     allCourses = courses;
     notifyListeners();
@@ -74,7 +110,6 @@ class AppDataProvider extends ChangeNotifier  {
     filteredCourse = course; // Corrected assignment
     notifyListeners();
   }
-
 
   void setCourseView(course) {
     courseviews = course;
@@ -104,12 +139,12 @@ class AppDataProvider extends ChangeNotifier  {
   List<Portal> portals = [];
   List<Portal> filteredPortals = [];
 
-  void setPortalCourse(List<Portal> portal){
+  void setPortalCourse(List<Portal> portal) {
     portals = portal;
     notifyListeners();
   }
 
-  void setFilterPortalCourse(List<Portal> portal){
+  void setFilterPortalCourse(List<Portal> portal) {
     filteredPortals = portal;
     notifyListeners();
   }
@@ -118,18 +153,18 @@ class AppDataProvider extends ChangeNotifier  {
   List<Trainer> trainers = [];
   List<Trainer> filteredTrainers = [];
 
-  void setTrainer(trainer){
+  void setTrainer(trainer) {
     users = trainer;
     notifyListeners();
   }
 
-  void setTrainers(List<Trainer> trainer){
-    trainers =trainer;
+  void setTrainers(List<Trainer> trainer) {
+    trainers = trainer;
     notifyListeners();
   }
 
-  void setFilteredTrainers(List<Trainer> trainer){
-    filteredTrainers =trainer;
+  void setFilteredTrainers(List<Trainer> trainer) {
+    filteredTrainers = trainer;
     notifyListeners();
   }
 }
