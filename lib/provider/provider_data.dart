@@ -8,6 +8,7 @@ import 'package:learningplatformapp/AllClass/TainerCourseShow.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
 import 'package:learningplatformapp/futureapi/PortalApi.dart';
+import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
@@ -138,6 +139,19 @@ class AppDataProvider extends ChangeNotifier {
     _filteredPortals = res;
     notifyListeners();
   }
+
+  Map<int, double> _averageRatings = {}; // Map to store average ratings by course ID
+  Map<int, double> get averageRatings => _averageRatings;
+  Future<void> fetchAndSetAverageRating(int courseId) async {
+    try {
+      final double averageRating = await fetchAverageRating(courseId);
+      _averageRatings[courseId] = averageRating;
+      notifyListeners();
+    } catch (error) {
+      print('Error fetching average rating for course $courseId: $error');
+    }
+  }
+
 
   void deletePortal() {
     portals.clear();

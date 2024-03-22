@@ -216,19 +216,14 @@ class _MainPageState extends State<MainPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       for (final courseView in courseviews)
-                                        FutureBuilder<double?>(
-                                          future: fetchAverageRating(courseView
-                                              .id), // Assuming courseId is accessible via 'id'
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const CircularProgressIndicator(); // Placeholder while loading
-                                            } else if (snapshot.hasError) {
-                                              return Text(
-                                                  'Error: ${snapshot.error}');
+                                        Consumer<AppDataProvider>(
+                                          builder: (context, averageRatingProvider, _) {
+                                            final double? averageRating = averageRatingProvider.averageRatings[courseView.id];
+                                            if (averageRating == null) {
+                                              // Fetch the average rating if it's not available
+                                              averageRatingProvider.fetchAndSetAverageRating(courseView.id);
+                                              return CircularProgressIndicator(); // Placeholder while loading
                                             } else {
-                                              final averageRating =
-                                                  snapshot.data ?? 0.0;
                                               return CourseView(
                                                 cname: courseView.name,
                                                 image: 'assets/image1.png',
@@ -263,9 +258,8 @@ class _MainPageState extends State<MainPage> {
                                 }),
                             const SizedBox(height: 2),
                             Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: LatestCourseAdd(courses: courseadd)
-                            )
+                                padding: const EdgeInsets.all(8),
+                                child: LatestCourseAdd(courses: courseadd))
                           ],
                         ),
                   randomcourse.isEmpty
@@ -281,28 +275,30 @@ class _MainPageState extends State<MainPage> {
                                   padding: const EdgeInsets.all(1),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       for (final random in randomcourse)
-                                        FutureBuilder<double?>(
-                                          future: fetchAverageRating(random
-                                              .id), // Assuming courseId is accessible via 'id'
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const CircularProgressIndicator(); // Placeholder while loading
-                                            } else if (snapshot.hasError) {
-                                              return Text(
-                                                  'Error: ${snapshot.error}');
+                                        Consumer<AppDataProvider>(
+                                          builder: (context,
+                                              averageRatingProvider, _) {
+                                            final double? averageRating =
+                                                averageRatingProvider
+                                                    .averageRatings[random.id];
+                                            if (averageRating == null) {
+                                              // Fetch the average rating if it's not available
+                                              averageRatingProvider
+                                                  .fetchAndSetAverageRating(
+                                                      random.id);
+                                              return CircularProgressIndicator(); // Placeholder while loading
                                             } else {
-                                              final averageRating =
-                                                  snapshot.data ?? 0.0;
-                                              return RandomCourse(cname: random.name,
-                                                  image: 'assets/image1.png',
-                                                  price: random.price,
-                                                  press: (){},
-                                              averagerate: averageRating,
-                                              desc: random.description,);
+                                              return RandomCourse(
+                                                cname: random.name,
+                                                image: 'assets/image1.png',
+                                                price: random.price,
+                                                press: () {},
+                                                averagerate: averageRating,
+                                                desc: random.description,
+                                              );
                                             }
                                           },
                                         ),
@@ -322,4 +318,3 @@ class _MainPageState extends State<MainPage> {
     });
   }
 }
-

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<double?> fetchAverageRating(int courseId) async {
+Future<double> fetchAverageRating(int courseId) async {
   try {
     final apiUrl = 'http://192.168.1.12/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=$courseId';
     final response = await http.get(Uri.parse(apiUrl));
