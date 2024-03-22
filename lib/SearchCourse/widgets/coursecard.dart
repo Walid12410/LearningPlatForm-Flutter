@@ -48,7 +48,7 @@ class _CourseCardState extends State<CourseCard> {
 
   Future<void> fetchAverageRating() async {
     try {
-      final apiUrl = 'http://192.168.1.3/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=${widget.course.id}';
+      final apiUrl = 'http://192.168.1.12/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=${widget.course.id}';
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);

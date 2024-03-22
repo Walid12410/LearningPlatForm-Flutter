@@ -1,14 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:learningplatformapp/provider/provider_data.dart';
 
 
 Future<List> fetchPartNumbers(int courseId) async {
   try {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.3/EduPlatForm/CMS/api/CountLesson.php?operation=CLesson&CourseID=$courseId'));
+        'http://192.168.1.12/EduPlatForm/CMS/api/CountLesson.php?operation=CLesson&CourseID=$courseId'));
     if (response.statusCode == 200) {
       final dynamic parsedData = json.decode(response.body);
       if (parsedData is List) {

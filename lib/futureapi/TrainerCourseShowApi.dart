@@ -5,7 +5,7 @@ import 'dart:convert';
 
 Future<List<TrainerCourseShow>> getDataTrainerCourse(int courseid) async {
   try {
-    Uri url = Uri.parse('http://192.168.1.3/EduPlatForm/CMS/api/TrainerCourse.php?operation=TrainerCourse&CourseID=$courseid');
+    Uri url = Uri.parse('http://192.168.1.12/EduPlatForm/CMS/api/TrainerCourse.php?operation=TrainerCourse&CourseID=$courseid');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> trainerJsonList = jsonDecode(response.body);

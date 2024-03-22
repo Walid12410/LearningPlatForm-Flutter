@@ -23,7 +23,7 @@ class _InformationState extends State<Information> {
 
   void getData(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
-    fetchTrainers(context, provider.userId);
+    fetchTrainers(provider.userId);
   }
 
   @override

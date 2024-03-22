@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class FavoriteService {
   static Future<bool> checkFavorite(int userId, int courseId) async {
-    final url = 'http://192.168.1.3/EduPlatForm/CMS/api/favorite.php';
+    final url = 'http://192.168.1.12/EduPlatForm/CMS/api/favorite.php';
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -23,7 +23,7 @@ class FavoriteService {
 
   static Future<bool> toggleFavorite(
       int userId, int courseId, bool isFavorite) async {
-    final url = 'http://192.168.1.3/EduPlatForm/CMS/api/favorite.php';
+    final url = 'http://192.168.1.12/EduPlatForm/CMS/api/favorite.php';
     final operation = isFavorite ? 'delete' : 'add';
     final response = await http.post(
       Uri.parse(url),

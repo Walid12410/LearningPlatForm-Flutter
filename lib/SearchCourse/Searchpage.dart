@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
-    getAllCourses(context).then((_) {
+    getAllCourses().then((_) {
       setState(() {
         allCourses =
             Provider.of<AppDataProvider>(context, listen: false).allCourses;

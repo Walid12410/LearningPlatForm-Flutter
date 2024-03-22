@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:learningplatformapp/AllClass/CourseTime.dart';
+import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/AllClass/TainerCourseShow.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
+import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
+import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
+import 'package:learningplatformapp/futureapi/VideoPart.dart';
 
 class AppDataProvider extends ChangeNotifier {
   int _userId = 0;
@@ -54,19 +58,84 @@ class AppDataProvider extends ChangeNotifier {
     }
   }
 
+  List<ShowFirstVideo> _fvideo = [];
+  List<ShowFirstVideo> get fvideo => _fvideo;
+  getFirstVideo(int courseID) async{
+    final res = await fetchVideo(courseID);
+    _fvideo = res;
+    notifyListeners();
+  }
 
-  void deleteAllItems() {
-    courses.clear();
-    filteredCourse.clear();
-    courseviews.clear();
-    courseadd.clear();
-    coursestrainer.clear();
-    filterCoursestrainer.clear();
-    allCourses.clear();
-    randomcourse.clear();
-    users.clear();
-    trainers.clear();
-    filteredTrainers.clear();
+  List<Course> _allCourses = [];
+  List<Course> get allCourses => _allCourses;
+  getAllCourse() async{
+    final res = await getAllCourses();
+    if (res != null) {
+      _allCourses = res;
+      notifyListeners();
+    } else {
+      print('Error: Courses is null');
+    }
+  }
+
+
+  List<Course> _courseadd = [];
+  List<Course> get courseadd => _courseadd;
+  getCourseadd() async{
+    final res = await getCourseNew();
+    if (res != null) {
+      _courseadd = res;
+      notifyListeners();
+    } else {
+      print('Error: Courses is null');
+    }
+  }
+
+  List<Course> _courseviews = [];
+  List<Course> get courseviews => _courseviews;
+  getcourseview() async{
+    final res = await getCourseView();
+    if(res != null){
+      _courseviews = res;
+      notifyListeners();
+    }else{
+      print('Error course is null');
+    }
+  }
+
+  List<Course> _randomcourse = [];
+  List<Course> get randomcourse => _randomcourse;
+  getrandomcourse() async{
+    final res = await getRandomCourse();
+    if(res != null){
+      _randomcourse = res;
+      notifyListeners();
+    }else{
+      print('Error: course is empty');
+    }
+  }
+
+  List<Trainer> _users = []; // Define list to store trainers
+  List<Trainer> get users => _users;
+  getTrainer(int userid) async{
+    final res = await fetchTrainers(userid);
+    _users = res;
+    notifyListeners();
+  }
+
+  List<Portal> _portals = [];
+  List<Portal> get portals => _portals;
+  getportal() async{
+    final res = await getPortals();
+    _portals = res;
+    notifyListeners();
+  }
+
+  List<Portal> _filteredPortals = [];
+  List<Portal> get filteredPortals => _filteredPortals;
+  getFilteredPortals() async{
+    final res = await getPortals();
+    _filteredPortals = res;
     notifyListeners();
   }
 
@@ -84,22 +153,16 @@ class AppDataProvider extends ChangeNotifier {
 
   List<Course> courses = [];
   List<Course> filteredCourse = [];
-  List<Course> courseviews = [];
-  List<Course> courseadd = [];
   List<Course> coursestrainer = [];
   List<Course> filterCoursestrainer = [];
-  List<Course> allCourses = [];
-  List<Course> randomcourse = [];
+
 
   void deleteCourseByID() {
     CourseByID.clear();
     notifyListeners();
   }
 
-  void setAllCourses(courses) {
-    allCourses = courses;
-    notifyListeners();
-  }
+
 
   void setCourses(List<Course> course) {
     courses = course;
@@ -111,20 +174,6 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCourseView(course) {
-    courseviews = course;
-    notifyListeners();
-  }
-
-  void setCourseadd(course) {
-    courseadd = course;
-    notifyListeners();
-  }
-
-  void setRandonCourse(course) {
-    randomcourse = course;
-    notifyListeners();
-  }
 
   void setFilterCourseTrainer(List<Course> course) {
     filterCoursestrainer = course;
@@ -136,27 +185,13 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Portal> portals = [];
-  List<Portal> filteredPortals = [];
 
-  void setPortalCourse(List<Portal> portal) {
-    portals = portal;
-    notifyListeners();
-  }
 
-  void setFilterPortalCourse(List<Portal> portal) {
-    filteredPortals = portal;
-    notifyListeners();
-  }
-
-  List<Trainer> users = []; // Define list to store trainers
   List<Trainer> trainers = [];
   List<Trainer> filteredTrainers = [];
 
-  void setTrainer(trainer) {
-    users = trainer;
-    notifyListeners();
-  }
+
+
 
   void setTrainers(List<Trainer> trainer) {
     trainers = trainer;

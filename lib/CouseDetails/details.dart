@@ -24,52 +24,27 @@ class _CourseDetailsState extends State<CourseDetails>
     with SingleTickerProviderStateMixin {
   late AppDataProvider appDataProvider;
   late TabController _tabController;
-  bool _isLoading = true;
   bool _isFavorite = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    getVideo(context);
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      int userid = provider.userId;
+      fetchFavoriteStatus(userid, widget.courseid);
+      provider.getFirstVideo(widget.courseid);
+      provider.fetchCourseByID(widget.courseid);
     });
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
-    int userid = provider.userId;
-    fetchFavoriteStatus(userid, widget.courseid);
   }
 
-  // void getData(context)  {
-  //   // final List<Course>? fetchedCourses =
-  //   //     await getCourseByID(widget.courseid, context);
-  //   // setState(() {
-  //   //   courseDetail = fetchedCourses ?? [];
-  //   // });
-  //   getCourseByID(widget.courseid, context);
-  // }
-  void getData(context) async {
-    try {
-      await getCourseByID(widget.courseid);
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
 
   @override
   void dispose() {
     _tabController.dispose();
-    fvideo.clear();
     super.dispose();
-  }
-
-  void getVideo(context) {
-    fetchVideo(widget.courseid, context);
   }
 
   Future<void> fetchFavoriteStatus(int userId, int courseId) async {
@@ -85,19 +60,14 @@ class _CourseDetailsState extends State<CourseDetails>
 
   @override
   Widget build(BuildContext context) {
-    getData(context);
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var courseDetail = provider.CourseByID;
+    var fvideo = provider.fvideo;
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            if (_isLoading)
-              const Center(
-                child: CircularProgressIndicator(color: tdbrown),
-              )
-            else
               SingleChildScrollView(
                 child: Column(
                   children: [

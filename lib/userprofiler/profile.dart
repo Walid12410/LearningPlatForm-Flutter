@@ -23,7 +23,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> getData(context) async {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
-    _userFuture = fetchTrainers(context, provider.userId);
+    _userFuture = fetchTrainers(provider.userId);
   }
 
   @override

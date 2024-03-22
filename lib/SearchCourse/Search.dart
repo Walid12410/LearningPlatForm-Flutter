@@ -24,8 +24,8 @@ class _SearchCourseState extends State<SearchCourse> {
   }
 
   void getData(context){
-    getAllCourses(context);
-    getPortals(context);
+    getAllCourses();
+    getPortals();
   }
 
   Future<void> reloadPage() async{

@@ -30,7 +30,7 @@ class _LatestcourseState extends State<Latestcourse> {
   void getData(BuildContext context) async {
     try {
       final userId = Provider.of<AppDataProvider>(context, listen: false).userId;
-      final courses = await getAllCourses(context);
+      final courses = await getAllCourses();
       if (courses != null) {
         for (final course in courses) {
           final averageRating = await fetchAverageRating(course.id);

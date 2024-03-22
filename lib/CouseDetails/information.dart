@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
-import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
-import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';

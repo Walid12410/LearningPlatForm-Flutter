@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pages = [
       const MainPage(),
-      const PortalPage(),
       const UserCourse(),
       const SearchCourse(),
       const Profile()
@@ -56,8 +55,6 @@ class _HomePageState extends State<HomePage> {
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.category_outlined), label: 'Categories'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.school), label: 'MyCourse'),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),

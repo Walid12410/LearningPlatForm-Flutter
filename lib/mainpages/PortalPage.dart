@@ -22,51 +22,38 @@ class _PortalPageState extends State<PortalPage> {
   @override
   void initState() {
     super.initState();
-    getData(context);
-  }
-
-  void getData(context) {
-    getPortals(context).then((_) {
-      if (_searchText.isNotEmpty) {
-        filterPortals(context, _searchText);
-      }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AppDataProvider provider = Provider.of<AppDataProvider>(context, listen: false);
+      provider.getportal();
+      provider.getFilteredPortals();
     });
   }
 
-  void filterPortals(BuildContext context, String searchText) {
-    AppDataProvider appDataProvider =
-    Provider.of<AppDataProvider>(context, listen: false);
-    List<Portal> portal = appDataProvider.portals;
-    List<Portal> filteredPortal = portal
-        .where((portal) =>
-        portal.portalName.toLowerCase().contains(searchText.toLowerCase()))
-        .toList();
-    appDataProvider.setFilterPortalCourse(filteredPortal);
-  }
 
-  String _searchText = ''; // Store the entered search text
 
-  Future<void> reloadPage() async {
-    try {
-      final provider =
-      Provider.of<AppDataProvider>(context, listen: false);
-      provider.deletePortal();
-      getData(context);
-    } catch (e) {}
-  }
+  // void filterPortals(BuildContext context, String searchText) {
+  //   AppDataProvider appDataProvider =
+  //   Provider.of<AppDataProvider>(context, listen: false);
+  //   List<Portal> portal = appDataProvider.portals;
+  //   List<Portal> filteredPortal = portal
+  //       .where((portal) =>
+  //       portal.portalName.toLowerCase().contains(searchText.toLowerCase()))
+  //       .toList();
+  // }
+  //
+  // String _searchText = ''; // Store the entered search text
+
+
 
   @override
   Widget build(BuildContext context) {
     AppDataProvider appDataProvider =
     Provider.of<AppDataProvider>(context, listen: true);
-    getData(context);
     var portals = appDataProvider.portals;
     var filteredPortals = appDataProvider.filteredPortals;
 
     return Scaffold(
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: reloadPage,
           child: Stack(
             children: [
               Container(
@@ -98,35 +85,35 @@ class _PortalPageState extends State<PortalPage> {
               ),
               DetailsForPortal_Instructor(
                   name: 'categories', number: portals.length),
-              Positioned(
-                top: 190,
-                left: 20.0,
-                right: 20.0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(
-                    color: tdBGColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: TextField(
-                    cursorColor: tdbrown,
-                    decoration: const InputDecoration(
-                      hintText: 'Search',
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: tdBlue,
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _searchText = value;
-                      });
-                      filterPortals(context, value);
-                    },
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   top: 190,
+              //   left: 20.0,
+              //   right: 20.0,
+              //   child: Container(
+              //     padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              //     decoration: BoxDecoration(
+              //       color: tdBGColor,
+              //       borderRadius: BorderRadius.circular(10.0),
+              //     ),
+              //     child: TextField(
+              //       cursorColor: tdbrown,
+              //       decoration: const InputDecoration(
+              //         hintText: 'Search',
+              //         border: InputBorder.none,
+              //         prefixIcon: Icon(
+              //           Icons.search,
+              //           color: tdBlue,
+              //         ),
+              //       ),
+              //       onChanged: (value) {
+              //         setState(() {
+              //           _searchText = value;
+              //         });
+              //         filterPortals(context, value);
+              //       },
+              //     ),
+              //   ),
+              // ),
               if (portals.isEmpty)
                 const Center(
                   child: Text(
@@ -159,7 +146,7 @@ class _PortalPageState extends State<PortalPage> {
                 ),
             ],
           ),
-        ),
+
       ),
     );
   }

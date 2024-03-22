@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/colors/color.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RandomCourse extends StatelessWidget {
   const RandomCourse({
@@ -8,101 +8,82 @@ class RandomCourse extends StatelessWidget {
     required this.image,
     required this.price,
     required this.press,
+    required this.averagerate,
+    required this.desc
   }) : super(key: key);
 
   final String cname;
   final String image;
   final double price;
   final GestureTapCallback press;
+  final double averagerate;
+  final String desc;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
-      child: SizedBox(
+      child: Container(
         width: 200,
-        height: 220,
-        child: GestureDetector(
-          child: ClipRRect(
+        height: 265,
+        decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            child: Stack(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 3,
+                  blurRadius: 10,
+                  offset: Offset(0, 3)
+              ),
+            ]
+        ),
+        child: GestureDetector(
+          onTap: press,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
                 Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        const Color(0xff343434).withOpacity(0.4),
-                        const Color(0xff343434).withOpacity(0.15),
-                      ],
-                    ),
-                  ),
+                  // alignment: Alignment.center,
+                  child: Image.asset(image,height: 150,),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text.rich(
-                    TextSpan(
-                      style: const TextStyle(color: tdBlue),
-                      children: [
-                        const TextSpan(
-                            text: "Course Name\n",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                                color: tdBlue)),
-                        TextSpan(
-                          text: '$cname\n',
-                          style: const TextStyle(
-                              fontSize: 15,
-                              color: tdBlue,
-                              fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        cname,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(onPressed: (){},
-                            icon:const Icon(Icons.forward)),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 8,
-                  left: 8,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      'Price: \$$price',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
+                    const Icon(Icons.verified, size: 20),
+                  ],
                 ),
+                Text(desc,
+                    style:const TextStyle(fontSize: 15,overflow: TextOverflow.ellipsis)
+                ),
+                const SizedBox(height: 2),
+                RatingBar.builder(
+                  direction: Axis.horizontal,
+                  itemBuilder: (context, _) =>
+                  const Icon(Icons.star, color: Colors.red),
+                  onRatingUpdate: (index) {},
+                  itemPadding:
+                  const EdgeInsets.symmetric(horizontal: 4),
+                  minRating: 1,
+                  itemCount: 5,
+                  itemSize: 18,
+                  initialRating: averagerate ?? 1,
+                  ignoreGestures: true,
+                ),
+                const SizedBox(height: 1),
+                    Text('\$$price',
+                      style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)
               ],
             ),
           ),

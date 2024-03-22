@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/Homepage/widget/RecommendedCourse.dart';
 import 'package:learningplatformapp/SeeMoreCourse/LatestCourseView.dart';
 import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -17,6 +14,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:learningplatformapp/futureapi/RatingCourses.dart';
+import 'widget/Categories.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -26,24 +25,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
-
-
-  Future<void> getData(BuildContext context) async {
-    try {
-      final provider = Provider.of<AppDataProvider>(context, listen: true);
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
       final userId = provider.userId;
-      await Future.wait([
-        getAllCourses(context),
-        getCourseNew(context),
-        getCourseView(context),
-        getRandomCourse(context),
-        getTrainer(context),
-        fetchTrainers(context, userId),
-      ]);
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
+      provider.getCourseadd();
+      provider.getcourseview();
+      provider.getrandomcourse();
+      provider.getTrainer(userId);
+      provider.getportal();
+    });
+    super.initState();
   }
 
   Future<bool> checkInternetConnectivity() async {
@@ -72,12 +65,11 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppDataProvider>(builder: (context, provider, child) {
-      getData(context);
       var courseviews = provider.courseviews;
       var courseadd = provider.courseadd;
-      var allCourses = provider.allCourses;
       var randomcourse = provider.randomcourse;
       var users = provider.users;
+      var portal = provider.portals;
 
       return Scaffold(
         body: SafeArea(
@@ -117,7 +109,7 @@ class _MainPageState extends State<MainPage> {
                         child: Container(
                           width: 50,
                           height: 50,
-                          child: users.isNotEmpty && users[0].tpicture !=null
+                          child: users.isNotEmpty && users[0].tpicture != null
                               ? ClipOval(
                                   child: CachedNetworkImage(
                                     imageUrl: users[0].tpicture!,
@@ -168,8 +160,44 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
+                  // courseviews.isEmpty
+                  //     ? Container() // Display nothing if the array is empty
+                  //
+                  portal.isEmpty
+                      ? Container()
+                      : Column(
+                          children: [
+                            Specialforyou(text: 'Categories', press: () {}),
+                            const SizedBox(height: 5),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 5),
+                                    for (int i = 0;
+                                        i < 6 && i < portal.length;
+                                        i++)
+                                      Row(
+                                        children: [
+                                          Categories(
+                                              name: portal[i].portalName),
+                                          if (i < 5 && i < portal.length - 1)
+                                            const SizedBox(width: 10),
+                                        ],
+                                      ),
+                                    for (int i = 6; i < portal.length; i++)
+                                      const SizedBox(width: 10),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                          ],
+                        ),
                   courseviews.isEmpty
-                      ? Container() // Display nothing if the array is empty
+                      ? Container()
                       : Column(
                           children: [
                             Specialforyou(
@@ -182,34 +210,44 @@ class _MainPageState extends State<MainPage> {
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Padding(
-                                padding: const EdgeInsets.all(1),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: courseviews.isEmpty
-                                      ? []
-                                      : List.generate(
-                                          min(3, courseviews.length),
-                                          (i) {
-                                            if (courseviews.isNotEmpty) {
-                                              return CourseView(
-                                                cname: courseviews[i].name,
-                                                image:
-                                                    'assets/courseview/image${i + 1}.png',
-                                                price: courseviews[i].price,
-                                                view: courseviews[i].view,
-                                                press: () {},
-                                              );
+                                  padding: const EdgeInsets.all(1),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      for (final courseView in courseviews)
+                                        FutureBuilder<double?>(
+                                          future: fetchAverageRating(courseView
+                                              .id), // Assuming courseId is accessible via 'id'
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator(); // Placeholder while loading
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Error: ${snapshot.error}');
                                             } else {
-                                              return Container();
+                                              final averageRating =
+                                                  snapshot.data ?? 0.0;
+                                              return CourseView(
+                                                cname: courseView.name,
+                                                image: 'assets/image1.png',
+                                                price: courseView.price,
+                                                view: courseView.view,
+                                                press: () {},
+                                                desc: courseView.description,
+                                                averageRating: averageRating,
+                                              );
                                             }
                                           },
                                         ),
-                                ),
-                              ),
+                                      const SizedBox(width: 5),
+                                    ],
+                                  )),
                             ),
                           ],
                         ),
+                  const SizedBox(height: 5),
                   courseadd.isEmpty
                       ? Container() // Display nothing if the array is empty
                       : Column(
@@ -223,66 +261,11 @@ class _MainPageState extends State<MainPage> {
                                       CustomPageRoute(
                                           child: const Latestcourse()));
                                 }),
-                            const SizedBox(height: 5),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.all(1),
-                                child: Row(
-                                  children: List.generate(
-                                    min(4, courseadd.length),
-                                    (i) {
-                                      if (courseadd.isNotEmpty) {
-                                        return LatestCourseAdd(
-                                          image:
-                                              'assets/latestadd/image${i + 1}.png',
-                                          price: courseadd[i].price,
-                                          name: courseadd[i].name,
-                                        );
-                                      } else {
-                                        return Container();
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                  allCourses.isEmpty
-                      ? Container()
-                      : Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            Specialforyou(
-                                text: 'Recommended Course', press: () {}),
-                            const SizedBox(height: 5),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: Row(
-                                  children: allCourses.isEmpty
-                                      ? [] // Display nothing if the array is empty
-                                      : List.generate(
-                                          min(5, allCourses.length),
-                                          (i) {
-                                            if (allCourses.isNotEmpty) {
-                                              return RecommendedCourse(
-                                                cname: allCourses[i].name,
-                                                image:
-                                                    'assets/rc/i${i + 1}.png',
-                                                price: allCourses[i].price,
-                                                press: () {},
-                                              );
-                                            } else {
-                                              return Container();
-                                            }
-                                          },
-                                        ),
-                                ),
-                              ),
-                            ),
+                            const SizedBox(height: 2),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: LatestCourseAdd(courses: courseadd)
+                            )
                           ],
                         ),
                   randomcourse.isEmpty
@@ -291,31 +274,41 @@ class _MainPageState extends State<MainPage> {
                           children: [
                             const SizedBox(height: 10),
                             Specialforyou(text: 'For you', press: () {}),
+                            const SizedBox(height: 5),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: Row(
-                                  children: randomcourse.isEmpty
-                                      ? [] // Display nothing if the array is empty
-                                      : List.generate(
-                                          min(5, randomcourse.length),
-                                          (i) {
-                                            if (randomcourse.isNotEmpty) {
-                                              return RandomCourse(
-                                                cname: randomcourse[i].name,
-                                                image:
-                                                    'assets/rac/i${i + 1}.png',
-                                                price: randomcourse[i].price,
-                                                press: () {},
-                                              );
+                                  padding: const EdgeInsets.all(1),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      for (final random in randomcourse)
+                                        FutureBuilder<double?>(
+                                          future: fetchAverageRating(random
+                                              .id), // Assuming courseId is accessible via 'id'
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return const CircularProgressIndicator(); // Placeholder while loading
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Error: ${snapshot.error}');
                                             } else {
-                                              return Container();
+                                              final averageRating =
+                                                  snapshot.data ?? 0.0;
+                                              return RandomCourse(cname: random.name,
+                                                  image: 'assets/image1.png',
+                                                  price: random.price,
+                                                  press: (){},
+                                              averagerate: averageRating,
+                                              desc: random.description,);
                                             }
                                           },
                                         ),
-                                ),
-                              ),
+                                      const SizedBox(width: 5),
+                                    ],
+                                  )),
                             ),
                           ],
                         ),
@@ -329,3 +322,4 @@ class _MainPageState extends State<MainPage> {
     });
   }
 }
+

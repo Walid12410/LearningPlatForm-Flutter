@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
 
-List<ShowFirstVideo> fvideo = [];
-
-Future<void> fetchVideo(int courseId,context) async {
-  final url = 'http://192.168.1.3/EduPlatForm/CMS/api/part.php';
+Future<List<ShowFirstVideo>> fetchVideo(int courseId) async {
+  final url = 'http://192.168.1.12/EduPlatForm/CMS/api/part.php';
   try {
     final response = await http.post(
       Uri.parse(url),
@@ -17,7 +15,7 @@ Future<void> fetchVideo(int courseId,context) async {
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body) as List;
       final List<ShowFirstVideo> videoList = data.map((videoJson) => ShowFirstVideo.fromJson(videoJson)).toList();
-      fvideo = videoList;
+      return videoList;
     } else {
       throw Exception('Failed to load videos');
     }
