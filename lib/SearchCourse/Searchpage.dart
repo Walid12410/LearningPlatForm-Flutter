@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/colors/color.dart';

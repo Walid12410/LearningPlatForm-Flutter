@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
+import 'package:learningplatformapp/SeeMoreCourse/ForyouView.dart';
 import 'package:learningplatformapp/SeeMoreCourse/LatestCourseView.dart';
 import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
 import 'package:learningplatformapp/mainpages/CoursePage.dart';
@@ -289,7 +290,14 @@ class _MainPageState extends State<MainPage> {
                       : Column(
                           children: [
                             const SizedBox(height: 10),
-                            Specialforyou(text: 'For you', press: () {}),
+                            Specialforyou(
+                                text: 'For you',
+                                press: () {
+                                  Navigator.push(
+                                      context,
+                                      CustomPageRoute(
+                                          child: const ForYouCourse()));
+                                }),
                             const SizedBox(height: 5),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -311,13 +319,22 @@ class _MainPageState extends State<MainPage> {
                                               averageRatingProvider
                                                   .fetchAndSetAverageRating(
                                                       random.id);
-                                              return CircularProgressIndicator(); // Placeholder while loading
+                                              return const CircularProgressIndicator(
+                                                color: tdbrown,
+                                              ); // Placeholder while loading
                                             } else {
                                               return RandomCourse(
                                                 cname: random.name,
                                                 image: 'assets/image1.png',
                                                 price: random.price,
-                                                press: () {},
+                                                press: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      CustomPageRoute(
+                                                          child: CourseDetails(
+                                                              courseid:
+                                                                  random.id)));
+                                                },
                                                 averagerate: averageRating,
                                                 desc: random.description,
                                               );
