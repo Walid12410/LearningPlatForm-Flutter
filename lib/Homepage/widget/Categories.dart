@@ -6,8 +6,10 @@ class Categories extends StatelessWidget {
   const Categories({
     Key? key,
     required this.name,
+    required this.press
   }) : super(key: key);
 
+  final GestureTapCallback press;
   final String name;
 
   @override
@@ -25,12 +27,15 @@ class Categories extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Text(
-          name,
-          style:
-          const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+      child: GestureDetector(
+        onTap: press,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Text(
+            name,
+            style:
+            const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

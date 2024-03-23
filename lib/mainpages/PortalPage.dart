@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/AllClass/portal.dart';
-import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/Widget/Courseportal.dart';
-import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
 import 'Trainer.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
-import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 class PortalPage extends StatefulWidget {
   const PortalPage({Key? key}) : super(key: key);
@@ -25,24 +21,8 @@ class _PortalPageState extends State<PortalPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppDataProvider provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getportal();
-      provider.getFilteredPortals();
     });
   }
-
-
-
-  // void filterPortals(BuildContext context, String searchText) {
-  //   AppDataProvider appDataProvider =
-  //   Provider.of<AppDataProvider>(context, listen: false);
-  //   List<Portal> portal = appDataProvider.portals;
-  //   List<Portal> filteredPortal = portal
-  //       .where((portal) =>
-  //       portal.portalName.toLowerCase().contains(searchText.toLowerCase()))
-  //       .toList();
-  // }
-  //
-  // String _searchText = ''; // Store the entered search text
-
 
 
   @override
@@ -50,7 +30,6 @@ class _PortalPageState extends State<PortalPage> {
     AppDataProvider appDataProvider =
     Provider.of<AppDataProvider>(context, listen: true);
     var portals = appDataProvider.portals;
-    var filteredPortals = appDataProvider.filteredPortals;
 
     return Scaffold(
       body: SafeArea(
@@ -68,52 +47,30 @@ class _PortalPageState extends State<PortalPage> {
                   ),
                 ),
               ),
-              Positioned(
-                top: 130,
-                left: 20,
-                right: 20,
-                child: ProfileMenuWidget(
-                  icon: Icons.assignment_ind,
-                  text: 'All Instructor',
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        CustomPageRoute(child: const TrainerPage()));
-                  },
-                  textColor: tdBlue,
-                ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      IconButton(onPressed: (){
+                        Navigator.pop(context);
+                      }, icon:
+                      const Icon(Icons.arrow_back_ios,size: 20,color: Colors.black,)),
+                      const Text('All Categories',
+                        style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)
+                    ],
+                  ),
+                  ProfileMenuWidget(
+                    icon: Icons.assignment_ind,
+                    text: 'All Instructor',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          CustomPageRoute(child: const TrainerPage()));
+                    },
+                    textColor: tdBlue,
+                  ),
+                ],
               ),
-              DetailsForPortal_Instructor(
-                  name: 'categories', number: portals.length),
-              // Positioned(
-              //   top: 190,
-              //   left: 20.0,
-              //   right: 20.0,
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              //     decoration: BoxDecoration(
-              //       color: tdBGColor,
-              //       borderRadius: BorderRadius.circular(10.0),
-              //     ),
-              //     child: TextField(
-              //       cursorColor: tdbrown,
-              //       decoration: const InputDecoration(
-              //         hintText: 'Search',
-              //         border: InputBorder.none,
-              //         prefixIcon: Icon(
-              //           Icons.search,
-              //           color: tdBlue,
-              //         ),
-              //       ),
-              //       onChanged: (value) {
-              //         setState(() {
-              //           _searchText = value;
-              //         });
-              //         filterPortals(context, value);
-              //       },
-              //     ),
-              //   ),
-              // ),
               if (portals.isEmpty)
                 const Center(
                   child: Text(
@@ -123,7 +80,7 @@ class _PortalPageState extends State<PortalPage> {
                 )
               else
                 Padding(
-                  padding: const EdgeInsets.only(top: 250),
+                  padding: const EdgeInsets.only(top: 120),
                   child: Container(
                     decoration: const BoxDecoration(
                         color: Colors.white,
@@ -135,12 +92,11 @@ class _PortalPageState extends State<PortalPage> {
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: ResponsiveGridList(
-                        minItemWidth: 160,
-                        children: filteredPortals.map((portal) {
-                          return CoursePortal(portals: portal);
-                        }).toList(),
-                      ),
+                      child: ListView.builder(
+                          itemCount: portals.length,
+                          itemBuilder: (context,i){
+                            return CoursePortal(portals: portals[i]);
+                          })
                     ),
                   ),
                 ),

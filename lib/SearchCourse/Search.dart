@@ -20,22 +20,15 @@ class _SearchCourseState extends State<SearchCourse> {
   @override
   void initState() {
     super.initState();
-    getData(context);
-  }
-
-  void getData(context){
-    getAllCourses();
-    getPortals();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      reloadPage();
+    });
   }
 
   Future<void> reloadPage() async{
-    try{
-      final provider = Provider.of<AppDataProvider>(context, listen: false);
-      provider.searchdelete();
-      getData(context);
-    }catch(e){
-
-    }
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    await provider.getAllCourse();
+    await provider.getportal();
   }
 
   @override
@@ -62,24 +55,23 @@ class _SearchCourseState extends State<SearchCourse> {
                         itemBuilder: (context, index) {
                           Portal portal = portals[index];
                           List<Course> portalCourses = allCourses
-                              .where((course) =>
-                          course.portalID == portal.portalID)
+                              .where((course) => course.portalID == portal.portalID)
                               .toList();
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  portal.portalName,
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: tdBlue,
+                          if (portalCourses.isNotEmpty) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    portal.portalName,
+                                    style: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: tdBlue,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              if (portalCourses.isNotEmpty)
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
@@ -87,21 +79,14 @@ class _SearchCourseState extends State<SearchCourse> {
                                       return CourseCard(course: course);
                                     }).toList(),
                                   ),
-                                )
-                              else
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'No courses for this category yet',
-                                    style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      color: tdBlue
-                                    ),
-                                  ),
                                 ),
-                              const Divider(),
-                            ],
-                          );
+                                const Divider(),
+                              ],
+                            );
+                          } else {
+                            // Return an empty container if the portal has no courses
+                            return Container();
+                          }
                         },
                       );
                     }

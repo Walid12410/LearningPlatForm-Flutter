@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/SeeMoreCourse/LatestCourseView.dart';
 import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
+import 'package:learningplatformapp/mainpages/CoursePage.dart';
+import 'package:learningplatformapp/mainpages/PortalPage.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'widget/specialforyou.dart';
 import 'widget/courseviwe.dart';
 import 'widget/LatestCourseAdded.dart';
-import 'dart:math';
 import 'widget/RandomCourse.dart';
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'widget/Categories.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,13 +29,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final provider = Provider.of<AppDataProvider>(context, listen: false);
-      final userId = provider.userId;
-      provider.getCourseadd();
-      provider.getcourseview();
-      provider.getrandomcourse();
-      provider.getTrainer(userId);
-      provider.getportal();
+      reloadPage();
     });
     super.initState();
   }
@@ -53,13 +48,13 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> reloadPage() async {
-    // try {
-    //   final provider = Provider.of<AppDataProvider>(context, listen: true);
-    //   provider.deleteAllItems(); // Delete all items before fetching new data
-    //   await getData(context);
-    // } catch (e) {
-    //   showNoConnectionSnackBar(context);
-    // }
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    final userId = provider.userId;
+    await provider.getCourseadd();
+    await provider.getcourseview();
+    await provider.getrandomcourse();
+    await provider.getTrainer(userId);
+    await provider.getportal();
   }
 
   @override
@@ -160,14 +155,18 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
-                  // courseviews.isEmpty
-                  //     ? Container() // Display nothing if the array is empty
-                  //
                   portal.isEmpty
                       ? Container()
                       : Column(
                           children: [
-                            Specialforyou(text: 'Categories', press: () {}),
+                            Specialforyou(
+                                text: 'Categories',
+                                press: () {
+                                  Navigator.push(
+                                      context,
+                                      CustomPageRoute(
+                                          child: const PortalPage()));
+                                }),
                             const SizedBox(height: 5),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -182,7 +181,16 @@ class _MainPageState extends State<MainPage> {
                                       Row(
                                         children: [
                                           Categories(
-                                              name: portal[i].portalName),
+                                            name: portal[i].portalName,
+                                            press: () {
+                                              Navigator.push(
+                                                  context,
+                                                  CustomPageRoute(
+                                                      child: CourseListView(
+                                                          portalid: portal[i]
+                                                              .portalID)));
+                                            },
+                                          ),
                                           if (i < 5 && i < portal.length - 1)
                                             const SizedBox(width: 10),
                                         ],
@@ -217,19 +225,33 @@ class _MainPageState extends State<MainPage> {
                                     children: [
                                       for (final courseView in courseviews)
                                         Consumer<AppDataProvider>(
-                                          builder: (context, averageRatingProvider, _) {
-                                            final double? averageRating = averageRatingProvider.averageRatings[courseView.id];
+                                          builder: (context,
+                                              averageRatingProvider, _) {
+                                            final double? averageRating =
+                                                averageRatingProvider
+                                                        .averageRatings[
+                                                    courseView.id];
                                             if (averageRating == null) {
                                               // Fetch the average rating if it's not available
-                                              averageRatingProvider.fetchAndSetAverageRating(courseView.id);
-                                              return CircularProgressIndicator(); // Placeholder while loading
+                                              averageRatingProvider
+                                                  .fetchAndSetAverageRating(
+                                                      courseView.id);
+                                              return const CircularProgressIndicator(); // Placeholder while loading
                                             } else {
                                               return CourseView(
                                                 cname: courseView.name,
                                                 image: 'assets/image1.png',
                                                 price: courseView.price,
                                                 view: courseView.view,
-                                                press: () {},
+                                                press: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      CustomPageRoute(
+                                                          child: CourseDetails(
+                                                              courseid:
+                                                                  courseView
+                                                                      .id)));
+                                                },
                                                 desc: courseView.description,
                                                 averageRating: averageRating,
                                               );

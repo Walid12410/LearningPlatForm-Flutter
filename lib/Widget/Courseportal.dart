@@ -15,59 +15,28 @@ class CoursePortal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 8.0), // Add vertical margin
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         color: tdbrown,
       ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              portals.portalName,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: tdBlue,
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  portals.portalDescription,
-                  style: const TextStyle(color: tdBlue),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Show Courses',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: tdBlue,
-                  ),
-                ),
-                IconButton(
-                  color: tdBlue,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      CustomPageRoute(child: CourseListView(portalid: portals.portalID))
-                    );
-                  },
-                  icon: const Icon(Icons.arrow_circle_right_rounded),
-                  iconSize: 40,
-                ),
-              ],
-            ),
-          ],
+      child: ListTile(
+        title: Text(
+          '${portals.portalName}',
+          style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
         ),
+        subtitle: Text(
+          '${portals.portalDescription}',
+          style: const TextStyle(color: tdBlue),
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            CustomPageRoute(
+              child: CourseListView(portalid: portals.portalID),
+            ),
+          );
+        },
       ),
     );
   }

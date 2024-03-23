@@ -54,10 +54,8 @@ Future<List<Course>?> getCourseByID(int CourseID) async {
   }
 }
 
-Future<void> getCourseTrainer(int userId, context) async {
+Future<List<Course>> getCourseTrainer(int userId) async {
   try {
-    AppDataProvider appDataProvider =
-        Provider.of<AppDataProvider>(context, listen: true);
     Uri url = Uri.parse(
         'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
@@ -72,32 +70,21 @@ Future<void> getCourseTrainer(int userId, context) async {
         return Course.fromJson(parsedJson);
       }).toList();
       List<Course> filteredCourses =
-          fetchedCourses.where((course) => course.trainerID == userId).toList();
-      if (filteredCourses.isNotEmpty) {
-        appDataProvider.setFilterCourseTrainer(filteredCourses);
-        appDataProvider.setCourseTrainer(filteredCourses);
-      } else {
-        throw Exception('No courses found for trainer with ID: ${userId}');
-      }
+      fetchedCourses.where((course) => course.trainerID == userId).toList();
+      print(filteredCourses);
+      return filteredCourses;
     } else {
       throw Exception(
           'Failed to load courses. Status Code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error fetching courses: $e');
-    AppDataProvider appDataProvider =
-        Provider.of<AppDataProvider>(context, listen: false);
-    appDataProvider.coursestrainer =
-        []; // Set courses to empty list in case of error
-    appDataProvider.filterCoursestrainer =
-        []; // Set filtered courses to empty list in case of error
+    return []; // Return an empty list if an error occurs
   }
 }
 
-Future<void> getCourse(int portalId, context) async {
+Future<List<Course>> getCourse(int portalId) async {
   try {
-    AppDataProvider appDataProvider =
-        Provider.of<AppDataProvider>(context, listen: true);
     Uri url = Uri.parse(
         'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
     final response = await http.get(url);
@@ -119,22 +106,13 @@ Future<void> getCourse(int portalId, context) async {
       List<Course> filteredCourses = fetchedCourses
           .where((course) => course.portalID == portalId)
           .toList();
-      if (filteredCourses.isNotEmpty) {
-        appDataProvider.setCourses(filteredCourses);
-        appDataProvider.setFilterCourse(filteredCourses);
-      } else {
-        appDataProvider.setCourses([]);
-        appDataProvider.setFilterCourse([]);
-      }
+      return filteredCourses;
     } else {
       throw Exception('Failed to load courses');
     }
   } catch (e) {
     print('Error fetching courses: $e');
-    AppDataProvider appDataProvider =
-        Provider.of<AppDataProvider>(context, listen: false);
-    appDataProvider.setCourses([]);
-    appDataProvider.setFilterCourse([]);
+    return []; // Return an empty list if an error occurs
   }
 }
 

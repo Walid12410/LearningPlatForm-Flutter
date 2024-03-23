@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/CouseDetails/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/information.dart';
 import 'package:learningplatformapp/CouseDetails/quiz.dart';
 import 'package:learningplatformapp/CouseDetails/tabcontroller.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
-import 'package:learningplatformapp/futureapi/VideoPart.dart';
 import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
 
 class CourseDetails extends StatefulWidget {

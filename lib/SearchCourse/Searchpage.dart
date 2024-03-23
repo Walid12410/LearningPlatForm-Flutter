@@ -27,10 +27,11 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
-    getAllCourses().then((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      await provider.getAllCourse();
       setState(() {
-        allCourses =
-            Provider.of<AppDataProvider>(context, listen: false).allCourses;
+        allCourses = provider.allCourses;
         filteredCourses = allCourses;
       });
     });

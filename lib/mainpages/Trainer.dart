@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/Widget/TrainerInfo.dart';
-import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/AllClass/trainer.dart';
-import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
@@ -19,35 +15,14 @@ class _TrainerPageState extends State<TrainerPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-
-  void getData(context){
-    getTrainer(context).then((_) {
-      if (_searchText.isNotEmpty) {
-        filterTrainers(context, _searchText);
-      }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      AppDataProvider provider = Provider.of<AppDataProvider>(context, listen: false);
+      provider.getAllTrainer();
     });
   }
-
-  void filterTrainers(BuildContext context ,String searchText) {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
-    List<Trainer> trainers = appDataProvider.trainers;
-    List<Trainer> filteredTraine = trainers
-    .where((trainer) =>
-      trainer.fname.toLowerCase().contains(searchText.toLowerCase()) ||
-          trainer.lname.toLowerCase().contains(searchText.toLowerCase())).toList();
-    appDataProvider.setFilteredTrainers(filteredTraine);
-  }
-
-  String _searchText = ''; // Store the entered search text
-
-
   @override
   Widget build(BuildContext context) {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
-    getData(context);
-    var filteredTrainers = appDataProvider.filteredTrainers;
     var trainers = appDataProvider.trainers;
 
     return Scaffold(
@@ -66,63 +41,20 @@ class _TrainerPageState extends State<TrainerPage> {
                 ),
               ),
             ),
-            DetailsForPortal_Instructor(name: 'Instructor', number: trainers.length),
-            Positioned(
-              top: 130.0,
-              left: 20.0,
-              right: 20.0,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context); // Assuming you are inside a BuildContext
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0), // Adjust padding as needed
-                      decoration: BoxDecoration(
-                        color: Colors.white, // Choose your desired background color
-                        borderRadius: BorderRadius.circular(20.0), // Adjust border radius as needed
-                      ),
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: tdBlue, // You can change the color of the icon as needed
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 5,),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        color: tdBGColor,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: TextField(
-                        cursorColor: tdbrown,
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.search, color: tdBlue),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _searchText = value;
-                          });
-                          filterTrainers(context,value);
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, icon: const Icon(Icons.arrow_back_ios,
+                    color: Colors.black,size: 25,)),
+                    const Text('Go Back',style: TextStyle(fontWeight: FontWeight.bold,
+                    color: Colors.black,fontSize: 30),)
+                  ],
+                )
+              ],
             ),
-            // if (_isLoading) // Show CircularProgressIndicator if isLoading is true
-            //   const Center(
-            //       child: SizedBox(width: 150, height: 150,
-            //           child: CircularProgressIndicator(
-            //             color: tdbrown,
-            //           ))
-            //   )
             if(trainers.isEmpty)
               const Center(
                 child: Text(
@@ -132,7 +64,7 @@ class _TrainerPageState extends State<TrainerPage> {
               )
             else
               Padding(
-                padding: const EdgeInsets.only(top: 195.0),
+                padding: const EdgeInsets.only(top: 50.0),
                 child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.white,
@@ -146,10 +78,9 @@ class _TrainerPageState extends State<TrainerPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
-                        itemCount: filteredTrainers.length,
+                        itemCount: trainers.length,
                         itemBuilder: (context , i){
-                          final trainer = filteredTrainers[i];
-                          return TrainerInfo(trainers: trainer);
+                          return TrainerInfo(trainers: trainers[i]);
                         }),
                   ),
                 ),

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
+import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 
 class LatestCourseAdd extends StatelessWidget {
-  const LatestCourseAdd({
-    super.key,
-    required this.courses
-  });
+  const LatestCourseAdd({super.key, required this.courses});
 
   final List<Course> courses; // Assuming you have a Course model
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +21,22 @@ class LatestCourseAdd extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   course.name,
-                  style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis),
+                  style: const TextStyle(
+                      color: tdBlue,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
                 ),
                 subtitle: Text(
                   course.description,
-                  style: const TextStyle(color: tdBlue,
-                      overflow: TextOverflow.ellipsis),
+                  style: const TextStyle(
+                      color: tdBlue, overflow: TextOverflow.ellipsis),
                 ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      CustomPageRoute(
+                          child: CourseDetails(courseid: course.id)));
+                },
                 trailing: Container(
                   width: 64,
                   height: 64,
@@ -42,7 +48,8 @@ class LatestCourseAdd extends StatelessWidget {
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(2), // Adjust border radius as needed
+                    borderRadius: BorderRadius.circular(
+                        2), // Adjust border radius as needed
                     child: Image.asset(
                       'assets/image1.png',
                       fit: BoxFit.fill,

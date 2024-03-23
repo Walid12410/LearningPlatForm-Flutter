@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/colors/color.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 

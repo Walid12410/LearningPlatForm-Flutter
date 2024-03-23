@@ -19,45 +19,15 @@ class Latestcourse extends StatefulWidget {
 
 class _LatestcourseState extends State<Latestcourse> {
   Map<int, double> averageRatings = {};
-  Map<int, bool> isFavorite = {};
-  TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    getData(context);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      provider.getAllCourse();
+    });
   }
-
-  void getData(BuildContext context) async {
-    try {
-      final userId = Provider.of<AppDataProvider>(context, listen: false).userId;
-      final courses = await getAllCourses();
-      if (courses != null) {
-        for (final course in courses) {
-          final averageRating = await fetchAverageRating(course.id);
-          final isFavoriteValue = await FavoriteService.checkFavorite(userId, course.id);
-          if (averageRating != null) {
-            setState(() {
-              averageRatings[course.id] = averageRating;
-              isFavorite[course.id] = isFavoriteValue;
-            });
-          } else {
-            print('Average rating is null for course ID: ${course.id}');
-          }
-        }
-      } else {
-        print('Courses are null');
-      }
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
-  }
-
-  List<Course> _filterCourses(List<Course> courses, String query) {
-    if (query.isEmpty) {
-      return courses;
-    }
-    return courses.where((course) => course.name.toLowerCase().contains(query.toLowerCase())).toList();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +40,7 @@ class _LatestcourseState extends State<Latestcourse> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Most View Courses',
+          'Latest Courses Added',
           style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
         ),
         centerTitle: true,
@@ -98,37 +68,13 @@ class _LatestcourseState extends State<Latestcourse> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(6),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: tdBGColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  cursorColor: tdbrown,
-                  decoration: const InputDecoration(
-                    hintText: 'Search',
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: tdBlue,
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {});
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 65),
+              padding: const EdgeInsets.only(top: 2),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                    topLeft: Radius.circular(2),
+                    topRight: Radius.circular(2),
                   ),
                 ),
                 height: double.infinity,
@@ -137,12 +83,12 @@ class _LatestcourseState extends State<Latestcourse> {
                   padding: const EdgeInsets.all(8),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
-                      var filteredCourses = _filterCourses(coursesview ?? [], _searchController.text);
                       return ResponsiveGridList(
                         minItemWidth: 150,
-                        children:  filteredCourses.map((course)  {
+                        children:  coursesview.map((course)  {
                           final courseId = course.id;
-                          final averageRating = averageRatings[courseId] ?? 0.0;
+                          final provider = Provider.of<AppDataProvider>(context, listen: false);
+                          final averageRating = provider.averageRatings[courseId] ?? 0.0;
                           return GestureDetector(
                             onTap: (){
                               Navigator.push(context, CustomPageRoute(child: CourseDetails(
@@ -196,15 +142,15 @@ class _LatestcourseState extends State<Latestcourse> {
                                                   ),
                                                 ),
                                                 const Spacer(),
-                                                // const Icon(Icons.visibility, color: tdBlue),
-                                                // const SizedBox(width: 1),
-                                                // Text(
-                                                //   '${course.view}',
-                                                //   style: const TextStyle(
-                                                //     fontWeight: FontWeight.w700,
-                                                //     color: tdBlue,
-                                                //   ),
-                                                // ),
+                                                const Icon(Icons.visibility, color: tdBlue),
+                                                const SizedBox(width: 1),
+                                                Text(
+                                                  '${course.view}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: tdBlue,
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(height: 1),
@@ -224,28 +170,6 @@ class _LatestcourseState extends State<Latestcourse> {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 8,
-                                  right: 8,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      isFavorite[courseId] ?? false ? Icons.bookmark : Icons.bookmark_border, // Check if course is favorite
-                                      size: 30,
-                                      color: tdBlue,
-                                    ),
-                                    onPressed: () {
-                                      if (userId != null) {
-                                        final currentFavoriteStatus = isFavorite[courseId] ?? false;
-                                        FavoriteService.toggleFavorite(userId, courseId, currentFavoriteStatus);
-                                        setState(() {
-                                          isFavorite[courseId] = !currentFavoriteStatus; // Update favorite status
-                                        });
-                                      } else {
-                                        // Handle when user ID is not available
-                                      }
-                                    },
                                   ),
                                 ),
                               ],

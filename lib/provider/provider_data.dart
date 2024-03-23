@@ -132,14 +132,6 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Portal> _filteredPortals = [];
-  List<Portal> get filteredPortals => _filteredPortals;
-  getFilteredPortals() async{
-    final res = await getPortals();
-    _filteredPortals = res;
-    notifyListeners();
-  }
-
   Map<int, double> _averageRatings = {}; // Map to store average ratings by course ID
   Map<int, double> get averageRatings => _averageRatings;
   Future<void> fetchAndSetAverageRating(int courseId) async {
@@ -153,67 +145,40 @@ class AppDataProvider extends ChangeNotifier {
   }
 
 
-  void deletePortal() {
-    portals.clear();
-    filteredPortals.clear();
+  List<Trainer> _trainers = [];
+  List<Trainer> get trainers => _trainers;
+  getAllTrainer() async{
+    final res = await fetchAllTrainer();
+    _trainers = res;
     notifyListeners();
   }
 
-  void searchdelete() {
-    allCourses.clear();
-    portals.clear();
+  List<Course> _coursestrainer = [];
+  List<Course> get coursestrainer => _coursestrainer;
+  getcoursetrainer(int id) async{
+    final res = await getCourseTrainer(id);
+    _coursestrainer = res;
     notifyListeners();
   }
 
-  List<Course> courses = [];
-  List<Course> filteredCourse = [];
-  List<Course> coursestrainer = [];
-  List<Course> filterCoursestrainer = [];
-
-
-  void deleteCourseByID() {
-    CourseByID.clear();
-    notifyListeners();
-  }
-
-
-
-  void setCourses(List<Course> course) {
-    courses = course;
-    notifyListeners();
-  }
-
-  void setFilterCourse(List<Course> course) {
-    filteredCourse = course; // Corrected assignment
-    notifyListeners();
-  }
-
-
-  void setFilterCourseTrainer(List<Course> course) {
-    filterCoursestrainer = course;
-    notifyListeners();
-  }
-
-  void setCourseTrainer(List<Course> course) {
-    coursestrainer = course;
+  List<Course> _courses = [];
+  List<Course> get courses => _courses;
+  getcourse(int id) async{
+    final res = await getCourse(id);
+    _courses = res ;
     notifyListeners();
   }
 
 
 
-  List<Trainer> trainers = [];
-  List<Trainer> filteredTrainers = [];
 
 
 
 
-  void setTrainers(List<Trainer> trainer) {
-    trainers = trainer;
-    notifyListeners();
-  }
 
-  void setFilteredTrainers(List<Trainer> trainer) {
-    filteredTrainers = trainer;
-    notifyListeners();
-  }
+
+
+
+
+
 }
