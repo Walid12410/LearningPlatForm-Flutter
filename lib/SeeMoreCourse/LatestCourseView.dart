@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
-import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
 
 class Latestcourse extends StatefulWidget {
   const Latestcourse({Key? key}) : super(key: key);
@@ -27,7 +23,7 @@ class _LatestcourseState extends State<Latestcourse> {
       provider.getAllCourse();
     });
   }
-  
+
 
   @override
   Widget build(BuildContext context) {
