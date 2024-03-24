@@ -5,14 +5,21 @@ import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/AllClass/TainerCourseShow.dart';
+import 'package:learningplatformapp/futureapi/ChapterApi.dart';
 import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
+import 'package:learningplatformapp/futureapi/LessonApi.dart';
 import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:learningplatformapp/futureapi/VideoPart.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/material.dart';
+
+import '../AllClass/Chapter.dart';
+import '../AllClass/Lesson.dart';
 
 class AppDataProvider extends ChangeNotifier {
   int _userId = 0;
@@ -170,15 +177,33 @@ class AppDataProvider extends ChangeNotifier {
   }
 
 
+  YoutubePlayerController? _controller;
+  YoutubePlayerController? get controller => _controller;
+  set controller(YoutubePlayerController? newController) {
+    _controller = newController;
+    notifyListeners();
+  }
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
 
+  List<Chapter> _allchapter = [];
+  List<Chapter> get allchapter => _allchapter;
+  getChapterByID(int id) async {
+    final res = await fetchChaptersByCourseID(id);
+    _allchapter = res;
+    notifyListeners(); // Notify listeners after updating the list
+  }
 
-
-
-
-
-
-
-
-
+  List<Lesson> _lesson =[];
+  List<Lesson> get lesson => _lesson;
+  Future<void> getLessonById(int id) async {
+    final res = await fetchLessonsByCourseID(id);
+    _lesson = res;
+    notifyListeners();
+  }
 
 }
+
+

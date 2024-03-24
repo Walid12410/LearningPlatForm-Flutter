@@ -8,21 +8,20 @@ import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
 class CourseInformation extends StatefulWidget {
-  const CourseInformation({required this.courseid, required this.fvideo});
+  const CourseInformation({required this.courseid});
 
   final int courseid;
-  final String fvideo;
 
   @override
   State<CourseInformation> createState() => _CourseInformationState();
 }
 
 class _CourseInformationState extends State<CourseInformation> {
-  late YoutubePlayerController _controller;
   double? _averageRating;
 
   @override
   void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.fetchCourseByID(widget.courseid);
@@ -30,7 +29,6 @@ class _CourseInformationState extends State<CourseInformation> {
       provider.getPartNumber(widget.courseid);
       provider.getTrainerCourseShow(widget.courseid);
     });
-    super.initState();
   }
 
   void loadData(context)  {
@@ -48,27 +46,9 @@ class _CourseInformationState extends State<CourseInformation> {
     }
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.fvideo.isNotEmpty) {
-      _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.fvideo)!,
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-          disableDragSeek: false,
-          loop: false,
-          isLive: false,
-          forceHD: false,
-        ),
-      );
-    }
     return Scaffold(
       body: SafeArea(
         child: Consumer<AppDataProvider>(
@@ -85,29 +65,11 @@ class _CourseInformationState extends State<CourseInformation> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    if (widget.fvideo.isNotEmpty && _controller != null)
-                      YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
-                        bottomActions: [
-                          CurrentPosition(),
-                          ProgressBar(isExpanded: true),
-                        ],
-                      )
-                    else if (widget.fvideo.isNotEmpty && _controller == null)
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    else
-                      const Center(
-                        child: Text(
-                          'No Video Yet',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ),
+                    Container(
+                      height: 150,
+                      width: double.infinity,
+                      child: Image.asset('assets/image1.png',fit: BoxFit.cover,),
+                    ),
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.all(2),
@@ -120,17 +82,17 @@ class _CourseInformationState extends State<CourseInformation> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border:
-                                    Border.all(color: Colors.black, width: 2),
+                                Border.all(color: Colors.black, width: 2),
                               ),
                               child: ClipOval(
                                 child: CachedNetworkImage(
                                   imageUrl: data[0].ProfilePicture,
                                   placeholder: (context, url) =>
-                                      const CircularProgressIndicator(
+                                  const CircularProgressIndicator(
                                     color: tdbrown,
                                   ),
                                   errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
+                                  const Icon(Icons.error),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -150,10 +112,10 @@ class _CourseInformationState extends State<CourseInformation> {
                           RatingBar.builder(
                             direction: Axis.horizontal,
                             itemBuilder: (context, _) =>
-                                const Icon(Icons.star, color: Colors.red),
+                            const Icon(Icons.star, color: Colors.red),
                             onRatingUpdate: (index) {},
                             itemPadding:
-                                const EdgeInsets.symmetric(horizontal: 4),
+                            const EdgeInsets.symmetric(horizontal: 4),
                             minRating: 1,
                             itemCount: 5,
                             itemSize: 18,

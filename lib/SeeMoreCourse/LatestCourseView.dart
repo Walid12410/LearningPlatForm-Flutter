@@ -18,7 +18,7 @@ class _LatestcourseState extends State<Latestcourse> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getAllCourse();
     });

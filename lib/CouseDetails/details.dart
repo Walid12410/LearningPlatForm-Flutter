@@ -58,8 +58,6 @@ class _CourseDetailsState extends State<CourseDetails>
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var courseDetail = provider.CourseByID;
-    var fvideo = provider.fvideo;
-
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -138,10 +136,8 @@ class _CourseDetailsState extends State<CourseDetails>
                       tabController: _tabController,
                       tabViews: [
                         CourseInformation(
-                          courseid: widget.courseid,
-                          fvideo: fvideo.isNotEmpty ? fvideo[0].video : '',
-                        ),
-                        Chapter(),
+                          courseid: widget.courseid),
+                        Chapterpage(courseid: widget.courseid),
                         Quizzes(), // Third tab with the stateful page
                       ],
                     ),
@@ -149,6 +145,19 @@ class _CourseDetailsState extends State<CourseDetails>
                 ),
               ),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: tdbrown, // Set the background color for the bottom app bar
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              // Add action for enrolling
+            },
+            child:const Text('Enroll Now',style: TextStyle(fontSize: 15,
+            fontWeight: FontWeight.bold,color: Colors.black),),
+          ),
         ),
       ),
     );
