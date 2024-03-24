@@ -31,7 +31,6 @@ class _CourseDetailsState extends State<CourseDetails>
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       int userid = provider.userId;
       fetchFavoriteStatus(userid, widget.courseid);
-      provider.getFirstVideo(widget.courseid);
       provider.fetchCourseByID(widget.courseid);
     });
   }

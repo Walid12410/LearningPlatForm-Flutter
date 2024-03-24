@@ -13,7 +13,6 @@ Future<List<Lesson>> fetchLessonsByCourseID(int id) async {
       Lesson lesson = Lesson.fromJson(lessonJson);
       lessons.add(lesson);
     }
-    print('Lesssonsss : ${lessons}');
     return lessons;
   } else {
     throw Exception('Failed to load lessons');

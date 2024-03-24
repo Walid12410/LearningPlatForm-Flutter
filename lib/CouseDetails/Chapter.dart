@@ -48,24 +48,81 @@ class _ChapterpageState extends State<Chapterpage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Text(
-                          c.title,
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: tdBlue,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              c.title,
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: tdBlue,
+                              ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                              child: Text(c.description),
+                            )
+                          ],
                         ),
+                      ),
+                      const Center(
+                        child: Text('Lesson',style: TextStyle(fontWeight: FontWeight.bold,
+                        fontSize: 25),),
                       ),
                       if (chapterLessons.isNotEmpty)
                         Column(
                           children: chapterLessons.map((lesson) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: ListTile(
-                                title: Text(lesson.name),
-                                // You can add more details about the lesson here if needed
-                              ),
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          lesson.title,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      if (lesson.mediatype == 'v')
+                                        IconButton(
+                                          onPressed: () {
+                                            // Add your video playback logic here
+                                          },
+                                          icon: const Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.black,
+                                            size: 25,
+                                          ),
+                                        ),
+                                      if (lesson.mediatype != 'v')
+                                        IconButton(
+                                          onPressed: () {
+                                            // Add your eye icon logic here
+                                          },
+                                          icon: const Icon(
+                                            Icons.file_copy,
+                                            color: Colors.black,
+                                            size: 25,
+                                          ),
+                                        ),
+                                      const Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.green,
+                                        size: 25,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Divider(), // Add a divider after each row
+                              ],
                             );
                           }).toList(),
                         )
@@ -77,7 +134,7 @@ class _ChapterpageState extends State<Chapterpage> {
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
-                      const Divider(), // Divider between chapters
+                      const Divider(color: Colors.black,thickness: 5,), // Divider between chapters
                     ],
                   );
                 }).toList(),

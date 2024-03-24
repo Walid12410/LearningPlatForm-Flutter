@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:learningplatformapp/AllClass/CourseTime.dart';
-import 'package:learningplatformapp/AllClass/ShowFirstVideo.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
@@ -14,7 +13,6 @@ import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
-import 'package:learningplatformapp/futureapi/VideoPart.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -66,13 +64,6 @@ class AppDataProvider extends ChangeNotifier {
     }
   }
 
-  List<ShowFirstVideo> _fvideo = [];
-  List<ShowFirstVideo> get fvideo => _fvideo;
-  getFirstVideo(int courseID) async{
-    final res = await fetchVideo(courseID);
-    _fvideo = res;
-    notifyListeners();
-  }
 
   List<Course> _allCourses = [];
   List<Course> get allCourses => _allCourses;

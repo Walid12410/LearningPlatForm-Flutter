@@ -1,33 +1,40 @@
 class Lesson {
   int id;
-  String name;
   int number;
-  String description;
-  String video;
-  int videoMin;
-  int videoSec;
+  String title;
+  String mediatype;
+  String filepath;
   int chpaterID;
+  int isactive;
+  int min;
+  int second;
+  String mobilelink;
 
   Lesson({required this.id,
-    required this.name,
     required this.number,
-    required this.description,
-    required this.video,
-    required this.videoMin,
-    required this.videoSec,
-    required this.chpaterID
+    required this.title,
+    required this.mediatype,
+    required this.filepath,
+    required this.chpaterID,
+    required this.isactive,
+    required this.min,
+    required this.second,
+    required this.mobilelink
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
     return Lesson(
-        id: json['PartID'],
-        name: json['PartName'],
-        number: json['PartNumber'],
-        description: json['PartDescription'],
-        video: json['PartVideo'],
-        videoMin: json['VideoMin'],
-        videoSec: json['VideoSec'],
-        chpaterID: json['ChapterID']
+      id: json['PartID'] ?? 0,
+      number: json['PartNum'] ?? 0,
+      title: json['Title'] ?? '',
+      mediatype: json['MediaType'] ?? '',
+      filepath: json['FilePath'] ?? '',
+      chpaterID: json['ChapterID'] ?? 0,
+      isactive: json['IsActive'] ?? 0,
+      min: json['PeriodMinutes'] ?? 0,
+      second: json['PeriodSeconds'] ?? 0,
+      mobilelink: json['FilePathMobile'] ?? '',
     );
   }
+
 }
