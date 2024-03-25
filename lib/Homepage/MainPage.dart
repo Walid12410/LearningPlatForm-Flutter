@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      reloadPage();
+        reloadPage();
     });
     super.initState();
   }
@@ -66,294 +66,310 @@ class _MainPageState extends State<MainPage> {
       var randomcourse = provider.randomcourse;
       var users = provider.users;
       var portal = provider.portals;
-
-      return Scaffold(
-        body: SafeArea(
-          child: RefreshIndicator(
-            onRefresh: reloadPage,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: const Text(
-                              'Learning PlatForm App',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: tdBlue,
-                                  fontSize: 25),
+      if (courseviews.isEmpty &&
+          courseadd.isEmpty &&
+          randomcourse.isEmpty &&
+          users.isEmpty &&
+          portal.isEmpty) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: tdbrown,
+          ),
+        );
+      } else {
+        return Scaffold(
+          body: SafeArea(
+            child: RefreshIndicator(
+              onRefresh: reloadPage,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: const Text(
+                                'Learning PlatForm App',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: tdBlue,
+                                    fontSize: 25),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return DialogPage(); // Custom dialog page
-                            },
-                          );
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          child: users.isNotEmpty && users[0].tpicture != null
-                              ? ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl: users[0].tpicture!,
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(
-                                      color: tdbrown,
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DialogPage(); // Custom dialog page
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            child: users.isNotEmpty && users[0].tpicture != null
+                                ? ClipOval(
+                                    child: CachedNetworkImage(
+                                      imageUrl: users[0].tpicture!,
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(
+                                        color: tdbrown,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset('assets/user.png'),
+                                      fit: BoxFit.cover,
                                     ),
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset('assets/user.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : const CircularProgressIndicator(color: tdbrown),
+                                  )
+                                : const CircularProgressIndicator(
+                                    color: tdbrown),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          color: tdbrown,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text.rich(
-                            TextSpan(
-                              text:
-                                  'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
-                              style: const TextStyle(
-                                color: tdBlue,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: tdbrown,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text.rich(
+                              TextSpan(
+                                text:
+                                    'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                                style: const TextStyle(
+                                  color: tdBlue,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                children: const [
+                                  TextSpan(
+                                    text: 'Start learning now!',
+                                    style:
+                                        TextStyle(color: tdBlue, fontSize: 20),
+                                  )
+                                ],
                               ),
-                              children: const [
-                                TextSpan(
-                                  text: 'Start learning now!',
-                                  style: TextStyle(color: tdBlue, fontSize: 20),
-                                )
-                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  portal.isEmpty
-                      ? Container()
-                      : Column(
-                          children: [
-                            Specialforyou(
-                                text: 'Categories',
-                                press: () {
-                                  Navigator.push(
-                                      context,
-                                      CustomPageRoute(
-                                          child: const PortalPage()));
-                                }),
-                            const SizedBox(height: 5),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(width: 5),
-                                    for (int i = 0;
-                                        i < 6 && i < portal.length;
-                                        i++)
-                                      Row(
-                                        children: [
-                                          Categories(
-                                            name: portal[i].portalName,
-                                            press: () {
-                                              Navigator.push(
-                                                  context,
-                                                  CustomPageRoute(
-                                                      child: CourseListView(
-                                                          portalid: portal[i]
-                                                              .portalID)));
-                                            },
-                                          ),
-                                          if (i < 5 && i < portal.length - 1)
-                                            const SizedBox(width: 10),
-                                        ],
-                                      ),
-                                    for (int i = 6; i < portal.length; i++)
-                                      const SizedBox(width: 10),
-                                  ],
+                    portal.isEmpty
+                        ? Container()
+                        : Column(
+                            children: [
+                              Specialforyou(
+                                  text: 'Categories',
+                                  press: () {
+                                    Navigator.push(
+                                        context,
+                                        CustomPageRoute(
+                                            child: const PortalPage()));
+                                  }),
+                              const SizedBox(height: 5),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 5),
+                                      for (int i = 0;
+                                          i < 6 && i < portal.length;
+                                          i++)
+                                        Row(
+                                          children: [
+                                            Categories(
+                                              name: portal[i].portalName,
+                                              press: () {
+                                                Navigator.push(
+                                                    context,
+                                                    CustomPageRoute(
+                                                        child: CourseListView(
+                                                            portalid: portal[i]
+                                                                .portalID)));
+                                              },
+                                            ),
+                                            if (i < 5 && i < portal.length - 1)
+                                              const SizedBox(width: 10),
+                                          ],
+                                        ),
+                                      for (int i = 6; i < portal.length; i++)
+                                        const SizedBox(width: 10),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 5),
-                          ],
-                        ),
-                  courseviews.isEmpty
-                      ? Container()
-                      : Column(
-                          children: [
-                            Specialforyou(
-                                text: 'Most Viewed Courses',
-                                press: () {
-                                  Navigator.push(context,
-                                      CustomPageRoute(child: const MostView()));
-                                }),
-                            const SizedBox(height: 5),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      for (final courseView in courseviews)
-                                        Consumer<AppDataProvider>(
-                                          builder: (context,
-                                              averageRatingProvider, _) {
-                                            final double? averageRating =
+                              const SizedBox(height: 5),
+                            ],
+                          ),
+                    courseviews.isEmpty
+                        ? Container()
+                        : Column(
+                            children: [
+                              Specialforyou(
+                                  text: 'Most Viewed Courses',
+                                  press: () {
+                                    Navigator.push(
+                                        context,
+                                        CustomPageRoute(
+                                            child: const MostView()));
+                                  }),
+                              const SizedBox(height: 5),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                    padding: const EdgeInsets.all(1),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        for (final courseView in courseviews)
+                                          Consumer<AppDataProvider>(
+                                            builder: (context,
+                                                averageRatingProvider, _) {
+                                              final double? averageRating =
+                                                  averageRatingProvider
+                                                          .averageRatings[
+                                                      courseView.id];
+                                              if (averageRating == null) {
+                                                // Fetch the average rating if it's not available
                                                 averageRatingProvider
-                                                        .averageRatings[
-                                                    courseView.id];
-                                            if (averageRating == null) {
-                                              // Fetch the average rating if it's not available
-                                              averageRatingProvider
-                                                  .fetchAndSetAverageRating(
-                                                      courseView.id);
-                                              return const CircularProgressIndicator(); // Placeholder while loading
-                                            } else {
-                                              return CourseView(
-                                                cname: courseView.name,
-                                                image: 'assets/image1.png',
-                                                price: courseView.price,
-                                                view: courseView.view,
-                                                press: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      CustomPageRoute(
-                                                          child: CourseDetails(
-                                                              courseid:
-                                                                  courseView
-                                                                      .id)));
-                                                },
-                                                desc: courseView.description,
-                                                averageRating: averageRating,
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      const SizedBox(width: 5),
-                                    ],
-                                  )),
-                            ),
-                          ],
-                        ),
-                  const SizedBox(height: 5),
-                  courseadd.isEmpty
-                      ? Container() // Display nothing if the array is empty
-                      : Column(
-                          children: [
-                            const SizedBox(height: 5),
-                            Specialforyou(
-                                text: 'Latest Course Added',
-                                press: () {
-                                  Navigator.push(
-                                      context,
-                                      CustomPageRoute(
-                                          child: const Latestcourse()));
-                                }),
-                            const SizedBox(height: 2),
-                            Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: LatestCourseAdd(courses: courseadd))
-                          ],
-                        ),
-                  randomcourse.isEmpty
-                      ? Container()
-                      : Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            Specialforyou(
-                                text: 'For you',
-                                press: () {
-                                  Navigator.push(
-                                      context,
-                                      CustomPageRoute(
-                                          child: const ForYouCourse()));
-                                }),
-                            const SizedBox(height: 5),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(1),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      for (final random in randomcourse)
-                                        Consumer<AppDataProvider>(
-                                          builder: (context,
-                                              averageRatingProvider, _) {
-                                            final double? averageRating =
+                                                    .fetchAndSetAverageRating(
+                                                        courseView.id);
+                                                return const CircularProgressIndicator(); // Placeholder while loading
+                                              } else {
+                                                return CourseView(
+                                                  cname: courseView.name,
+                                                  image: 'assets/image1.png',
+                                                  price: courseView.price,
+                                                  view: courseView.view,
+                                                  press: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        CustomPageRoute(
+                                                            child: CourseDetails(
+                                                                courseid:
+                                                                    courseView
+                                                                        .id)));
+                                                  },
+                                                  desc: courseView.description,
+                                                  averageRating: averageRating,
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        const SizedBox(width: 5),
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          ),
+                    const SizedBox(height: 5),
+                    courseadd.isEmpty
+                        ? Container() // Display nothing if the array is empty
+                        : Column(
+                            children: [
+                              const SizedBox(height: 5),
+                              Specialforyou(
+                                  text: 'Latest Course Added',
+                                  press: () {
+                                    Navigator.push(
+                                        context,
+                                        CustomPageRoute(
+                                            child: const Latestcourse()));
+                                  }),
+                              const SizedBox(height: 2),
+                              Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: LatestCourseAdd(courses: courseadd))
+                            ],
+                          ),
+                    randomcourse.isEmpty
+                        ? Container()
+                        : Column(
+                            children: [
+                              const SizedBox(height: 10),
+                              Specialforyou(
+                                  text: 'For you',
+                                  press: () {
+                                    Navigator.push(
+                                        context,
+                                        CustomPageRoute(
+                                            child: const ForYouCourse()));
+                                  }),
+                              const SizedBox(height: 5),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                    padding: const EdgeInsets.all(1),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        for (final random in randomcourse)
+                                          Consumer<AppDataProvider>(
+                                            builder: (context,
+                                                averageRatingProvider, _) {
+                                              final double? averageRating =
+                                                  averageRatingProvider
+                                                          .averageRatings[
+                                                      random.id];
+                                              if (averageRating == null) {
+                                                // Fetch the average rating if it's not available
                                                 averageRatingProvider
-                                                    .averageRatings[random.id];
-                                            if (averageRating == null) {
-                                              // Fetch the average rating if it's not available
-                                              averageRatingProvider
-                                                  .fetchAndSetAverageRating(
-                                                      random.id);
-                                              return const CircularProgressIndicator(
-                                                color: tdbrown,
-                                              ); // Placeholder while loading
-                                            } else {
-                                              return RandomCourse(
-                                                cname: random.name,
-                                                image: 'assets/image1.png',
-                                                price: random.price,
-                                                press: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      CustomPageRoute(
-                                                          child: CourseDetails(
-                                                              courseid:
-                                                                  random.id)));
-                                                },
-                                                averagerate: averageRating,
-                                                desc: random.description,
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      const SizedBox(width: 5),
-                                    ],
-                                  )),
-                            ),
-                          ],
-                        ),
-                  const SizedBox(height: 10),
-                ],
+                                                    .fetchAndSetAverageRating(
+                                                        random.id);
+                                                return const CircularProgressIndicator(
+                                                  color: tdbrown,
+                                                ); // Placeholder while loading
+                                              } else {
+                                                return RandomCourse(
+                                                  cname: random.name,
+                                                  image: 'assets/image1.png',
+                                                  price: random.price,
+                                                  press: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        CustomPageRoute(
+                                                            child: CourseDetails(
+                                                                courseid: random
+                                                                    .id)));
+                                                  },
+                                                  averagerate: averageRating,
+                                                  desc: random.description,
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        const SizedBox(width: 5),
+                                      ],
+                                    )),
+                              ),
+                            ],
+                          ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      }
     });
   }
 }

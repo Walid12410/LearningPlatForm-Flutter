@@ -115,7 +115,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                         ),
                                       const Icon(
                                         Icons.check_circle_outline,
-                                        color: Colors.green,
+                                        color: Colors.black,
                                         size: 25,
                                       ),
                                     ],

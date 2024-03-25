@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:cached_network_image/cached_network_image.dart';
