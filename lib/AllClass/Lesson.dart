@@ -33,7 +33,7 @@ class Lesson {
       isactive: json['IsActive'] ?? 0,
       min: json['PeriodMinutes'] ?? 0,
       second: json['PeriodSeconds'] ?? 0,
-      mobilelink: json['FilePathMobile'] ?? '',
+      mobilelink: json['FilepathMobile'] ?? '',
     );
   }
 

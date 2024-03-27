@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
+import 'package:learningplatformapp/CouseDetails/video.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -94,7 +95,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                       if (lesson.mediatype == 'v')
                                         IconButton(
                                           onPressed: () {
-                                            // Add your video playback logic here
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> YoutubeVideo(video: lesson.mobilelink, name: lesson.title)));
                                           },
                                           icon: const Icon(
                                             Icons.play_arrow,
