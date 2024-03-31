@@ -126,7 +126,7 @@ class _MostViewState extends State<MostView> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              course.name,
+                                              course.title,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: tdBlue,

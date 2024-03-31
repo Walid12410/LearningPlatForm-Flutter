@@ -19,7 +19,7 @@ class _CourseListViewState extends State<CourseListView> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppDataProvider provider =
           Provider.of<AppDataProvider>(context, listen: false);
-      provider.getcourse(widget.portalid);
+      provider.getCoursePortal(widget.portalid);
     });
   }
 

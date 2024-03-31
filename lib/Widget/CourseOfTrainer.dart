@@ -22,12 +22,12 @@ class CourseOfTrainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(5), color: tdbrown),
           child: ListTile(
             title: Text(
-              '${courses.name}',
+              courses.title,
               style:
               const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              '${courses.description}',
+              courses.description,
               style: const TextStyle(color: tdBlue),
             ),
             trailing: Text(

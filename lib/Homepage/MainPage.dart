@@ -54,8 +54,8 @@ class _MainPageState extends State<MainPage> {
     await provider.getCourseadd();
     await provider.getcourseview();
     await provider.getrandomcourse();
-    await provider.getTrainer(userId);
     await provider.getportal();
+    await provider.getTrainer(userId);
   }
 
   @override
@@ -66,11 +66,8 @@ class _MainPageState extends State<MainPage> {
       var randomcourse = provider.randomcourse;
       var users = provider.users;
       var portal = provider.portals;
-      if (courseviews.isEmpty &&
-          courseadd.isEmpty &&
-          randomcourse.isEmpty &&
-          users.isEmpty &&
-          portal.isEmpty) {
+      if (courseviews.isEmpty && courseadd.isEmpty && randomcourse.isEmpty
+      && users.isEmpty && portal.isEmpty) {
         return const Center(
           child: CircularProgressIndicator(
             color: tdbrown,
@@ -115,10 +112,10 @@ class _MainPageState extends State<MainPage> {
                           child: Container(
                             width: 50,
                             height: 50,
-                            child: users.isNotEmpty && users[0].tpicture != null
+                            child: users.isNotEmpty && users[0].picture != null
                                 ? ClipOval(
                                     child: CachedNetworkImage(
-                                      imageUrl: users[0].tpicture!,
+                                      imageUrl: users[0].picture!,
                                       placeholder: (context, url) =>
                                           const CircularProgressIndicator(
                                         color: tdbrown,
@@ -254,7 +251,7 @@ class _MainPageState extends State<MainPage> {
                                                 return const CircularProgressIndicator(); // Placeholder while loading
                                               } else {
                                                 return CourseView(
-                                                  cname: courseView.name,
+                                                  cname: courseView.title,
                                                   image: 'assets/image1.png',
                                                   price: courseView.price,
                                                   view: courseView.view,
@@ -339,7 +336,7 @@ class _MainPageState extends State<MainPage> {
                                                 ); // Placeholder while loading
                                               } else {
                                                 return RandomCourse(
-                                                  cname: random.name,
+                                                  cname: random.title,
                                                   image: 'assets/image1.png',
                                                   price: random.price,
                                                   press: () {

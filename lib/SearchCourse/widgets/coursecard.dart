@@ -20,35 +20,37 @@ class CourseCard extends StatefulWidget {
 }
 
 class _CourseCardState extends State<CourseCard> {
-  late bool isFavorite = false;
+  bool _isFavorite = false;
   double averageRating = 0.0; // Add this line
 
   @override
   void initState() {
     super.initState();
-    final userId = Provider.of<AppDataProvider>(context, listen: false).userId;
+    final userId = Provider
+        .of<AppDataProvider>(context, listen: false)
+        .userId;
     if (userId != null) {
       fetchFavoriteStatus(userId);
     }
-    fetchAverageRating(); // Call method to fetch average rating
+    fetchAverageRating();
   }
 
-  // Asynchronously fetches favorite status
   Future<void> fetchFavoriteStatus(int userId) async {
     try {
-      final isFavoriteValue = await FavoriteService.checkFavorite(userId, widget.course.id);
+      bool isFavorite = await FavoriteService.checkFavorite(
+          userId, widget.course.id);
       setState(() {
-        isFavorite = isFavoriteValue;
+        _isFavorite = isFavorite;
       });
     } catch (e) {
-      // Handle errorhttp://192.168.1.13/EduPlatForm/CMS/api/feedback.php
       print('Error fetching favorite status: $e');
     }
   }
 
   Future<void> fetchAverageRating() async {
     try {
-      final apiUrl = 'http://192.168.1.12/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=${widget.course.id}';
+      final apiUrl = 'http://192.168.1.12/EduPlatForm/CMS/api/feedback.php?operation=getAverageRating&course_id=${widget
+          .course.id}';
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = jsonDecode(response.body);
@@ -57,10 +59,10 @@ class _CourseCardState extends State<CourseCard> {
           if (averageRatingValue != null) {
             setState(() {
               averageRating = double.parse(averageRatingValue.toString());
-             // print('Average Rating: $averageRating');
+              // print('Average Rating: $averageRating');
             });
           } else {
-           // print('Average rating is null');
+            // print('Average rating is null');
           }
         } else {
           // Handle error
@@ -68,7 +70,7 @@ class _CourseCardState extends State<CourseCard> {
         }
       } else {
         // Handle errors
-       // print('Failed to load data. Status code: ${response.statusCode}');
+        // print('Failed to load data. Status code: ${response.statusCode}');
       }
     } catch (e) {
       // Handle error
@@ -78,7 +80,9 @@ class _CourseCardState extends State<CourseCard> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = Provider.of<AppDataProvider>(context).userId;
+    final userId = Provider
+        .of<AppDataProvider>(context)
+        .userId;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -106,33 +110,35 @@ class _CourseCardState extends State<CourseCard> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    widget.course.name,
+                    widget.course.title,
                     style: const TextStyle(
-                      fontSize: 22,
-                      color: tdBlue,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis
+                        fontSize: 22,
+                        color: tdBlue,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     widget.course.description,
                     style: const TextStyle(
-                      fontSize: 16,
-                      color: tdBlue,
+                        fontSize: 16,
+                        color: tdBlue,
                         overflow: TextOverflow.ellipsis
                     ),
                   ),
                   const SizedBox(height: 4),
                   RatingBar.builder(
                     direction: Axis.horizontal,
-                    itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.red),
+                    itemBuilder: (context, _) =>
+                    const Icon(Icons.star, color: Colors.red),
                     onRatingUpdate: (index) {},
                     itemPadding: const EdgeInsets.symmetric(horizontal: 4),
                     minRating: 1,
                     itemCount: 5,
                     itemSize: 18,
-                    initialRating: averageRating, // Use fetched average rating
+                    initialRating: averageRating,
+                    // Use fetched average rating
                     ignoreGestures: true,
                   ),
                   const SizedBox(height: 4),
@@ -148,15 +154,22 @@ class _CourseCardState extends State<CourseCard> {
                       ),
                       IconButton(
                         icon: Icon(
-                          isFavorite ? Icons.bookmark : Icons.bookmark_border,
+                          _isFavorite
+                              ? Icons.bookmark
+                              : Icons.bookmark_border,
                           size: 30,
                           color: tdBlue,
                         ),
                         onPressed: () {
-                          if (userId != null) {
-                            toggleFavorite(userId, widget.course.id, isFavorite);
-                          } else {
-                            // Handle when user ID is not available
+                          try {
+                            bool newFavoriteStatus = !_isFavorite;
+                            FavoriteService.toggleFavorite(
+                                userId, widget.course.id, newFavoriteStatus);
+                            setState(() {
+                              _isFavorite = newFavoriteStatus;
+                            });
+                          } catch (e) {
+                            print('Error toggling favorite status: $e');
                           }
                         },
                       ),
@@ -170,16 +183,5 @@ class _CourseCardState extends State<CourseCard> {
       ),
     );
   }
-
-  Future<void> toggleFavorite(int userId, int courseId, bool isFavorite) async {
-    try {
-      final success = await FavoriteService.toggleFavorite(userId, courseId, isFavorite);
-      setState(() {
-        this.isFavorite = success ? !isFavorite : isFavorite;
-      });
-    } catch (e) {
-      // Handle error
-      print('Error toggling favorite: $e');
-    }
-  }
 }
+

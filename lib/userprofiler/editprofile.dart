@@ -35,9 +35,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     await fetchTrainers(userid);
     setState(() {
       fnameController =
-          TextEditingController(text: users.isNotEmpty ? users[0].fname : '');
+          TextEditingController(text: users.isNotEmpty ? users[0].firstname : '');
       lnameController =
-          TextEditingController(text: users.isNotEmpty ? users[0].lname : '');
+          TextEditingController(text: users.isNotEmpty ? users[0].lastname : '');
       emailController =
           TextEditingController(text: users.isNotEmpty ? users[0].email : '');
       phoneController = TextEditingController(
@@ -129,9 +129,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         SizedBox(
                           width: 120,
                           height: 120,
-                          child: users[0].tpicture.isNotEmpty? ClipOval(
+                          child: users[0].picture.isNotEmpty? ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: users[0].tpicture,
+                              imageUrl: users[0].picture,
                               placeholder: (context, url) =>const CircularProgressIndicator(
                                 color: tdbrown,
                               ),

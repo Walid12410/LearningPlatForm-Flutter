@@ -30,9 +30,8 @@ class _LatestcourseState extends State<Latestcourse> {
     AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     var coursesview = appDataProvider.allCourses;
     if (coursesview != null && coursesview.isNotEmpty) {
-      coursesview.sort((a, b) => b.createDate.compareTo(a.createDate));
+      coursesview.sort((a, b) => b.createDate!.compareTo(a.createDate!));
     }
-    final userId = Provider.of<AppDataProvider>(context).userId;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -120,7 +119,7 @@ class _LatestcourseState extends State<Latestcourse> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              course.name,
+                                              course.title,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: tdBlue,

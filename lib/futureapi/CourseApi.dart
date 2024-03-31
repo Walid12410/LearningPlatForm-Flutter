@@ -4,191 +4,147 @@ import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
-Future<List<Course>?> getAllCourses() async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> courseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourses = courseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] =
-            double.parse(parsedJson['CoursePrice'].toString());
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate'].toString());
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      return fetchedCourses;
+Future<List<Course>> getAllCourses() async {
+  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    List<Course> courses = [];
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
+    if (jsonResponse.containsKey('data')) {
+      List<dynamic> data = jsonResponse['data'];
+      for (var item in data) {
+        courses.add(Course.fromJson(item));
+      }
+      return courses;
     } else {
-      throw Exception('Failed to load Course view');
+      throw Exception('Invalid response format: data key not found');
     }
-  } catch (e) {
-    print('Error fetching Course view: $e');
+  } else {
+    throw Exception('Failed to load courses');
   }
 }
 
-Future<List<Course>?> getCourseByID(int CourseID) async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectOne&CourseID=$CourseID');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> courseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourses = courseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate']);
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      return fetchedCourses;
+Future<List<Course>> getCourseByID(int courseID) async {
+  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=one&id=$courseID');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    List<Course> courses = [];
+    dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse is List) {
+      for (var item in jsonResponse) {
+        courses.add(Course.fromJson(item));
+      }
+      return courses;
+    } else if (jsonResponse is Map<String, dynamic>) {
+      courses.add(Course.fromJson(jsonResponse));
+      return courses;
     } else {
-      throw Exception('No courses found for Course with ID: $CourseID');
+      throw Exception('Invalid response format');
     }
-  } catch (e) {
-    print('Error fetching courses: $e');
-    return null; // Return null in case of error
+  } else {
+    throw Exception('Failed to load courses');
   }
 }
 
 Future<List<Course>> getCourseTrainer(int userId) async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> courseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourses = courseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate']);
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      List<Course> filteredCourses =
-      fetchedCourses.where((course) => course.trainerID == userId).toList();
-      print(filteredCourses);
-      return filteredCourses;
+  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse['data'] is List) {
+      List<Course> courses = [];
+      for (var item in jsonResponse['data']) {
+        courses.add(Course.fromJson(item));
+      }
+        courses = courses.where((course) => course.trainerID == userId).toList();
+      return courses;
     } else {
-      throw Exception(
-          'Failed to load courses. Status Code: ${response.statusCode}');
+      throw Exception('Invalid response format: expected a list');
     }
-  } catch (e) {
-    print('Error fetching courses: $e');
-    return []; // Return an empty list if an error occurs
+  } else {
+    throw Exception('Failed to load courses: ${response.statusCode}');
   }
 }
 
 Future<List<Course>> getCourse(int portalId) async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=SelectAll');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> courseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourses = [];
-      for (var json in courseJsonList) {
-        try {
-          final parsedJson = json as Map<String, dynamic>;
-          parsedJson['CoursePrice'] = double.parse(parsedJson['CoursePrice']);
-          parsedJson['TrainerShareRate'] =
-              double.parse(parsedJson['TrainerShareRate']);
-          parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-          fetchedCourses.add(Course.fromJson(parsedJson));
-        } catch (e) {
-          print('Error parsing course: $e');
-        }
+  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse['data'] is List) {
+      List<Course> courses = [];
+      for (var item in jsonResponse['data']) {
+        courses.add(Course.fromJson(item));
       }
-      List<Course> filteredCourses = fetchedCourses
-          .where((course) => course.portalID == portalId)
-          .toList();
-      return filteredCourses;
+      courses = courses.where((course) => course.portalID == portalId).toList();
+      return courses;
     } else {
-      throw Exception('Failed to load courses');
+      throw Exception('Invalid response format: expected a list');
     }
-  } catch (e) {
-    print('Error fetching courses: $e');
-    return []; // Return an empty list if an error occurs
-  }
-}
-
-Future<List<Course>?> getCourseView() async {
-  try {
-    final Uri url = Uri.parse('http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=mostview');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> courseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourses = courseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] =
-            double.parse(parsedJson['CoursePrice'].toString());
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate'].toString());
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      return fetchedCourses;
-    } else {
-      throw Exception('Failed to load Course view');
-    }
-  } catch (e) {
-    print('Error fetching Course view: $e');
+  } else {
+    throw Exception('Failed to load courses: ${response.statusCode}');
   }
 }
 
 
 
-Future<List<Course>?> getCourseNew() async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=latest');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> CourseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourse = CourseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] =
-            double.parse(parsedJson['CoursePrice'].toString());
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate'].toString());
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      return fetchedCourse;
+
+Future<List<Course>> getCourseView() async {
+  final response = await http.get(Uri.parse(
+      'http://192.168.1.12/api/walid/courseapi.php?operation=mostview'));
+  if (response.statusCode == 200) {
+    List<Course> courses = [];
+    dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse is List) {
+      for (var item in jsonResponse) {
+        courses.add(Course.fromJson(item));
+      }
+      return courses;
     } else {
-      throw Exception('Failed to load Course view');
+      throw Exception('Invalid response format: expected a list');
     }
-  } catch (e) {
-    print('Error fetching Course view: $e');
+  } else {
+    throw Exception('Failed to load courses');
   }
 }
 
 
-Future<List<Course>?> getRandomCourse() async {
-  try {
-    Uri url = Uri.parse(
-        'http://192.168.1.12/EduPlatForm/CMS/api/CourseCrudOperation.php?operation=random');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final List<dynamic> CourseJsonList = jsonDecode(response.body);
-      List<Course> fetchedCourse = CourseJsonList.map((json) {
-        final parsedJson = json as Map<String, dynamic>;
-        parsedJson['CoursePrice'] =
-            double.parse(parsedJson['CoursePrice'].toString());
-        parsedJson['TrainerShareRate'] =
-            double.parse(parsedJson['TrainerShareRate'].toString());
-        parsedJson['CreateDate'] = {'date': parsedJson['CreateDate']['date']};
-        return Course.fromJson(parsedJson);
-      }).toList();
-      return fetchedCourse;
+Future<List<Course>> getCourseNew() async {
+  Uri url = Uri.parse('http://192.168.1.12/api/walid/courseapi.php?operation=latest');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    List<Course> courses = [];
+    dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse is List) {
+      for (var item in jsonResponse) {
+        courses.add(Course.fromJson(item));
+      }
+      return courses;
     } else {
-      throw Exception('Failed to load Course random');
+      throw Exception('Invalid response format: expected a list');
     }
-  } catch (e) {
-    print('Error fetching Course random: $e');
+  } else {
+    throw Exception('Failed to load courses');
   }
 }
+
+Future<List<Course>> getRandomCourse() async {
+  final Uri url = Uri.parse('http://192.168.1.12/api/walid/courseapi.php?operation=random');
+  final response = await http.get(url);
+  if (response.statusCode == 200) {
+    final List<Course> courses = [];
+    final dynamic jsonResponse = json.decode(response.body);
+    if (jsonResponse is List) {
+      for (var item in jsonResponse) {
+        courses.add(Course.fromJson(item));
+      }
+      return courses;
+    } else {
+      throw Exception('Invalid response format: expected a list');
+    }
+  } else {
+    throw Exception('Failed to load courses');
+  }
+}
+
+

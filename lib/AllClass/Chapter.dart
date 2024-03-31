@@ -16,9 +16,9 @@ class Chapter {
   factory Chapter.fromJson(Map<String, dynamic> json) {
     return Chapter(
       id: json['ChapterID'],
-      title: json['ChapterName'],
-      number: json['ChapterNumber'],
-      description: json['ChapterDescription'],
+      title: json['Title'],
+      number: json['ChapNum'],
+      description: json['ChapDescr'],
       courseID: json['CourseID'],
     );
   }

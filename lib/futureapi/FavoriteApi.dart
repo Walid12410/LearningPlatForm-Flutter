@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 
 class FavoriteService {
   static Future<bool> checkFavorite(int userId, int courseId) async {
-    final url = 'http://192.168.1.12/EduPlatForm/CMS/api/favorite.php';
+    String url = 'http://192.168.1.12/api/walid/favoritecourse.php';
     final response = await http.post(
       Uri.parse(url),
       body: {
         'operation': 'check',
-        'user_id': userId.toString(),
-        'course_id': courseId.toString(),
+        'UserID': userId.toString(),
+        'CourseID': courseId.toString(),
       },
     );
     if (response.statusCode == 200) {
@@ -21,16 +21,15 @@ class FavoriteService {
     }
   }
 
-  static Future<bool> toggleFavorite(
-      int userId, int courseId, bool isFavorite) async {
-    final url = 'http://192.168.1.12/EduPlatForm/CMS/api/favorite.php';
-    final operation = isFavorite ? 'delete' : 'add';
+  static Future<bool> toggleFavorite(int userId, int courseId, bool isFavorite) async {
+    String url = 'http://192.168.1.12/api/walid/favoritecourse.php';
+    final operation = isFavorite ? 'add' : 'delete';
     final response = await http.post(
       Uri.parse(url),
       body: {
         'operation': operation,
-        'user_id': userId.toString(),
-        'course_id': courseId.toString(),
+        'UserID': userId.toString(),
+        'CourseID': courseId.toString(),
       },
     );
     if (response.statusCode == 200) {

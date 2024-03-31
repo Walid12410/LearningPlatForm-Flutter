@@ -21,12 +21,12 @@ class Courseofportal extends StatelessWidget {
               borderRadius: BorderRadius.circular(5), color: tdbrown),
           child: ListTile(
             title: Text(
-              '${course.name}',
+              course.title,
               style:
                   const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              '${course.description}',
+              course.description,
               style: const TextStyle(color: tdBlue),
             ),
             trailing: Text(

@@ -134,7 +134,7 @@ class _ForYouCourseState extends State<ForYouCourse> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              course.name,
+                                              course.title,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: tdBlue,

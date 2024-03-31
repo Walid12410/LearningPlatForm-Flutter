@@ -42,7 +42,7 @@ class _ChapterpageState extends State<Chapterpage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: chapters.map((c) {
                   List<Lesson> chapterLessons = lessons
-                      .where((lesson) => lesson.chpaterID == c.id)
+                      .where((lesson) => lesson.chapterID == c.id)
                       .toList();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -56,7 +56,6 @@ class _CourseInformationState extends State<CourseInformation> {
             var data = provider.data;
             var partNumbers = provider.partNumber;
             var courses = provider.CourseByID;
-
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -85,7 +84,7 @@ class _CourseInformationState extends State<CourseInformation> {
                               ),
                               child: ClipOval(
                                 child: CachedNetworkImage(
-                                  imageUrl: data[0].ProfilePicture,
+                                  imageUrl: data[0].profilePicture,
                                   placeholder: (context, url) =>
                                   const CircularProgressIndicator(
                                     color: tdbrown,
@@ -171,7 +170,7 @@ class _CourseInformationState extends State<CourseInformation> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                                '${courses[0].name}.${courses[0].description}'),
+                                '${courses[0].title}.${courses[0].description}'),
                           ],
                         ),
                       )

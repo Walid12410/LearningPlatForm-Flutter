@@ -15,19 +15,15 @@ class CoursePortal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0), // Add vertical margin
+      margin: const EdgeInsets.symmetric(vertical: 8.0), // Add vertical margin
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: tdbrown,
       ),
       child: ListTile(
         title: Text(
-          '${portals.portalName}',
+         portals.portalName,
           style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          '${portals.portalDescription}',
-          style: const TextStyle(color: tdBlue),
         ),
         onTap: () {
           Navigator.push(

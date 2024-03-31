@@ -20,7 +20,7 @@ class LatestCourseAdd extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  course.name,
+                  course.title,
                   style: const TextStyle(
                       color: tdBlue,
                       fontWeight: FontWeight.bold,

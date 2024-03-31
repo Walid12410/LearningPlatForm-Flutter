@@ -15,7 +15,6 @@ import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
-
 import '../AllClass/Chapter.dart';
 import '../AllClass/Lesson.dart';
 
@@ -30,24 +29,24 @@ class AppDataProvider extends ChangeNotifier {
 
   List<CourseTime> _courseTime = [];
   List<CourseTime> get courseTime => _courseTime;
-  getCourseTine(int courseid) async {
-    final res = await TotalCourseTime(courseid);
+  getCourseTine(int id) async {
+    final res = await TotalCourseTime(id);
     _courseTime = res;
     notifyListeners();
   }
 
   List<TrainerCourseShow> _data = [];
   List<TrainerCourseShow> get data => _data;
-  getTrainerCourseShow(int courseid) async {
-    final res = await getDataTrainerCourse(courseid);
+  getTrainerCourseShow(int id) async {
+    final res = await getDataTrainerCourse(id);
     _data = res;
     notifyListeners();
   }
 
   List<String> _partNumbers = [];
   List<String> get partNumber => _partNumbers;
-  Future<void> getPartNumber(int courseid) async {
-    final res = await fetchPartNumbers(courseid);
+  Future<void> getPartNumber(int id) async {
+    final res = await fetchPartNumbers(id);
     _partNumbers = res.map((item) => item.toString()).toList();
     notifyListeners();
   }
@@ -146,7 +145,7 @@ class AppDataProvider extends ChangeNotifier {
   List<Trainer> _trainers = [];
   List<Trainer> get trainers => _trainers;
   getAllTrainer() async{
-    final res = await fetchAllTrainer();
+    final res = await fetchAllTrainers();
     _trainers = res;
     notifyListeners();
   }
@@ -161,7 +160,7 @@ class AppDataProvider extends ChangeNotifier {
 
   List<Course> _courses = [];
   List<Course> get courses => _courses;
-  getcourse(int id) async{
+  getCoursePortal(int id) async{
     final res = await getCourse(id);
     _courses = res ;
     notifyListeners();

@@ -46,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       filteredCourses = allCourses
           .where((course) =>
-              course.name.toLowerCase().contains(query.toLowerCase()) &&
+              course.title.toLowerCase().contains(query.toLowerCase()) &&
               (selectedCategory.isEmpty ||
                   course.portalID.toString() == selectedCategory))
           .toList();
@@ -307,7 +307,7 @@ class _SearchPageState extends State<SearchPage> {
                                   borderRadius: BorderRadius.circular(5), color: tdbrown),
                               child: ListTile(
                                 title: Text(
-                                  filteredCourses[index].name,
+                                  filteredCourses[index].title,
                                   style:
                                   const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
                                 ),

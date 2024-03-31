@@ -58,9 +58,9 @@ class _ProfileState extends State<Profile> {
                 height: 120,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: user.tpicture != null
+                  child: user.picture != null
                       ? Image.network(
-                          user.tpicture!,
+                          user.picture!,
                           fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;

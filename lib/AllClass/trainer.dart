@@ -1,56 +1,50 @@
-
-
 class Trainer {
   final int id;
-  final String fname;
-  final String lname;
-  final String tpicture;
+  final String firstname;
+  final String fName;
+  final String lastname;
+  final DateTime? dob;
   final String telephone;
-  final String gender;
   final String email;
-  final DateTime joindate;
-  final bool isActive;
+  final String picture;
+  final int isActive;
   final String usertype;
+  final String title;
+  final String description;
 
-  Trainer({
-    required this.id,
-    required this.fname,
-    required this.lname,
-    required this.tpicture,
-    required this.telephone,
-    required this.gender,
-    required this.email,
-    required this.joindate,
-    required this.isActive,
-    required this.usertype
-  });
+  Trainer(
+      {required this.id,
+      required this.firstname,
+      required this.fName,
+      required this.lastname,
+      required this.dob,
+      required this.telephone,
+      required this.email,
+      required this.picture,
+      required this.isActive,
+      required this.usertype,
+      required this.title,
+      required this.description});
 
   factory Trainer.fromJson(Map<String, dynamic> json) {
-    String tpicture = json['UserProfilePic'] ?? '';
-    if (tpicture == null && json['UserProfilePic'] is String) {
-      tpicture = '';
-    }
-    final Map<String, dynamic> joinDateJson = json['JoinDate'];
-    final String dateString = joinDateJson['date'] ?? '';
-
     return Trainer(
       id: json['UserID'] ?? 0,
-      fname: json['UserFirstName'] ?? '',
-      lname: json['UserLastName'] ?? '',
-      tpicture: tpicture,
-      telephone: json['UserTelephone'] ?? '',
-      joindate: dateString.isNotEmpty ? DateTime.parse(dateString) : DateTime.now(),
-      isActive: json['IsActive'] == 1,
-      email: json['UserEmail'] ?? '',
-      gender: json['UserGender'] ?? '',
-      usertype: json['UserType']
+      firstname: json['FName'] ?? '',
+      fName: json['FatName'] ?? '',
+      lastname: json['LName'] ?? '',
+      dob: json['DOB'] != null ? DateTime.parse(json['DOB']['date']) : null,
+      telephone: json['Phone'] ?? '',
+      email: json['Email'] ?? '',
+      picture: json['Photo'] ?? '',
+      isActive: json['IsActive'] ?? true,
+      usertype: json['UserType'] ?? '',
+      title: json['Title'] ?? '',
+      description: json['Description'] ?? '',
     );
   }
 
   @override
   String toString() {
-    return '$fname $lname';
+    return '$firstname $lastname';
   }
 }
-
-

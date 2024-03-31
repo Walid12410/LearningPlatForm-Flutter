@@ -23,7 +23,7 @@ class TrainerInfo extends StatelessWidget {
         ),
         child: ListTile(
           leading:  CircleAvatar(
-            backgroundImage: NetworkImage(trainers.tpicture),
+            backgroundImage: NetworkImage(trainers.picture),
             radius: 25,
           ),
           title: Text(
@@ -31,7 +31,7 @@ class TrainerInfo extends StatelessWidget {
             style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
-            '${trainers.email}',
+            trainers.email,
             style: const TextStyle(color: tdBlue),
           ),
           trailing: TextButton.icon(

@@ -57,7 +57,7 @@ class _InformationState extends State<Information> {
                     child: Container(
                       child: users.isNotEmpty? ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: users[0].tpicture,
+                          imageUrl: users[0].picture,
                           placeholder: (context, url) =>const CircularProgressIndicator(
                             color: tdbrown,
                           ),

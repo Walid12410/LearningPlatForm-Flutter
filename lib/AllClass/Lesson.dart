@@ -4,22 +4,23 @@ class Lesson {
   String title;
   String mediatype;
   String filepath;
-  int chpaterID;
-  int isactive;
+  int chapterID;
+  int isActive;
   int min;
   int second;
   String mobilelink;
 
-  Lesson({required this.id,
+  Lesson({
+    required this.id,
     required this.number,
     required this.title,
     required this.mediatype,
     required this.filepath,
-    required this.chpaterID,
-    required this.isactive,
+    required this.chapterID,
+    required this.isActive,
     required this.min,
     required this.second,
-    required this.mobilelink
+    required this.mobilelink,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
@@ -29,12 +30,11 @@ class Lesson {
       title: json['Title'] ?? '',
       mediatype: json['MediaType'] ?? '',
       filepath: json['FilePath'] ?? '',
-      chpaterID: json['ChapterID'] ?? 0,
-      isactive: json['IsActive'] ?? 0,
+      chapterID: json['ChapterID'] ?? 0,
+      isActive: json['IsActive'] ?? 0,
       min: json['PeriodMinutes'] ?? 0,
       second: json['PeriodSeconds'] ?? 0,
       mobilelink: json['FilepathMobile'] ?? '',
     );
   }
-
 }

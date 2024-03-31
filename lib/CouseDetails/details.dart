@@ -26,7 +26,6 @@ class _CourseDetailsState extends State<CourseDetails>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       int userid = provider.userId;
@@ -57,6 +56,7 @@ class _CourseDetailsState extends State<CourseDetails>
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var courseDetail = provider.CourseByID;
+    var userId = provider.userId;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -80,7 +80,7 @@ class _CourseDetailsState extends State<CourseDetails>
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '${courseDetail[0].name}',
+                                    courseDetail[0].title,
                                     style: const TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.w900,
@@ -100,7 +100,15 @@ class _CourseDetailsState extends State<CourseDetails>
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    // Handle onPressed for bookmark button
+                                    try {
+                                      bool newFavoriteStatus = !_isFavorite;
+                                       FavoriteService.toggleFavorite(userId, widget.courseid, newFavoriteStatus);
+                                      setState(() {
+                                        _isFavorite = newFavoriteStatus;
+                                      });
+                                    } catch (e) {
+                                      print('Error toggling favorite status: $e');
+                                    }
                                   },
                                   icon: Icon(
                                     _isFavorite

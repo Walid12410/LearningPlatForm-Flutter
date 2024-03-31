@@ -4,7 +4,7 @@ import 'package:learningplatformapp/AllClass/Chapter.dart';
 
 Future<List<Chapter>> fetchChaptersByCourseID(int courseID) async {
   final response =
-  await http.get(Uri.parse('http://192.168.1.12/EduPlatForm/CMS/api/chapter.php?status=data'));
+  await http.get(Uri.parse('http://192.168.1.12/api/webChapter.php?status=data'));
   if (response.statusCode == 200) {
     List<Chapter> chapters = [];
     Map<String, dynamic> data = json.decode(response.body);
