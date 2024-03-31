@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // For controlling system UI overlays
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
