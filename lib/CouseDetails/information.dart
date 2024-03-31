@@ -28,6 +28,7 @@ class _CourseInformationState extends State<CourseInformation> {
       provider.getPartNumber(widget.courseid);
       provider.getTrainerCourseShow(widget.courseid);
     });
+    loadData(context);
   }
 
   void loadData(context)  {

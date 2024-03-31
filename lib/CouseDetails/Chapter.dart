@@ -95,7 +95,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                       if (lesson.mediatype == 'v')
                                         IconButton(
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> YoutubeVideo(video: lesson.mobilelink, name: lesson.title)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> YoutubeVideo(videoUrl: lesson.mobilelink, name: lesson.title)));
                                           },
                                           icon: const Icon(
                                             Icons.play_arrow,

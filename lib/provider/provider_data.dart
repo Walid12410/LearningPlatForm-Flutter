@@ -166,18 +166,6 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  YoutubePlayerController? _controller;
-  YoutubePlayerController? get controller => _controller;
-  set controller(YoutubePlayerController? newController) {
-    _controller = newController;
-    notifyListeners();
-  }
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
   List<Chapter> _allchapter = [];
   List<Chapter> get allchapter => _allchapter;
   getChapterByID(int id) async {
