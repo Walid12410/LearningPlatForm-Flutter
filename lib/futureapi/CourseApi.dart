@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:learningplatformapp/AllClass/course.dart';
-import 'package:provider/provider.dart';
-import 'package:learningplatformapp/provider/provider_data.dart';
 
 Future<List<Course>> getAllCourses() async {
   Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');

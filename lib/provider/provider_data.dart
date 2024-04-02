@@ -10,6 +10,7 @@ import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
 import 'package:learningplatformapp/futureapi/LessonApi.dart';
 import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
+import 'package:learningplatformapp/futureapi/RatingDetails.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
@@ -17,6 +18,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import '../AllClass/Chapter.dart';
 import '../AllClass/Lesson.dart';
+import '../AllClass/RatingDetails.dart';
 
 class AppDataProvider extends ChangeNotifier {
   int _userId = 0;
@@ -113,12 +115,12 @@ class AppDataProvider extends ChangeNotifier {
     }
   }
 
-  List<Trainer> _users = []; // Define list to store trainers
+  List<Trainer> _users = [];
   List<Trainer> get users => _users;
-  getTrainer(int userid) async{
+  getTrainer(int userid) async {
     final res = await fetchTrainers(userid);
-    _users = res;
-    notifyListeners();
+      _users = res;
+      notifyListeners();
   }
 
   List<Portal> _portals = [];
@@ -182,6 +184,13 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<CourseReview> _review = [];
+  List<CourseReview> get courseReview => _review;
+  getReviewCourseDetails(int id) async{
+    final res = await fetchCourseReview(id);
+    _review = res;
+    notifyListeners();
+  }
 }
 
 

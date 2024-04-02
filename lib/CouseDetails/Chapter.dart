@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
-import 'package:learningplatformapp/CouseDetails/video.dart';
+import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import '../AllClass/Lesson.dart';
@@ -19,9 +20,9 @@ class _ChapterpageState extends State<Chapterpage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        final provider = Provider.of<AppDataProvider>(context, listen: false);
-        provider.getChapterByID(widget.courseid);
-        provider.getLessonById(widget.courseid);
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      provider.getChapterByID(widget.courseid);
+      provider.getLessonById(widget.courseid);
     });
   }
 
@@ -61,15 +62,18 @@ class _ChapterpageState extends State<Chapterpage> {
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(c.description),
                             )
                           ],
                         ),
                       ),
                       const Center(
-                        child: Text('Lesson',style: TextStyle(fontWeight: FontWeight.bold,
-                        fontSize: 25),),
+                        child: Text(
+                          'Lesson',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ),
                       ),
                       if (chapterLessons.isNotEmpty)
                         Column(
@@ -77,7 +81,8 @@ class _ChapterpageState extends State<Chapterpage> {
                             return Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -95,7 +100,12 @@ class _ChapterpageState extends State<Chapterpage> {
                                       if (lesson.mediatype == 'v')
                                         IconButton(
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> YoutubeVideo(videoUrl: lesson.mobilelink, name: lesson.title)));
+                                            Navigator.push(
+                                                context,
+                                                CustomPageRoute2(
+                                                    child: FeedbackCourse(
+                                                  courseId: widget.courseid,
+                                                )));
                                           },
                                           icon: const Icon(
                                             Icons.play_arrow,
@@ -114,11 +124,6 @@ class _ChapterpageState extends State<Chapterpage> {
                                             size: 25,
                                           ),
                                         ),
-                                      const Icon(
-                                        Icons.check_circle_outline,
-                                        color: Colors.black,
-                                        size: 25,
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -135,7 +140,10 @@ class _ChapterpageState extends State<Chapterpage> {
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
-                      const Divider(color: Colors.black,thickness: 5,), // Divider between chapters
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 5,
+                      ), // Divider between chapters
                     ],
                   );
                 }).toList(),
