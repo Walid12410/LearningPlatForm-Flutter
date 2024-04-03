@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
+import 'package:learningplatformapp/CouseDetails/video.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
 import 'package:provider/provider.dart';
@@ -102,10 +103,16 @@ class _ChapterpageState extends State<Chapterpage> {
                                           onPressed: () {
                                             Navigator.push(
                                                 context,
-                                                CustomPageRoute2(
-                                                    child: FeedbackCourse(
-                                                  courseId: widget.courseid,
-                                                )));
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        YoutubeVideo(
+                                                            videoUrl: lesson
+                                                                .mobilelink,
+                                                            name:
+                                                                lesson.title
+                                                        )
+                                                )
+                                            );
                                           },
                                           icon: const Icon(
                                             Icons.play_arrow,

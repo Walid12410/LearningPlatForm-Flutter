@@ -15,6 +15,7 @@ Future<List<CourseReview>> fetchCourseReview(int id) async {
       }
       return courseReview;
     } else {
+      return [];
       throw Exception('Invalid response format: data key not found');
     }
   } else {

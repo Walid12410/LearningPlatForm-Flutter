@@ -7,6 +7,9 @@ class CourseReview {
   final DateTime? timestamp;
   final int ?timezoneType;
   final String ?timezone;
+  final String fName;
+  final String lName;
+  final String photo;
 
   CourseReview({
     required this.id,
@@ -17,6 +20,9 @@ class CourseReview {
     required this.timestamp,
     required this.timezoneType,
     required this.timezone,
+    required this.fName,
+    required this.lName,
+    required this.photo
   });
 
   factory CourseReview.fromJson(Map<String, dynamic> json) {
@@ -29,6 +35,14 @@ class CourseReview {
       timestamp: DateTime.parse(json['timestamp']['date']),
       timezoneType: json['timestamp']['timezone_type'],
       timezone: json['timestamp']['timezone'],
+      fName: json['FName'] ?? '',
+      lName: json['LName'] ?? '',
+      photo: json['Photo'] ?? ''
     );
+  }
+
+  @override
+  String toString() {
+    return '$fName $lName';
   }
 }
