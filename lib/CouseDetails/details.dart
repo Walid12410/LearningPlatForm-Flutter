@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
 import 'package:learningplatformapp/CouseDetails/information.dart';
-import 'package:learningplatformapp/CouseDetails/quiz.dart';
+import 'package:learningplatformapp/CouseDetails/quizDetails.dart';
 import 'package:learningplatformapp/CouseDetails/tabcontroller.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
@@ -149,7 +149,7 @@ class _CourseDetailsState extends State<CourseDetails>
                     tabViews: [
                       CourseInformation(courseid: widget.courseid),
                       Chapterpage(courseid: widget.courseid),
-                      Quizzes(), // Third tab with the stateful page
+                      Quizzes(courseId: widget.courseid,), // Third tab with the stateful page
                     ],
                   ),
                 ],

@@ -9,6 +9,7 @@ import 'package:learningplatformapp/futureapi/CourseApi.dart';
 import 'package:learningplatformapp/futureapi/LeasonCalculate.dart';
 import 'package:learningplatformapp/futureapi/LessonApi.dart';
 import 'package:learningplatformapp/futureapi/PortalApi.dart';
+import 'package:learningplatformapp/futureapi/QuizApi.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:learningplatformapp/futureapi/RatingDetails.dart';
 import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
@@ -18,6 +19,8 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import '../AllClass/Chapter.dart';
 import '../AllClass/Lesson.dart';
+import '../AllClass/Question.dart';
+import '../AllClass/QuestionChoice.dart';
 import '../AllClass/RatingDetails.dart';
 
 class AppDataProvider extends ChangeNotifier {
@@ -173,7 +176,7 @@ class AppDataProvider extends ChangeNotifier {
   getChapterByID(int id) async {
     final res = await fetchChaptersByCourseID(id);
     _allchapter = res;
-    notifyListeners(); // Notify listeners after updating the list
+    notifyListeners();
   }
 
   List<Lesson> _lesson =[];
@@ -191,6 +194,24 @@ class AppDataProvider extends ChangeNotifier {
     _review = res;
     notifyListeners();
   }
+
+  List<Question> _question = [];
+  List<Question> get question => _question;
+  getQuizQuestions(int id) async{
+    final res = await fetchQuizQuestion(id);
+    _question = res;
+    notifyListeners();
+  }
+
+  List<questionChoice> _qChoice = [];
+  List<questionChoice> get qChoice => _qChoice;
+  getQuestionChoice() async{
+    final res = await fetchQuestionChoice();
+    _qChoice = res;
+    notifyListeners();
+  }
+
 }
+
 
 
