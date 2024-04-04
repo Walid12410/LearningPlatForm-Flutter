@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        reloadPage();
+      reloadPage();
     });
     super.initState();
   }
@@ -66,8 +66,11 @@ class _MainPageState extends State<MainPage> {
       var randomcourse = provider.randomcourse;
       var users = provider.users;
       var portal = provider.portals;
-      if (courseviews.isEmpty && courseadd.isEmpty && randomcourse.isEmpty
-      && users.isEmpty && portal.isEmpty) {
+      if (courseviews.isEmpty &&
+          courseadd.isEmpty &&
+          randomcourse.isEmpty &&
+          users.isEmpty &&
+          portal.isEmpty) {
         return const Center(
           child: CircularProgressIndicator(
             color: tdbrown,
@@ -101,34 +104,44 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return DialogPage(); // Custom dialog page
-                              },
-                            );
-                          },
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            child: users.isNotEmpty && users[0].picture != null
-                                ? ClipOval(
-                                    child: CachedNetworkImage(
-                                      imageUrl: users[0].picture!,
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(
-                                        color: tdbrown,
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset('assets/user.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return DialogPage(); // Custom dialog page
+                                },
+                              );
+                            },
+                            child: users.isNotEmpty
+                                ? Container(
+                                    width: 50,
+                                    height: 50,
+                                    child: users[0].picture == ''
+                                        ? ClipOval(
+                                            child: Image.asset(
+                                              'assets/user.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )
+                                        : ClipOval(
+                                            child: CachedNetworkImage(
+                                              imageUrl: users[0].picture,
+                                              placeholder: (context, url) =>
+                                                  const CircularProgressIndicator(
+                                                color: tdbrown,
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                'assets/user.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ))
                                 : const CircularProgressIndicator(
-                                    color: tdbrown),
-                          ),
-                        ),
+                                    color: tdbrown,
+                                  )),
                       ],
                     ),
                     SingleChildScrollView(

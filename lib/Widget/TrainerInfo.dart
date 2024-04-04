@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -22,9 +23,21 @@ class TrainerInfo extends StatelessWidget {
           color: tdbrown,
         ),
         child: ListTile(
-          leading:  CircleAvatar(
-            backgroundImage: NetworkImage(trainers.picture),
-            radius: 25,
+          leading: ClipOval(
+            child: trainers.picture == ''
+                ? Image.asset('assets/user.png',
+                    fit: BoxFit.cover)
+                : CachedNetworkImage(
+                    imageUrl: trainers.picture,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        Image.asset('assets/user.png',
+                            fit: BoxFit.cover) ,
+                    width: 50.0,
+                    height: 50.0,
+                    fit: BoxFit.cover, // Adjust fit as needed
+                  ),
           ),
           title: Text(
             '$trainers',
@@ -36,10 +49,8 @@ class TrainerInfo extends StatelessWidget {
           ),
           trailing: TextButton.icon(
             onPressed: () {
-              Navigator.push(
-                context,
-                CustomPageRoute(child: TrainerCourse(userid: trainers.id))
-              );
+              Navigator.push(context,
+                  CustomPageRoute(child: TrainerCourse(userid: trainers.id)));
             },
             icon: const Icon(
               Icons.forward,

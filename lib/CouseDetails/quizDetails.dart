@@ -28,59 +28,67 @@ class _QuizzesState extends State<Quizzes> {
     var chapter = provider.allchapter;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: chapter.length,
-            itemBuilder: (context, i) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    chapter[i].title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.black),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
+      body: chapter.isEmpty
+          ? const Center(
+              child: Text(
+                'No Quiz Available ',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+            )
+          : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: chapter.length,
+                  itemBuilder: (context, i) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.quiz,
-                          color: Colors.black,
-                          size: 33,
+                        Text(
+                          chapter[i].title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                              color: Colors.black),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const Text(
-                          'Quiz',
-                          style: TextStyle(fontSize: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.quiz,
+                                color: Colors.black,
+                                size: 33,
+                              ),
+                              const Text(
+                                'Quiz',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        CustomPageRoute(
+                                            child: QuizPage(
+                                                chapterID: chapter[i].id)));
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.black,
+                                    size: 33,
+                                  ))
+                            ],
+                          ),
                         ),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  CustomPageRoute(
-                                      child: QuizPage(chapterID: chapter[i].id)));
-                            },
-                            icon: const Icon(
-                              Icons.arrow_forward,
-                              color: Colors.black,
-                              size: 33,
-                            ))
+                        const Divider(thickness: 5, color: Colors.black)
                       ],
-                    ),
-                  ),
-                  const Divider(thickness: 5, color: Colors.black)
-                ],
-              );
-            },
-          ),
-        ),
-      ),
+                    );
+                  },
+                ),
+              ),
+            ),
     );
   }
 }

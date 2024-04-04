@@ -78,10 +78,16 @@ class _TrainerPageState extends State<TrainerPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
-                        itemCount: trainers.length,
-                        itemBuilder: (context , i){
-                          return TrainerInfo(trainers: trainers[i]);
-                        }),
+                      itemCount: trainers.where((trainer) => trainer.usertype == 'TR').length,
+                      itemBuilder: (context, i) {
+                        final filteredTrainers = trainers.where((trainer) => trainer.usertype == 'TR').toList();
+                        if (filteredTrainers.isEmpty) {
+                          return const Text('No trainers found');
+                        } else {
+                          return TrainerInfo(trainers: filteredTrainers[i]);
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),

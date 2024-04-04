@@ -19,6 +19,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   late TextEditingController lnameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
+  late TextEditingController aboutController;
   late int userid = 0;
   bool _isLoading = true;
 
@@ -34,14 +35,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     final users = provider.users;
     await fetchTrainers(userid);
     setState(() {
-      fnameController =
-          TextEditingController(text: users.isNotEmpty ? users[0].firstname : '');
-      lnameController =
-          TextEditingController(text: users.isNotEmpty ? users[0].lastname : '');
+      fnameController = TextEditingController(
+          text: users.isNotEmpty ? users[0].firstname : '');
+      lnameController = TextEditingController(
+          text: users.isNotEmpty ? users[0].lastname : '');
       emailController =
           TextEditingController(text: users.isNotEmpty ? users[0].email : '');
       phoneController = TextEditingController(
           text: users.isNotEmpty ? users[0].telephone : '');
+      aboutController = TextEditingController(
+          text: users.isNotEmpty ? users[0].description : '');
       _isLoading = false;
     });
   }
@@ -94,7 +97,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    final provider = Provider.of<AppDataProvider>(context, listen: true);
     final users = provider.users;
     return Scaffold(
       appBar: AppBar(
@@ -118,8 +121,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           ? const Center(
               child:
                   CircularProgressIndicator()) // Show loading indicator while data is being fetched
-          : SingleChildScrollView(
-              child: Container(
+          : ListView(shrinkWrap: true, children: [
+              Container(
                 padding: const EdgeInsets.all(5),
                 child: Column(
                   children: [
@@ -127,21 +130,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     Stack(
                       children: [
                         SizedBox(
-                          width: 120,
-                          height: 120,
-                          child: users[0].picture.isNotEmpty? ClipOval(
-                            child: CachedNetworkImage(
-                              imageUrl: users[0].picture,
-                              placeholder: (context, url) =>const CircularProgressIndicator(
-                                color: tdbrown,
-                              ),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
-                              fit: BoxFit.cover,
-                            ),
-                          ): ClipOval(
-                            child: Image.asset('assets/user.png',fit: BoxFit.fill ),
-                          )
-                        ),
+                            width: 120,
+                            height: 120,
+                            child: users[0].picture.isNotEmpty
+                                ? ClipOval(
+                                    child: CachedNetworkImage(
+                                      imageUrl: users[0].picture,
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(
+                                        color: tdbrown,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                            'assets/user.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : ClipOval(
+                                    child: Image.asset('assets/user.png',
+                                        fit: BoxFit.fill),
+                                  )),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -230,6 +240,34 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             controller: phoneController,
                           ),
                           const SizedBox(height: 10),
+                          TextField(
+                            controller: aboutController,
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                              labelText: 'About',
+                              labelStyle: const TextStyle(color: tdBlue),
+                              prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: const BorderSide(color: tdBlue),
+                              ),
+                            ),
+                            onChanged: (text) {
+                              // Split the text into words
+                              List<String> words = text.trim().split(' ');
+                              // Check if the number of words exceeds 50
+                              if (words.length > 50) {
+                                // Remove extra words
+                                aboutController.text = words.take(50).join(' ');
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 10),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -257,7 +295,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ],
                 ),
               ),
-            ),
+            ]),
     );
   }
 }
