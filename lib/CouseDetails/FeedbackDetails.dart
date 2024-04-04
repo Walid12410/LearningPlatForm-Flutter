@@ -105,7 +105,10 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                                                   const CircularProgressIndicator(),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      const Icon(Icons.error),
+                                                      Image.asset(
+                                                        'assets/user.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
                                               fit: BoxFit.cover,
                                             )
                                           : Container(), // Use Container if user is null
