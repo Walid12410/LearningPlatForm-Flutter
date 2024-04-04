@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/AllClass/Question.dart';
 import 'package:learningplatformapp/AllClass/QuestionChoice.dart';
+import 'package:learningplatformapp/CouseDetails/ResultOfQuiz.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
 import '../provider/provider_data.dart';
+import 'widget/QWidget.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key, required this.chapterID}) : super(key: key);
@@ -13,13 +16,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int? _selectedChoiceIndex;
-  List<bool> _answerResults = [];
+  late List<Question> questions;
+  Map<int, questionChoice?> selectedOptions = {};
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getQuizQuestions(widget.chapterID);
       provider.getQuestionChoice();
@@ -29,157 +32,124 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: true);
-    var questions = provider.question;
-    var choiceList = provider.qChoice;
+    questions = provider.question;
 
     return Scaffold(
       body: questions.isEmpty
           ? const Center(
-        child: Text(
-          'No quiz added yet for this chapter',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            color: Colors.black,
-          ),
-        ),
-      )
+              child: Text(
+                'No quiz added yet for this chapter',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
+              ),
+            )
           : SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.black,
-                    size: 25,
-                  ),
-                ),
-                const Text(
-                  'Quiz',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const Text(
-                  'Challenge',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: tdbrown,
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: questions.length,
-                itemBuilder: (context, index) {
-                  final question = questions[index];
-                  final filteredChoices = choiceList
-                      .where((choice) => choice.questionID == question.id)
-                      .toList();
-                  final isCorrectAnswer = _answerResults.isNotEmpty &&
-                      !_answerResults[index] &&
-                      _selectedChoiceIndex == filteredChoices.firstWhere(
-                            (choice) => choice.isCorrect == 1,
-                        orElse: () => questionChoice(
-                            id: 0,
-                            qCNum: 0,
-                            answer: '',
-                            isCorrect: 0,
-                            questionID: 0,
-                            isActive: 0),
-                      ).id;
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      if (isCorrectAnswer)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            'Correct answer: ${filteredChoices.firstWhere((choice) => choice.isCorrect == 1).answer}',
-                            style: const TextStyle(color: Colors.green),
-                          ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.black,
+                          size: 25,
                         ),
-                      Card(
-                        margin:const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: Padding(
-                          padding:const EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                question.question,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: filteredChoices.map((choice) {
-                                  return RadioListTile<int>(
-                                    activeColor: _answerResults.isNotEmpty && !_answerResults[index] && _selectedChoiceIndex == choice.id
-                                        ? Colors.red
-                                        : null,
-                                    title: Text(choice.answer),
-                                    value: choice.id,
-                                    groupValue: _selectedChoiceIndex,
-                                    onChanged: (int? value) {
-                                      setState(() {
-                                        _selectedChoiceIndex = value;
-                                      });
-                                    },
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
+                      ),
+                      const Text(
+                        'Quiz',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const Text(
+                        'Challenge',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: tdbrown,
                         ),
                       ),
                     ],
-                  );
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _answerResults.clear();
-                  for (final question in questions) {
-                    final correctChoice = choiceList.firstWhere(
-                          (choice) => choice.questionID == question.id && choice.isCorrect == 1,
-                      orElse: () => questionChoice(id: 0, qCNum: 0, answer: '', isCorrect: 0, questionID: 0, isActive: 0),
-                    );
-                    _answerResults.add(_selectedChoiceIndex == correctChoice.id);
-                  }
-                });
-              },
-              child: const Text('Submit'),
-            ),
-            if (_answerResults.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Result: ${_answerResults.where((result) => result).length}/${_answerResults.length}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
                   ),
-                ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: questions.length,
+                      itemBuilder: (context, index) {
+                        final question = questions[index];
+                        return QuestionWidget(
+                          question: question,
+                          onClickOption: (option) {
+                            if (!selectedOptions.containsKey(question.id)) {
+                              setState(() {
+                                selectedOptions[question.id] = option;
+                              });
+                            }
+                          },
+                          selectedOption: selectedOptions[question.id],
+                        );
+                      },
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: canSubmit() ? submitQuiz : null,
+                    icon: const Icon(
+                      Icons.calculate_rounded,
+                      color: Colors.black,
+                    ),
+                    label: const Text(
+                      'Submit Quiz',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: tdbrown, // Change the background color here
+                      minimumSize: const Size(
+                          150, 40), // Set the minimum width and height
+                    ),
+                  )
+                ],
               ),
-          ],
-        ),
-      ),
+            ),
+    );
+  }
+
+  bool canSubmit() {
+    for (final question in questions) {
+      if (!selectedOptions.containsKey(question.id)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void submitQuiz() {
+    int correctAnswers = 0;
+    int totalQuestions = questions.length;
+    for (final question in questions) {
+      final selectedOption = selectedOptions[question.id];
+      if (selectedOption != null && selectedOption.isCorrect == 1) {
+        correctAnswers++;
+      }
+    }
+    double score = (correctAnswers / totalQuestions) * 100;
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ResultQuiz(
+                  score: score,
+                )
+        )
     );
   }
 }

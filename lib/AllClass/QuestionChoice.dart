@@ -17,12 +17,12 @@ class questionChoice{
 
   factory questionChoice.fromJson(Map<String,dynamic>json){
     return questionChoice(
-        id: json['QCID'],
-        qCNum: json['QCNum'],
-        answer: json['Answer'],
-        isCorrect: json['isCorrect'],
-        questionID: json['QuestionID'],
-        isActive: json['IsInActive']
+        id: json['QCID'] ?? 0,
+        qCNum: json['QCNum'] ?? 0,
+        answer: json['Answer'] ?? '',
+        isCorrect: json['isCorrect'] ?? 0,
+        questionID: json['QuestionID'] ?? 0,
+        isActive: json['IsInActive'] ?? 1
     );
   }
 }

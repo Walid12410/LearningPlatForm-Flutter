@@ -17,12 +17,12 @@ class Question{
 
   factory Question.fromJson(Map<String,dynamic>json){
     return Question(
-        id: json['QuestionID'],
-        qNum: json['QuestionNum'],
-        question: json['Question'],
-        qType: json['QuestionType'],
-        hasOnlyOne: json['HasOnlyOne'],
-        chapterID: json['ChapterID']
+        id: json['QuestionID'] ?? 0,
+        qNum: json['QuestionNum'] ?? 0,
+        question: json['Question'] ?? '',
+        qType: json['QuestionType'] ?? '',
+        hasOnlyOne: json['HasOnlyOne'] ?? 0,
+        chapterID: json['ChapterID'] ?? 0
     );
   }
 }
