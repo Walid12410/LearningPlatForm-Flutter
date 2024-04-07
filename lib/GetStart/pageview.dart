@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
+import 'package:learningplatformapp/aboutapp/aboutapp.dart';
 import 'pageviewdetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
@@ -103,7 +104,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      // Add your callback function here
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const About()));
                     },
                     child: Container(
                       height: 48,
@@ -126,7 +127,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    width: double.infinity, // Set width to fill available space
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const SignIn()));

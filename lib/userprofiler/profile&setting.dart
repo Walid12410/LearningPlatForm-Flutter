@@ -74,8 +74,8 @@ class _ProfileSettingState extends State<ProfileSetting> {
             height: 20,
           ),
           ProfileMenuWidget(
-              icon: Icons.settings,
-              text: 'Setting',
+              icon: Icons.language,
+              text: 'Language',
               onPressed: () {},
               textColor: tdBlue),
           const SizedBox(height: 10),
