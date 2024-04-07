@@ -4,111 +4,157 @@ import 'pageviewdetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 class PageViewScreen extends StatefulWidget {
-  const PageViewScreen({super.key});
+  const PageViewScreen({Key? key}) : super(key: key);
 
   @override
-  State<PageViewScreen> createState() => _PageViewScreenState();
+  _PageViewScreenState createState() => _PageViewScreenState();
 }
 
 class _PageViewScreenState extends State<PageViewScreen> {
-  int currentIndex = 0;
-  PageController _controller = PageController();
+  int _currentPage = 0;
+  late PageController _pageController;
+  List<page> _slides = [];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-                itemCount: pages.length,
-                controller: _controller,
-                onPageChanged: (int index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-                itemBuilder: (_, i) {
-                  return Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          pages[i].Image,
-                          height: 250,
-                        ),
-                        Text(
-                          pages[i].title,
-                          style: const TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 20),
-                        Flexible(
-                          child: Text(
-                            pages[i].Description,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+  void initState() {
+    super.initState();
+    _slides = [
+      page("assets/image2.png", "StudyLink: Your Ultimate Education Destination Online"),
+      page("assets/image1.png", "SmartStudy: Your Comprehensive Digital Learning Platform"),
+      page("assets/image3.png", "SkillBoost: Empowering You with Dynamic Online Education"),
+      page("assets/image4.png", 'LearnX: Your Gateway to Innovative Digital Learning'),
+    ];
+    _pageController = PageController(initialPage: _currentPage);
+  }
+
+  Widget _buildSlide(page slide) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(32),
+            child: Image.asset(slide.Image, fit: BoxFit.contain),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                pages.length,
-                    (index) => buildDot(index, context),
-              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Text(
+            slide.title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w900,
             ),
           ),
-          Container(
-            height: 60,
-            margin: const EdgeInsets.all(40),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (currentIndex == pages.length - 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignIn(),
-                    ),
-                  );
-                }
-                _controller.nextPage(
-                  duration: const Duration(milliseconds: 100),
-                  curve: Curves.bounceIn,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                primary: tdbrown,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: Text(
-                currentIndex == pages.length - 1 ? "Continue" : "Next",
-                style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
-                fontSize: 20),
-              ),
-            ),
-          )
-        ],
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildPageIndicator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List<Widget>.generate(
+        _slides.length,
+            (index) => _buildPageIndicatorItem(index),
+      ).expand((widget) => [widget, const SizedBox(width: 12)]).toList(),
+    );
+  }
+
+  Widget _buildPageIndicatorItem(int index) {
+    return Container(
+      width: index == _currentPage ? 8 : 5,
+      height: index == _currentPage ? 8 : 5,
+      margin: const EdgeInsets.symmetric(horizontal: 6),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: index == _currentPage ? tdbrown : Colors.grey,
       ),
     );
   }
 
-  Container buildDot(int index, BuildContext context) {
-    return Container(
-      height: 10,
-      width: currentIndex == index ? 25 : 10,
-      margin: const EdgeInsets.only(right: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: tdbrown),
+  void _onPageChanged(int page) {
+    setState(() => _currentPage = page);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                physics: const BouncingScrollPhysics(),
+                children: _slides.map(_buildSlide).toList(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _buildPageIndicator(),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      // Add your callback function here
+                    },
+                    child: Container(
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color: tdbrown,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "About Our App",
+                          style:  TextStyle(
+                            letterSpacing: 1,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity, // Set width to fill available space
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignIn()));
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: tdbrown,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

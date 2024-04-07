@@ -52,21 +52,28 @@ class _InformationState extends State<Information> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 150,
-                    height: 150,
-                    child: Container(
-                      child: users.isNotEmpty? ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: users[0].picture,
-                          placeholder: (context, url) =>const CircularProgressIndicator(
-                            color: tdbrown,
-                          ),
-                          errorWidget: (context, url, error) => Image.asset('assets/user.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ):const CircularProgressIndicator(color: tdbrown),
-                    ),
-                  ),
+                      width: 120,
+                      height: 120,
+                      child: users[0].picture == ''
+                          ? ClipOval(
+                              child: Image.asset('assets/user.png',
+                                  fit: BoxFit.fill),
+                            )
+                          : ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: users[0].picture,
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(
+                                  color: tdbrown,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                  'assets/user.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            )),
                 ],
               ),
               const SizedBox(height: 20),

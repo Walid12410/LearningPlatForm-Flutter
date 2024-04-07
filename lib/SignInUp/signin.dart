@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/SignInUp/signup.dart';
 import 'package:learningplatformapp/TrainerPage/Homepage/homepage.dart';
+import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:learningplatformapp/SignInUp/WidgetsForSignIn/siginform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:animated_switch/animated_switch.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -21,7 +23,6 @@ class _SignInState extends State<SignIn> {
   bool rememberMe = false;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void toggleRememberMe() {
     setState(() {
@@ -29,16 +30,18 @@ class _SignInState extends State<SignIn> {
     });
   }
 
-
-  Future<void> saveLoginInfo(BuildContext context, String username, int uid) async {
+  Future<void> saveLoginInfo(
+      BuildContext context, String username, int uid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', true);
     prefs.setString('username', username);
     prefs.setInt('uid', uid);
-    Provider.of<AppDataProvider>(context, listen: false).setUserId(uid); // Update the user ID in the provider
+    Provider.of<AppDataProvider>(context, listen: false)
+        .setUserId(uid); // Update the user ID in the provider
   }
 
-  Future<void> checkLogin(BuildContext context, String username, String password) async {
+  Future<void> checkLogin(
+      BuildContext context, String username, String password) async {
     String apiUrl = 'http://192.168.1.12/api/walid/login.php';
     var response = await http.post(
       Uri.parse(apiUrl),
@@ -49,18 +52,22 @@ class _SignInState extends State<SignIn> {
     );
     if (response.body.isNotEmpty) {
       var responseData = json.decode(response.body);
-      if (responseData['status'] != null && responseData['status'] is bool &&
+      if (responseData['status'] != null &&
+          responseData['status'] is bool &&
           responseData['status']) {
         int? userID = responseData['userID']?.toInt();
-        String? userType = responseData['usertype']; // Assuming 'usertype' is the key for the user type in the response
+        String? userType = responseData[
+            'usertype'];
         if (userID != null) {
           if (rememberMe) {
             await saveLoginInfo(context, username, userID);
           }
           if (userType == 'TR') {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePageTrainer()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HomePageTrainer()));
           } else if (userType == 'ST') {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
           }
         }
       } else {
@@ -69,64 +76,165 @@ class _SignInState extends State<SignIn> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color(0xFFEC9D52),
-                Color(0xFF000000),
-              ]),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/loginwelcome.png', // Replace with your actual image asset
+          const Positioned.fill(
+            child: Image(
               fit: BoxFit.fill,
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.3,
+              image: AssetImage('assets/loginwelcome.jpeg'),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 270),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-              ),
-              height: double.infinity,
-              width: double.infinity,
-              child: SingleChildScrollView(
-                child: SignInForm(
-                  formKey: _formKey,
-                  rememberMe: rememberMe,
-                  toggleRememberMe: toggleRememberMe,
-                  isObscure: isObscure,
-                  usernameController: usernameController,
-                  passwordController: passwordController,
-                  toggleVisibility: () {
-                    setState(() {
-                      isObscure = !isObscure;
-                    });
-                  },
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await checkLogin(context, usernameController.text, passwordController.text);
-                    }
-                  },
-                ),
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Colors.black,
+              Colors.black.withOpacity(0.8),
+              Colors.black.withOpacity(0.15),
+              Colors.black.withOpacity(0.5),
+            ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+          ),
+          Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'SignIn',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        hintText: 'Email Address',
+                        fillColor: Color(0xffD8D8DD),
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: isObscure,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isObscure ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isObscure = !isObscure;
+                            });
+                          },
+                        ),
+                        fillColor: const Color(0xffD8D8DD),
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 19, top: 8, right: 19),
+                    child: Row(
+                      children: [
+                        AnimatedSwitch(
+                          value: rememberMe,
+                          colorOn: tdbrown,
+                          onChanged: (value) {
+                            setState(() {
+                              rememberMe = value;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          'Remember me',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const Spacer(),
+                        const Text(
+                          "Forgot Password",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      String username = usernameController.text;
+                      String password = passwordController.text;
+                      checkLogin(context, username, password);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFEC9D52),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                   Padding(
+                    padding: const EdgeInsets.only(left: 100.0, top: 30),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't have an account?",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SignUp()),
+                            );
+                          },
+                          child: const Text(
+                            "Signup",
+                            style: TextStyle(
+                              color: tdbrown,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -135,4 +243,3 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
-

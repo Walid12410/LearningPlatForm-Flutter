@@ -118,9 +118,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         backgroundColor: tdbrown,
       ),
       body: _isLoading
-          ? const Center(
-              child:
-                  CircularProgressIndicator()) // Show loading indicator while data is being fetched
+          ? const Center(child: CircularProgressIndicator())
           : ListView(shrinkWrap: true, children: [
               Container(
                 padding: const EdgeInsets.all(5),
@@ -132,8 +130,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         SizedBox(
                             width: 120,
                             height: 120,
-                            child: users[0].picture.isNotEmpty
+                            child: users[0].picture == ''
                                 ? ClipOval(
+                                    child: Image.asset('assets/user.png',
+                                        fit: BoxFit.fill),
+                                  )
+                                : ClipOval(
                                     child: CachedNetworkImage(
                                       imageUrl: users[0].picture,
                                       placeholder: (context, url) =>
@@ -142,15 +144,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                       ),
                                       errorWidget: (context, url, error) =>
                                           Image.asset(
-                                            'assets/user.png',
-                                            fit: BoxFit.cover,
-                                          ),
+                                        'assets/user.png',
+                                        fit: BoxFit.cover,
+                                      ),
                                       fit: BoxFit.cover,
                                     ),
-                                  )
-                                : ClipOval(
-                                    child: Image.asset('assets/user.png',
-                                        fit: BoxFit.fill),
                                   )),
                         Positioned(
                           bottom: 0,
@@ -247,7 +245,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             decoration: InputDecoration(
                               labelText: 'About',
                               labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
+                              prefixIcon: const Icon(
+                                  Icons.account_balance_wallet_outlined),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                                 borderSide: const BorderSide(color: tdBlue),

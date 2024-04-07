@@ -20,28 +20,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider( // Provide AppDataProvider to the widget tree
-      create: (context) => AppDataProvider(), // Create an instance of AppDataProvider
+    return ChangeNotifierProvider(
+      create: (context) => AppDataProvider(),
       child: MaterialApp(
         title: 'App',
         debugShowCheckedModeBanner: false,
         color: Colors.red,
         home: FutureBuilder<SharedPreferences>(
-          future: SharedPreferences.getInstance(), // Get SharedPreferences instance asynchronously
+          future: SharedPreferences.getInstance(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              final prefs = snapshot.data; // Retrieve SharedPreferences instance
-              final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false; // Check if user is logged in
-              final userId = prefs?.getInt('uid') ?? 0; // Get user ID from SharedPreferences
+              final prefs = snapshot.data;
+              final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false;
+              final userId = prefs?.getInt('uid') ?? 0;
               if (isLoggedIn) {
                 Provider.of<AppDataProvider>(context, listen: false)
-                    .setUserId(userId); // Set user ID in AppDataProvider
-                return const HomePage(); // Navigate to HomePage if user is logged in
+                    .setUserId(userId);
+                return const HomePage();
               } else {
-                return const PageViewScreen(); // Navigate to PageViewScreen if user is not logged in
+                return const PageViewScreen();
               }
             } else {
-              return const Scaffold( // Show loading indicator while SharedPreferences is being fetched
+              return const Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -49,9 +49,9 @@ class MyApp extends StatelessWidget {
             }
           },
         ),
-        routes: { // Define named routes
-          "/SignIn": (context) => const SignIn(), // SignIn route
-          "/portal": (context) => const PortalPage(), // portal route
+        routes: {
+          "/SignIn": (context) => const SignIn(),
+          "/portal": (context) => const PortalPage(),
           "/trainer" : (context) => const TrainerPage(),
           "/profile" : (context) => const Profile(),
           "/information" : (context) =>const Information(),

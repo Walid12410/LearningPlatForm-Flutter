@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/SignInUp/Dialog.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'singupfield.dart';
@@ -29,7 +28,6 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -70,12 +68,7 @@ class _SignUpFormState extends State<SignUpForm> {
               width: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                gradient: const LinearGradient(
-                  colors: [
-                    Color(0xFF000000),
-                    Color(0xFFEC9D52),
-                  ],
-                ),
+                color: tdbrown
               ),
               child: TextButton(
                 onPressed: _signup,
@@ -113,7 +106,6 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void _signup() {
     if (_formKey.currentState!.validate()) {
-      // If valid, proceed with signup
       final firstName = _firstNameController.text;
       final lastName = _lastNameController.text;
       final email = _emailController.text;
@@ -121,9 +113,8 @@ class _SignUpFormState extends State<SignUpForm> {
       final userName = _userNameController.text;
       final password = _passwordController.text;
       final confirmPassword = _confirmPasswordController.text;
-      final gender = _genderController.text; // Fetch gender from controller
+      final gender = _genderController.text;
 
-      // Call function to insert user data
       insertTrainerData(firstName, lastName, email, telephone, userName, password,gender);
     }
   }
@@ -132,7 +123,6 @@ class _SignUpFormState extends State<SignUpForm> {
     String url = 'http://192.168.1.12/EduPlatform/CMS/api/TrainersCrudOperation.php';
     String operation = 'Insert';
 
-    // Current date
     DateTime now = DateTime.now();
     String formattedDate = '${now.year}-${now.month}-${now.day}';
 
@@ -142,17 +132,16 @@ class _SignUpFormState extends State<SignUpForm> {
       'UserFirstName': firstName,
       'UserLastName': lastName,
       'UserProfilePic': 'null',
-      'UserGender': gender, // Assuming gender is male, you can change it as needed
+      'UserGender': gender,
       'UserTelephone': telephone,
       'UserEmail': email,
       'JoinDate': formattedDate,
-      'IsActive': '1', // Active by default
+      'IsActive': '1',
       'UserName': userName,
       'UserPassword': password,
-      'UserType': 'ST' // User type by default
+      'UserType': 'ST'
     };
 
-    // Make POST request
     var response = await http.post(Uri.parse(url), body: params);
     if (response.statusCode == 200) {
       print('Trainer data inserted successfully');

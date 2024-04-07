@@ -12,34 +12,22 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color(0xFFEC9D52),
-                Color(0xFF000000)
-              ]),
+    return const Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+             Positioned.fill(
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/Signup.jpeg'),
+              ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/signupimage.png',
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.3,
-            ),
-          ),
-          const Padding(
-            padding:  EdgeInsets.only(top: 235),
-            child: SignUpForm(),
-          )
-        ],
+             Padding(
+              padding:  EdgeInsets.all(10),
+              child: SignUpForm(),
+            )
+          ],
+        ),
       ),
     );
   }
