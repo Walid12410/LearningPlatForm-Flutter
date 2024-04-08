@@ -72,7 +72,7 @@ class _SignInState extends State<SignIn> {
           }
         }
       } else {
-        ShowDialog(context, 'Login Failed', responseData['message']);
+        ShowDialog(context, S.of(context).LoginFail, responseData['message']);
       }
     }
   }

@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already Have Account?"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " By clicking in signup You agree to our "),
+        "Close": MessageLookupByLibrary.simpleMessage("Close"),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
@@ -37,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "InvalidEmail":
             MessageLookupByLibrary.simpleMessage("Please enter your email"),
         "LastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+        "LoginFail": MessageLookupByLibrary.simpleMessage("Login Failed"),
         "Male": MessageLookupByLibrary.simpleMessage("Male"),
         "PassNotMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),

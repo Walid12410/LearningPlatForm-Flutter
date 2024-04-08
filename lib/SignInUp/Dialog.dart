@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import '../generated/l10n.dart';
 
 
 void ShowDialog(BuildContext context, String title, String message) {
@@ -14,7 +15,7 @@ void ShowDialog(BuildContext context, String title, String message) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Close',style: TextStyle(
+            child: Text(S.of(context).Close,style:const TextStyle(
                 fontWeight: FontWeight.bold,color: tdBlue
             ),),
           ),

@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " بالضغط على تسجيل فإنك توافق على لدينا "),
+        "Close": MessageLookupByLibrary.simpleMessage("يغلق"),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
@@ -37,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "InvalidEmail":
             MessageLookupByLibrary.simpleMessage("رجاءا أدخل بريدك الإلكتروني"),
         "LastName": MessageLookupByLibrary.simpleMessage("اسم العائلة"),
+        "LoginFail": MessageLookupByLibrary.simpleMessage("فشل تسجيل الدخول"),
         "Male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "PassNotMatch":
             MessageLookupByLibrary.simpleMessage("كلمة المرور غير مطابقة"),
