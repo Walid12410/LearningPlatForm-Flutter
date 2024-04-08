@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/aboutapp/aboutapp.dart';
+import '../generated/l10n.dart';
 import 'pageviewdetails.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
@@ -19,12 +20,19 @@ class _PageViewScreenState extends State<PageViewScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     _slides = [
-      page("assets/image2.png", "StudyLink: Your Ultimate Education Destination Online"),
-      page("assets/image1.png", "SmartStudy: Your Comprehensive Digital Learning Platform"),
-      page("assets/image3.png", "SkillBoost: Empowering You with Dynamic Online Education"),
-      page("assets/image4.png", 'LearnX: Your Gateway to Innovative Digital Learning'),
+      page("assets/image2.png", S.of(context).getStartP1),
+      page("assets/image1.png", S.of(context).getStartP2),
+      page("assets/image3.png", S.of(context).getStartP3),
+      page("assets/image4.png", S.of(context).getStartP4),
     ];
+
     _pageController = PageController(initialPage: _currentPage);
   }
 
@@ -112,10 +120,10 @@ class _PageViewScreenState extends State<PageViewScreen> {
                         borderRadius: BorderRadius.circular(24),
                         color: tdbrown,
                       ),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
-                          "About Our App",
-                          style:  TextStyle(
+                          S.of(context).aboutOurApp,
+                          style: const TextStyle(
                             letterSpacing: 1,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -133,7 +141,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const SignIn()));
                       },
                       child: Text(
-                        "Sign In",
+                        S.of(context).signIn,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,

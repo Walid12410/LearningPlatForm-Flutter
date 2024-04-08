@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import '../../generated/l10n.dart';
 import 'singupfield.dart';
 import 'termsandcodition.dart';
 import 'package:http/http.dart' as http;
@@ -39,9 +40,9 @@ class _SignUpFormState extends State<SignUpForm> {
         child: Column(
           children: [
             const SizedBox(height: 15),
-            const Text(
-              'Create Account',
-              style: TextStyle(
+             Text(
+              S.of(context).createAccount,
+              style: const TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
                 color: tdbrown,
@@ -72,9 +73,9 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               child: TextButton(
                 onPressed: _signup,
-                child: const Text(
-                  'SIGN UP',
-                  style: TextStyle(
+                child:  Text(
+                  S.of(context).SignupSpace,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.white,
@@ -86,13 +87,13 @@ class _SignUpFormState extends State<SignUpForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Already Have Account?',
-                  style: TextStyle(fontWeight: FontWeight.bold,
+                 Text(S.of(context).AlreadyHaveAcc,
+                  style: const TextStyle(fontWeight: FontWeight.bold,
                       fontSize: 15,color: tdBlue),),
                 TextButton(onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                   const SignIn()));
-                }, child:const Text('Sign In',style: TextStyle(
+                }, child: Text(S.of(context).signIn,style:const TextStyle(
                     fontSize: 15,fontWeight: FontWeight.bold,
                     color: Colors.blue
                 ),))
@@ -144,20 +145,19 @@ class _SignUpFormState extends State<SignUpForm> {
 
     var response = await http.post(Uri.parse(url), body: params);
     if (response.statusCode == 200) {
-      print('Trainer data inserted successfully');
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('SignUp Successfully Done'),
-            content: Text('Welcome To Our Learning Platform App,Please Login To Our App'),
+            title: Text(S.of(context).SuccessSignUp),
+            content: Text(S.of(context).WelcomeSignUp),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                   const SignIn()));
                 },
-                child: const Text('Sign In',style: TextStyle(
+                child: Text(S.of(context).signIn, style: TextStyle(
                     fontWeight: FontWeight.bold,color: tdBlue
                 ),),
               ),

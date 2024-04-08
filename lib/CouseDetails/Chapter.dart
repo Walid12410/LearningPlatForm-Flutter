@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
+import 'package:learningplatformapp/CouseDetails/PdfViewer.dart';
 import 'package:learningplatformapp/CouseDetails/video.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
@@ -109,10 +110,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                                             videoUrl: lesson
                                                                 .mobilelink,
                                                             name:
-                                                                lesson.title
-                                                        )
-                                                )
-                                            );
+                                                                lesson.title)));
                                           },
                                           icon: const Icon(
                                             Icons.play_arrow,
@@ -123,7 +121,13 @@ class _ChapterpageState extends State<Chapterpage> {
                                       if (lesson.mediatype != 'v')
                                         IconButton(
                                           onPressed: () {
-                                            // Add your eye icon logic here
+                                            Navigator.push(
+                                                context,
+                                                CustomPageRoute2(
+                                                    child: PdfViewer(
+                                                  pdfUrl: lesson.filepath,
+                                                  title: lesson.title,
+                                                )));
                                           },
                                           icon: const Icon(
                                             Icons.file_copy,

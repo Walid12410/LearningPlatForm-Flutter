@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:animated_switch/animated_switch.dart';
+import 'package:intl/intl.dart';
+import '../generated/l10n.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -56,8 +58,7 @@ class _SignInState extends State<SignIn> {
           responseData['status'] is bool &&
           responseData['status']) {
         int? userID = responseData['userID']?.toInt();
-        String? userType = responseData[
-            'usertype'];
+        String? userType = responseData['usertype'];
         if (userID != null) {
           if (rememberMe) {
             await saveLoginInfo(context, username, userID);
@@ -74,6 +75,10 @@ class _SignInState extends State<SignIn> {
         ShowDialog(context, 'Login Failed', responseData['message']);
       }
     }
+  }
+
+  bool isArabic() {
+    return Intl.getCurrentLocale() == 'ar';
   }
 
   @override
@@ -102,9 +107,9 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'SignIn',
-                    style: TextStyle(
+                  Text(
+                    S.of(context).signIn,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -117,8 +122,8 @@ class _SignInState extends State<SignIn> {
                     padding: const EdgeInsets.all(20.0),
                     child: TextField(
                       controller: usernameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Email Address',
+                      decoration: InputDecoration(
+                        hintText: S.of(context).emailAddress,
                         fillColor: Color(0xffD8D8DD),
                         filled: true,
                       ),
@@ -130,7 +135,7 @@ class _SignInState extends State<SignIn> {
                       controller: passwordController,
                       obscureText: isObscure,
                       decoration: InputDecoration(
-                        hintText: 'Password',
+                        hintText: S.of(context).password,
                         suffixIcon: IconButton(
                           icon: Icon(
                             isObscure ? Icons.visibility_off : Icons.visibility,
@@ -147,7 +152,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 19, top: 8, right: 19),
+                    padding: const EdgeInsets.all(18),
                     child: Row(
                       children: [
                         AnimatedSwitch(
@@ -162,17 +167,17 @@ class _SignInState extends State<SignIn> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text(
-                          'Remember me',
-                          style: TextStyle(
-                            color: Colors.grey,
+                        Text(
+                          S.of(context).RememberMe,
+                          style:  TextStyle(
+                            color: Colors.grey.shade200,
                           ),
                         ),
                         const Spacer(),
-                        const Text(
-                          "Forgot Password",
-                          style: TextStyle(
-                            color: Colors.grey,
+                        Text(
+                          S.of(context).forgetPassword,
+                          style:  TextStyle(
+                            color: Colors.grey.shade200,
                           ),
                         ),
                       ],
@@ -193,10 +198,10 @@ class _SignInState extends State<SignIn> {
                       decoration: const BoxDecoration(
                         color: Color(0xFFEC9D52),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Login',
-                          style: TextStyle(
+                          S.of(context).signIn,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -204,27 +209,30 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-                   Padding(
-                    padding: const EdgeInsets.only(left: 100.0, top: 30),
+                  Padding(
+                    padding: isArabic()
+                        ? const EdgeInsets.only(right: 100.0, top: 30)
+                        : const EdgeInsets.only(left: 100.0, top: 30),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Don't have an account?",
-                          style: TextStyle(
-                            color: Colors.grey,
+                        Text(
+                          S.of(context).DoNotHaveAccount,
+                          style:  TextStyle(
+                            color: Colors.grey.shade200,
                           ),
                         ),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SignUp()),
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUp()),
                             );
                           },
-                          child: const Text(
-                            "Signup",
-                            style: TextStyle(
+                          child: Text(
+                            S.of(context).Signup,
+                            style: const TextStyle(
                               color: tdbrown,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

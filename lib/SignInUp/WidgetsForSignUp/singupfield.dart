@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
+import '../../generated/l10n.dart';
 import 'passwordfield.dart';
+import 'package:intl/intl.dart';
 
 class SignUpFields extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -31,6 +33,10 @@ class SignUpFields extends StatefulWidget {
 }
 
 class _SignUpFieldsState extends State<SignUpFields> {
+  bool isArabic() {
+    return Intl.getCurrentLocale() == 'ar';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -44,7 +50,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 child: TextFormField(
                   controller: widget.firstNameController,
                   decoration: InputDecoration(
-                    labelText: 'First Name',
+                    labelText: S.of(context).FirstName,
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -67,7 +73,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your first name';
+                      return S.of(context).PlzEnterFn;
                     }
                     return null;
                   },
@@ -78,7 +84,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 child: TextFormField(
                   controller: widget.lastNameController,
                   decoration: InputDecoration(
-                    labelText: 'Last Name',
+                    labelText: S.of(context).LastName,
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -101,7 +107,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your last name';
+                      return S.of(context).PlzEnterLn;
                     }
                     return null;
                   },
@@ -113,7 +119,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           TextFormField(
             controller: widget.emailController,
             decoration: InputDecoration(
-              labelText: 'Email',
+              labelText: S.of(context).emailAddress,
               labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -136,11 +142,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return S.of(context).InvalidEmail;
               }
               if (!value.endsWith('@gmail.com') &&
                   !value.endsWith('@hotmail.com')) {
-                return 'Invalid email domain. Use @gmail.com or @hotmail.com';
+                return S.of(context).InvalidDomainEmail;
               }
               // You can add more sophisticated email validation here if needed
               return null;
@@ -151,11 +157,13 @@ class _SignUpFieldsState extends State<SignUpFields> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: isArabic()
+                      ? const EdgeInsets.only(left: 8)
+                      : const EdgeInsets.only(right: 8),
                   child: TextFormField(
                     controller: widget.telephoneController,
                     decoration: InputDecoration(
-                      labelText: 'Telephone',
+                      labelText: S.of(context).Telephone,
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -178,10 +186,10 @@ class _SignUpFieldsState extends State<SignUpFields> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your telephone number';
+                        return S.of(context).PlzEnterPhone;
                       }
                       if (!isNumeric(value)) {
-                        return 'Please enter only numeric values';
+                        return S.of(context).PlzEnterNumPhone;
                       }
                       return null;
                     },
@@ -192,7 +200,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 child: TextFormField(
                   controller: widget.userNameController,
                   decoration: InputDecoration(
-                    labelText: 'UserName',
+                    labelText: S.of(context).UserName,
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -215,7 +223,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a username';
+                      return S.of(context).PlzEnterUserName;
                     }
                     return null;
                   },
@@ -228,9 +236,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
             children: [
               Expanded(
                 child: RadioListTile<String>(
-                  title: const Text(
-                    'Male',
-                    style: TextStyle(
+                  title: Text(
+                    S.of(context).Male,
+                    style: const TextStyle(
                       color: tdBlue,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -251,9 +259,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
               ),
               Expanded(
                 child: RadioListTile<String>(
-                  title: const Text(
-                    'Female',
-                    style: TextStyle(
+                  title: Text(
+                    S.of(context).Female,
+                    style: const TextStyle(
                       color: tdBlue,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,

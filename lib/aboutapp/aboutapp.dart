@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
+import '../generated/l10n.dart';
+
 class About extends StatefulWidget {
   const About({super.key});
 
@@ -13,17 +15,17 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'About Our Application',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        title: Text(
+          S.of(context).aboutOurAppFullSentence,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
       ),
-      body: const SafeArea(
+      body:  SafeArea(
         child: Stack(
           children: [
-            Positioned(
+            const Positioned(
                 child: Image(
               fit: BoxFit.cover,
               width: double.infinity,
@@ -33,17 +35,17 @@ class _AboutState extends State<About> {
               ),
             )),
              Padding(
-              padding: EdgeInsets.all(8),
+              padding:const EdgeInsets.all(8),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Embark on a transformative journey of learning and personal development through our cutting-edge learning platform app, where boundless knowledge meets endless possibilities for growth and exploration.',
-                      style: TextStyle(
+                      S.of(context).aboutDetails,
+                      style:const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                          fontSize: 25,
                           color: Colors.black),
                     )
                   ],

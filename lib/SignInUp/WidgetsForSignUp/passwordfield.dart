@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
+import '../../generated/l10n.dart';
+
 class PasswordFields extends StatefulWidget {
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
@@ -28,7 +30,7 @@ class _PasswordFieldsState extends State<PasswordFields> {
             controller: widget.passwordController,
             obscureText: isObscurePassword,
             decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: S.of(context).password,
               labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -62,13 +64,13 @@ class _PasswordFieldsState extends State<PasswordFields> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter a password';
+                return S.of(context).PlzEnterPassword;
               }
               if (value.length < 8) {
-                return 'Password must be at least 8 characters long';
+                return S.of(context).PasswordLong;
               }
               if (!containsUppercase(value)) {
-                return 'Password must contain at least one uppercase letter';
+                return S.of(context).PasswordLetter;
               }
               return null;
             },
@@ -80,7 +82,7 @@ class _PasswordFieldsState extends State<PasswordFields> {
             controller: widget.confirmPasswordController,
             obscureText: isObscureConfirmPassword,
             decoration: InputDecoration(
-              labelText: 'Confirm Password',
+              labelText: S.of(context).PasswordConfirm,
               labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -114,10 +116,10 @@ class _PasswordFieldsState extends State<PasswordFields> {
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your password again';
+                return S.of(context).EnterPassAgain;
               }
               if (value != widget.passwordController.text) {
-                return 'Passwords do not match';
+                return S.of(context).PassNotMatch;
               }
               return null;
             },
