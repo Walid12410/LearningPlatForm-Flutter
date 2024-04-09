@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
-import 'package:learningplatformapp/userprofiler/information.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../generated/l10n.dart';
 
 class DialogPage extends StatelessWidget {
   @override
@@ -14,14 +15,14 @@ class DialogPage extends StatelessWidget {
           children: [
             ListTile(
               leading:const Icon(Icons.person),
-              title: const Text('Personal Info'),
+              title: Text(S.of(context).PersonalInfo),
               onTap: () {
                  Navigator.pushNamed(context, '/information');
               },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              title: Text(S.of(context).LogOut),
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 await prefs.clear(); // Clear all stored preferences

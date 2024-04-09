@@ -529,6 +529,306 @@ class S {
       args: [],
     );
   }
+
+  /// `Learning Platform App`
+  String get LearningPlatformApp {
+    return Intl.message(
+      'Learning Platform App',
+      name: 'LearningPlatformApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome Back`
+  String get WelcomeBack {
+    return Intl.message(
+      'Welcome Back',
+      name: 'WelcomeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start learning now!`
+  String get StartLeaning {
+    return Intl.message(
+      'Start learning now!',
+      name: 'StartLeaning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get Categories {
+    return Intl.message(
+      'Categories',
+      name: 'Categories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Most Viewed Courses`
+  String get MViewCourse {
+    return Intl.message(
+      'Most Viewed Courses',
+      name: 'MViewCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest Course Added`
+  String get LatestCAdded {
+    return Intl.message(
+      'Latest Course Added',
+      name: 'LatestCAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For You`
+  String get ForYou {
+    return Intl.message(
+      'For You',
+      name: 'ForYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Info`
+  String get PersonalInfo {
+    return Intl.message(
+      'Personal Info',
+      name: 'PersonalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LogOut`
+  String get LogOut {
+    return Intl.message(
+      'LogOut',
+      name: 'LogOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `see more`
+  String get SeeMore {
+    return Intl.message(
+      'see more',
+      name: 'SeeMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recommend Courses For You`
+  String get RecommendCFY {
+    return Intl.message(
+      'Recommend Courses For You',
+      name: 'RecommendCFY',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Categories`
+  String get AllCategories {
+    return Intl.message(
+      'All Categories',
+      name: 'AllCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Instructor`
+  String get AllInstructor {
+    return Intl.message(
+      'All Instructor',
+      name: 'AllInstructor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Categories available`
+  String get NoCategoriesAvailable {
+    return Intl.message(
+      'No Categories available',
+      name: 'NoCategoriesAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go Back`
+  String get GoBack {
+    return Intl.message(
+      'Go Back',
+      name: 'GoBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Course available`
+  String get NoCourseAvailable {
+    return Intl.message(
+      'No Course available',
+      name: 'NoCourseAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get HomePage {
+    return Intl.message(
+      'Home',
+      name: 'HomePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MyCourse`
+  String get MyCourse {
+    return Intl.message(
+      'MyCourse',
+      name: 'MyCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get Search {
+    return Intl.message(
+      'Search',
+      name: 'Search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get Profile {
+    return Intl.message(
+      'Profile',
+      name: 'Profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Instructor available`
+  String get NoTrainerAvailable {
+    return Intl.message(
+      'No Instructor available',
+      name: 'NoTrainerAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Courses`
+  String get AllCourses {
+    return Intl.message(
+      'All Courses',
+      name: 'AllCourses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get OK {
+    return Intl.message(
+      'OK',
+      name: 'OK',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Filters`
+  String get QuickFilter {
+    return Intl.message(
+      'Quick Filters',
+      name: 'QuickFilter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Category Selected`
+  String get AllCategoriesSelected {
+    return Intl.message(
+      'All Category Selected',
+      name: 'AllCategoriesSelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum Price`
+  String get MinimumPrice {
+    return Intl.message(
+      'Minimum Price',
+      name: 'MinimumPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum Price`
+  String get MaximumPrice {
+    return Intl.message(
+      'Maximum Price',
+      name: 'MaximumPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get Cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'Cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get Done {
+    return Intl.message(
+      'Done',
+      name: 'Done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Course not found`
+  String get CourseNotFound {
+    return Intl.message(
+      'Course not found',
+      name: 'CourseNotFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

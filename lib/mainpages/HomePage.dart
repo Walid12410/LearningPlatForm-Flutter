@@ -3,8 +3,9 @@ import 'package:learningplatformapp/userprofiler/profile.dart';
 import '../Homepage/MainPage.dart';
 import 'package:learningplatformapp/UserCourses/UserCourse.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'PortalPage.dart';
 import 'package:learningplatformapp/SearchCourse/Search.dart';
+
+import '../generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key});
@@ -53,13 +54,13 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = newIndex;
             });
           },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          items:  [
+            BottomNavigationBarItem(icon: const Icon(Icons.home), label: S.of(context).HomePage),
             BottomNavigationBarItem(
-                icon: Icon(Icons.school), label: 'MyCourse'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+                icon: const Icon(Icons.school), label: S.of(context).MyCourse),
+            BottomNavigationBarItem(icon: const Icon(Icons.search), label: S.of(context).Search),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: 'Profile')
+                icon: const Icon(Icons.account_circle), label: S.of(context).Profile)
           ],
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
+import '../../generated/l10n.dart';
+
 
 class Specialforyou extends StatelessWidget {
   const Specialforyou({
@@ -27,9 +29,9 @@ class Specialforyou extends StatelessWidget {
           ),
           GestureDetector(
             onTap: press,
-            child: const Text(
-              'see more',
-              style: TextStyle(color: tdBlue),
+            child:  Text(
+             S.of(context).SeeMore,
+              style: const TextStyle(color: tdBlue),
             ),
           )
         ],

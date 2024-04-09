@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:learningplatformapp/Widget/ContainerDetailsPortal_Instructor.dart';
 import 'package:learningplatformapp/Widget/CourseOfPortal.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
+
+import '../generated/l10n.dart';
 
 class CourseListView extends StatefulWidget {
   int portalid;
@@ -33,49 +34,36 @@ class _CourseListViewState extends State<CourseListView> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Color(0xFFEC9D52), Color(0xFF000000)])),
-            ),
-            DetailsForPortal_Instructor(name: 'Course', number: courses.length),
-            Positioned(
-              top: 130.0,
-              left: 20.0,
-              right: 20.0,
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 25,
-                        color: Colors.black,
-                      )),
-                  const Text(
-                    'Go Back',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Colors.black),
-                  )
-                ],
-              ),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      size: 25,
+                      color: Colors.black,
+                    )),
+                 Text(
+                 S.of(context).GoBack,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.black),
+                )
+              ],
             ),
             if (courses.isEmpty)
-              const Center(
+               Center(
                 child: Text(
-                  'No Course available',
-                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  S.of(context).NoCourseAvailable,
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
                 ),
               )
             else
               Padding(
-                padding: const EdgeInsets.only(top: 180),
+                padding: const EdgeInsets.only(top: 40),
                 child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.white,

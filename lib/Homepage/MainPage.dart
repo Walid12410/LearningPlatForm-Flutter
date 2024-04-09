@@ -6,6 +6,7 @@ import 'package:learningplatformapp/SeeMoreCourse/MostViewCourse.dart';
 import 'package:learningplatformapp/mainpages/CoursePage.dart';
 import 'package:learningplatformapp/mainpages/PortalPage.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
+import '../generated/l10n.dart';
 import 'widget/dialogpage.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'widget/specialforyou.dart';
@@ -93,9 +94,9 @@ class _MainPageState extends State<MainPage> {
                             child: Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: const Text(
-                                'Learning PlatForm App',
-                                style: TextStyle(
+                              child: Text(
+                                S.of(context).LearningPlatformApp,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: tdBlue,
                                     fontSize: 25),
@@ -159,17 +160,17 @@ class _MainPageState extends State<MainPage> {
                             child: Text.rich(
                               TextSpan(
                                 text:
-                                    'Welcome Back ${users.isNotEmpty ? users[0].toString() : ""}\n',
+                                    '${S.of(context).WelcomeBack} ${users.isNotEmpty ? users[0].toString() : ""}\n',
                                 style: const TextStyle(
                                   color: tdBlue,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                children: const [
+                                children: [
                                   TextSpan(
-                                    text: 'Start learning now!',
-                                    style:
-                                        TextStyle(color: tdBlue, fontSize: 20),
+                                    text: S.of(context).StartLeaning,
+                                    style: const TextStyle(
+                                        color: tdBlue, fontSize: 20),
                                   )
                                 ],
                               ),
@@ -183,7 +184,7 @@ class _MainPageState extends State<MainPage> {
                         : Column(
                             children: [
                               Specialforyou(
-                                  text: 'Categories',
+                                  text: S.of(context).Categories,
                                   press: () {
                                     Navigator.push(
                                         context,
@@ -232,7 +233,7 @@ class _MainPageState extends State<MainPage> {
                         : Column(
                             children: [
                               Specialforyou(
-                                  text: 'Most Viewed Courses',
+                                  text: S.of(context).MViewCourse,
                                   press: () {
                                     Navigator.push(
                                         context,
@@ -243,7 +244,7 @@ class _MainPageState extends State<MainPage> {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                    padding: const EdgeInsets.all(1),
+                                    padding: const EdgeInsets.all(10),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -283,7 +284,7 @@ class _MainPageState extends State<MainPage> {
                                               }
                                             },
                                           ),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width:2),
                                       ],
                                     )),
                               ),
@@ -294,9 +295,12 @@ class _MainPageState extends State<MainPage> {
                         ? Container() // Display nothing if the array is empty
                         : Column(
                             children: [
+                              const Divider(
+                                color: Colors.black,
+                              ),
                               const SizedBox(height: 5),
                               Specialforyou(
-                                  text: 'Latest Course Added',
+                                  text: S.of(context).LatestCAdded,
                                   press: () {
                                     Navigator.push(
                                         context,
@@ -306,7 +310,10 @@ class _MainPageState extends State<MainPage> {
                               const SizedBox(height: 2),
                               Padding(
                                   padding: const EdgeInsets.all(8),
-                                  child: LatestCourseAdd(courses: courseadd))
+                                  child: LatestCourseAdd(courses: courseadd)),
+                              const Divider(
+                                color: Colors.black,
+                              )
                             ],
                           ),
                     randomcourse.isEmpty
@@ -315,7 +322,7 @@ class _MainPageState extends State<MainPage> {
                             children: [
                               const SizedBox(height: 10),
                               Specialforyou(
-                                  text: 'For you',
+                                  text: S.of(context).ForYou,
                                   press: () {
                                     Navigator.push(
                                         context,
@@ -326,7 +333,7 @@ class _MainPageState extends State<MainPage> {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                    padding: const EdgeInsets.all(1),
+                                    padding: const EdgeInsets.all(10),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -358,7 +365,9 @@ class _MainPageState extends State<MainPage> {
                                                         CustomPageRoute(
                                                             child: CourseDetails(
                                                                 courseid: random
-                                                                    .id)));
+                                                                    .id)
+                                                        )
+                                                    );
                                                   },
                                                   averagerate: averageRating,
                                                   desc: random.description,
@@ -366,7 +375,7 @@ class _MainPageState extends State<MainPage> {
                                               }
                                             },
                                           ),
-                                        const SizedBox(width: 5),
+                                        const SizedBox(width: 1),
                                       ],
                                     )),
                               ),

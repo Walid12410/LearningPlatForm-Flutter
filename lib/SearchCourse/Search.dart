@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/PortalApi.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';

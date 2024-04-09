@@ -6,6 +6,8 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
+import '../generated/l10n.dart';
+
 class MostView extends StatefulWidget {
   const MostView({Key? key}) : super(key: key);
 
@@ -36,9 +38,9 @@ class _MostViewState extends State<MostView> {
     final userId = Provider.of<AppDataProvider>(context).userId;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Most View Courses',
-          style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+        title:  Text(
+          S.of(context).MViewCourse,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,

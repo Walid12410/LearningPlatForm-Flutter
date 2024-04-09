@@ -22,24 +22,54 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AllCategories": MessageLookupByLibrary.simpleMessage("All Categories"),
+        "AllCategoriesSelected":
+            MessageLookupByLibrary.simpleMessage("All Category Selected"),
+        "AllCourses": MessageLookupByLibrary.simpleMessage("All Courses"),
+        "AllInstructor": MessageLookupByLibrary.simpleMessage("All Instructor"),
         "AlreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Already Have Account?"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " By clicking in signup You agree to our "),
+        "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "Categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "Close": MessageLookupByLibrary.simpleMessage("Close"),
+        "CourseNotFound":
+            MessageLookupByLibrary.simpleMessage("Course not found"),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+        "Done": MessageLookupByLibrary.simpleMessage("Done"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "Please enter your password again"),
         "Female": MessageLookupByLibrary.simpleMessage("Female"),
         "FirstName": MessageLookupByLibrary.simpleMessage("First Name"),
+        "ForYou": MessageLookupByLibrary.simpleMessage("For You"),
+        "GoBack": MessageLookupByLibrary.simpleMessage("Go Back"),
+        "HomePage": MessageLookupByLibrary.simpleMessage("Home"),
         "InvalidDomainEmail": MessageLookupByLibrary.simpleMessage(
             "Invalid email domain. Use @gmail.com or @hotmail.com"),
         "InvalidEmail":
             MessageLookupByLibrary.simpleMessage("Please enter your email"),
         "LastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+        "LatestCAdded":
+            MessageLookupByLibrary.simpleMessage("Latest Course Added"),
+        "LearningPlatformApp":
+            MessageLookupByLibrary.simpleMessage("Learning Platform App"),
+        "LogOut": MessageLookupByLibrary.simpleMessage("LogOut"),
         "LoginFail": MessageLookupByLibrary.simpleMessage("Login Failed"),
+        "MViewCourse":
+            MessageLookupByLibrary.simpleMessage("Most Viewed Courses"),
         "Male": MessageLookupByLibrary.simpleMessage("Male"),
+        "MaximumPrice": MessageLookupByLibrary.simpleMessage("Maximum Price"),
+        "MinimumPrice": MessageLookupByLibrary.simpleMessage("Minimum Price"),
+        "MyCourse": MessageLookupByLibrary.simpleMessage("MyCourse"),
+        "NoCategoriesAvailable":
+            MessageLookupByLibrary.simpleMessage("No Categories available"),
+        "NoCourseAvailable":
+            MessageLookupByLibrary.simpleMessage("No Course available"),
+        "NoTrainerAvailable":
+            MessageLookupByLibrary.simpleMessage("No Instructor available"),
+        "OK": MessageLookupByLibrary.simpleMessage("OK"),
         "PassNotMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "PasswordConfirm":
@@ -48,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password must contain at least one uppercase letter"),
         "PasswordLong": MessageLookupByLibrary.simpleMessage(
             "Password must be at least 8 characters long"),
+        "PersonalInfo": MessageLookupByLibrary.simpleMessage("Personal Info"),
         "PlzEnterFn": MessageLookupByLibrary.simpleMessage(
             "Please enter your first name"),
         "PlzEnterLn":
@@ -63,9 +94,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "PrivacyDetails": MessageLookupByLibrary.simpleMessage(
             "Our Privacy Policy outlines how we collect, use, and protect your personal information when you use our services. We are committed to safeguarding your privacy and ensuring the security of your data."),
         "PrivacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+        "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "QuickFilter": MessageLookupByLibrary.simpleMessage("Quick Filters"),
+        "RecommendCFY":
+            MessageLookupByLibrary.simpleMessage("Recommend Courses For You"),
         "RememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
+        "Search": MessageLookupByLibrary.simpleMessage("Search"),
+        "SeeMore": MessageLookupByLibrary.simpleMessage("see more"),
         "Signup": MessageLookupByLibrary.simpleMessage("Signup"),
         "SignupSpace": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "StartLeaning":
+            MessageLookupByLibrary.simpleMessage("Start learning now!"),
         "SuccessSignUp":
             MessageLookupByLibrary.simpleMessage("SignUp Successfully Done"),
         "Telephone": MessageLookupByLibrary.simpleMessage("Telephone"),
@@ -73,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "TermsDetails": MessageLookupByLibrary.simpleMessage(
             "By accessing and using our services, you agree to abide by our Terms and Conditions. These terms govern your use of our platform and outline your rights and responsibilities as a user."),
         "UserName": MessageLookupByLibrary.simpleMessage("UserName"),
+        "WelcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back"),
         "WelcomeSignUp": MessageLookupByLibrary.simpleMessage(
             "Welcome To Our Learning Platform App,Please Login To Your App"),
         "aboutDetails": MessageLookupByLibrary.simpleMessage(

@@ -3,6 +3,8 @@ import 'package:learningplatformapp/Widget/CourseOfTrainer.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 
+import '../generated/l10n.dart';
+
 class TrainerCourse extends StatefulWidget {
   int userid;
   TrainerCourse({super.key, required this.userid});
@@ -12,53 +14,53 @@ class TrainerCourse extends StatefulWidget {
 }
 
 class _TrainerCourseState extends State<TrainerCourse> {
-
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AppDataProvider provider = Provider.of<AppDataProvider>(context, listen: false);
+      AppDataProvider provider =
+          Provider.of<AppDataProvider>(context, listen: false);
       provider.getcoursetrainer(widget.userid);
     });
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    AppDataProvider appDataProvider =
+        Provider.of<AppDataProvider>(context, listen: true);
     var coursestrainer = appDataProvider.coursestrainer;
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Color(0xFFEC9D52),
-                        Color(0xFF000000)])),
-            ),
-              Row(
-                children: [
-                  IconButton(onPressed: (){
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
                       Navigator.pop(context);
-                  }, icon: const Icon(Icons.arrow_back_ios,
-                  color: Colors.black,size: 25,)),
-                  const Text('Go Back',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,
-                  color: Colors.black),)
-                ],
-              ),
-              if(coursestrainer.isEmpty)
-                const Center(
-                  child: Text('No Course Found',style: TextStyle(
-                    fontSize: 18,color: Colors.black
-                  ),),
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                      size: 25,
+                    )),
+                Text(
+                  S.of(context).GoBack,
+                  style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 )
+              ],
+            ),
+            if (coursestrainer.isEmpty)
+              Center(
+                child: Text(
+                  S.of(context).NoCourseAvailable,
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
+                ),
+              )
             else
               Padding(
                 padding: const EdgeInsets.only(top: 50),

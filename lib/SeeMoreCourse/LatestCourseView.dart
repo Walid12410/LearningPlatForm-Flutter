@@ -5,6 +5,7 @@ import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import '../generated/l10n.dart';
 
 class Latestcourse extends StatefulWidget {
   const Latestcourse({Key? key}) : super(key: key);
@@ -34,9 +35,9 @@ class _LatestcourseState extends State<Latestcourse> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Latest Courses Added',
-          style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+        title:  Text(
+          S.of(context).LatestCAdded,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,

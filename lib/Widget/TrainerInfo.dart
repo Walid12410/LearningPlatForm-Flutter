@@ -4,6 +4,7 @@ import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
+import '../generated/l10n.dart';
 
 class TrainerInfo extends StatelessWidget {
   const TrainerInfo({
@@ -25,15 +26,13 @@ class TrainerInfo extends StatelessWidget {
         child: ListTile(
           leading: ClipOval(
             child: trainers.picture == ''
-                ? Image.asset('assets/user.png',
-                    fit: BoxFit.cover)
+                ? Image.asset('assets/user.png', fit: BoxFit.cover)
                 : CachedNetworkImage(
                     imageUrl: trainers.picture,
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
-                        Image.asset('assets/user.png',
-                            fit: BoxFit.cover) ,
+                        Image.asset('assets/user.png', fit: BoxFit.cover),
                     width: 50.0,
                     height: 50.0,
                     fit: BoxFit.cover, // Adjust fit as needed
@@ -56,9 +55,9 @@ class TrainerInfo extends StatelessWidget {
               Icons.forward,
               color: tdBlue,
             ),
-            label: const Text(
-              'All Courses', // Your button label text here
-              style: TextStyle(color: tdBlue),
+            label: Text(
+              S.of(context).AllCourses,
+              style: const TextStyle(color: tdBlue),
             ),
             style: TextButton.styleFrom(
               backgroundColor: Colors.white,

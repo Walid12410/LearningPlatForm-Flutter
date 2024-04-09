@@ -3,6 +3,8 @@ import 'package:learningplatformapp/Widget/TrainerInfo.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 
+import '../generated/l10n.dart';
+
 class TrainerPage extends StatefulWidget {
   const TrainerPage({Key? key}) : super(key: key);
 
@@ -11,55 +13,55 @@ class TrainerPage extends StatefulWidget {
 }
 
 class _TrainerPageState extends State<TrainerPage> {
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AppDataProvider provider = Provider.of<AppDataProvider>(context, listen: false);
+      AppDataProvider provider =
+          Provider.of<AppDataProvider>(context, listen: false);
       provider.getAllTrainer();
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    AppDataProvider appDataProvider = Provider.of<AppDataProvider>(context, listen: true);
+    AppDataProvider appDataProvider =
+        Provider.of<AppDataProvider>(context, listen: true);
     var trainers = appDataProvider.trainers;
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFEC9D52),
-                    Color(0xFF000000),
-                  ],
-                ),
-              ),
-            ),
             Column(
               children: [
                 Row(
                   children: [
-                    IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    }, icon: const Icon(Icons.arrow_back_ios,
-                    color: Colors.black,size: 25,)),
-                    const Text('Go Back',style: TextStyle(fontWeight: FontWeight.bold,
-                    color: Colors.black,fontSize: 30),)
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: 25,
+                        )),
+                    Text(
+                      S.of(context).GoBack,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 30),
+                    )
                   ],
                 )
               ],
             ),
-            if(trainers.isEmpty)
-              const Center(
+            if (trainers.isEmpty)
+              Center(
                 child: Text(
-                  'No Instructor available',
-                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  S.of(context).NoTrainerAvailable,
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
                 ),
               )
             else
@@ -71,18 +73,21 @@ class _TrainerPageState extends State<TrainerPage> {
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
-                      )
-                  ),
+                      )),
                   height: double.infinity,
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
-                      itemCount: trainers.where((trainer) => trainer.usertype == 'TR').length,
+                      itemCount: trainers
+                          .where((trainer) => trainer.usertype == 'TR')
+                          .length,
                       itemBuilder: (context, i) {
-                        final filteredTrainers = trainers.where((trainer) => trainer.usertype == 'TR').toList();
+                        final filteredTrainers = trainers
+                            .where((trainer) => trainer.usertype == 'TR')
+                            .toList();
                         if (filteredTrainers.isEmpty) {
-                          return const Text('No trainers found');
+                          return  Text(S.of(context).NoTrainerAvailable);
                         } else {
                           return TrainerInfo(trainers: filteredTrainers[i]);
                         }
@@ -97,4 +102,3 @@ class _TrainerPageState extends State<TrainerPage> {
     );
   }
 }
-

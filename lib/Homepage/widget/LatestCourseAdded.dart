@@ -56,7 +56,7 @@ class LatestCourseAdd extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
           ],
         ),
       ),

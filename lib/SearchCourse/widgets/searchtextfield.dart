@@ -3,6 +3,8 @@ import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/SearchCourse/Searchpage.dart';
 import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
 
+import '../../generated/l10n.dart';
+
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({Key? key}) : super(key: key);
@@ -24,14 +26,14 @@ class SearchTextField extends StatelessWidget {
           color: tdbrown, // Use your desired color here
           borderRadius: BorderRadius.circular(10),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            Icon(Icons.search, color: tdBlue), // Use your desired color here
-            SizedBox(width: 8),
+            const Icon(Icons.search, color: tdBlue), // Use your desired color here
+            const SizedBox(width: 8),
             Expanded(
               child: Text(
-                'Search',
-                style: TextStyle(color: tdBlue), // Use your desired color here
+                S.of(context).Search,
+                style: const TextStyle(color: tdBlue), // Use your desired color here
               ),
             ),
           ],

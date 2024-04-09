@@ -7,6 +7,8 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 
+import '../generated/l10n.dart';
+
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -62,22 +64,23 @@ class _SearchPageState extends State<SearchPage> {
             List<Portal>? portals = appDataProvider.portals;
             if (portals == null || portals.isEmpty) {
               return AlertDialog(
-                title: const Text('No Category found'),
+                title: Text(S.of(context).NoCategoriesAvailable),
                 actions: [
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text('OK'),
+                    child: Text(S.of(context).OK),
                   ),
                 ],
               );
             }
             Set<String> uniqueValues = {};
             return AlertDialog(
-              title: const Text(
-                'Quick Filters',
-                style: TextStyle(color: tdbrown, fontWeight: FontWeight.bold),
+              title: Text(
+                S.of(context).QuickFilter,
+                style: const TextStyle(
+                    color: tdbrown, fontWeight: FontWeight.bold),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -107,25 +110,31 @@ class _SearchPageState extends State<SearchPage> {
                     value: selectedCategory,
                     onChanged: (String? newValue) {
                       setState(() {
-                        selectedCategory = newValue ?? ''; // Ensure newValue is not null
+                        selectedCategory =
+                            newValue ?? ''; // Ensure newValue is not null
                       });
                     },
                     items: [
-                      const DropdownMenuItem<String>(
+                      DropdownMenuItem<String>(
                         value: '',
-                        child: Text('All Category Selected'),
+                        child: Text(S.of(context).AllCategoriesSelected),
                       ),
-                      ...portals.map<DropdownMenuItem<String>>((Portal portal) {
-                        if (!uniqueValues.contains(portal.portalID.toString())) {
-                          uniqueValues.add(portal.portalID.toString());
-                          return DropdownMenuItem<String>(
-                            value: portal.portalID.toString(),
-                            child: Text(portal.portalName),
-                          );
-                        } else {
-                          return const DropdownMenuItem<String>(value: '', child: SizedBox.shrink());
-                        }
-                      }).whereType<DropdownMenuItem<String>>().toList(), // Filter out null values
+                      ...portals
+                          .map<DropdownMenuItem<String>>((Portal portal) {
+                            if (!uniqueValues
+                                .contains(portal.portalID.toString())) {
+                              uniqueValues.add(portal.portalID.toString());
+                              return DropdownMenuItem<String>(
+                                value: portal.portalID.toString(),
+                                child: Text(portal.portalName),
+                              );
+                            } else {
+                              return const DropdownMenuItem<String>(
+                                  value: '', child: SizedBox.shrink());
+                            }
+                          })
+                          .whereType<DropdownMenuItem<String>>()
+                          .toList(), // Filter out null values
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -135,7 +144,8 @@ class _SearchPageState extends State<SearchPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: TextField(
-                            controller: TextEditingController(text: minPrice.toString()),
+                            controller: TextEditingController(
+                                text: minPrice.toString()),
                             onChanged: (value) {
                               setState(() {
                                 minPrice = double.tryParse(value) ?? 0.0;
@@ -143,7 +153,7 @@ class _SearchPageState extends State<SearchPage> {
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              labelText: 'Minimum Price',
+                              labelText: S.of(context).MinimumPrice,
                               labelStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -171,7 +181,8 @@ class _SearchPageState extends State<SearchPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: TextField(
-                            controller: TextEditingController(text: maxPrice.toString()),
+                            controller: TextEditingController(
+                                text: maxPrice.toString()),
                             onChanged: (value) {
                               setState(() {
                                 maxPrice = double.tryParse(value) ?? 5000.0;
@@ -179,7 +190,7 @@ class _SearchPageState extends State<SearchPage> {
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              labelText: 'Maximum Price',
+                              labelText: S.of(context).MaximumPrice,
                               labelStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -212,7 +223,7 @@ class _SearchPageState extends State<SearchPage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text('Cancel',style: TextStyle(color: tdBlue)),
+                  child: Text(S.of(context).Cancel, style:const TextStyle(color: tdBlue)),
                 ),
                 TextButton(
                   onPressed: () {
@@ -236,7 +247,10 @@ class _SearchPageState extends State<SearchPage> {
                     // Close the dialog
                     Navigator.pop(context);
                   },
-                  child: const Text('Done',style: TextStyle(color: tdBlue),),
+                  child:Text(
+                    S.of(context).Done,
+                    style: const TextStyle(color: tdBlue),
+                  ),
                 )
               ],
             );
@@ -245,7 +259,6 @@ class _SearchPageState extends State<SearchPage> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +271,14 @@ class _SearchPageState extends State<SearchPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, icon:
-                  const Icon(Icons.arrow_back_ios,color: tdbrown,)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: tdbrown,
+                      )),
                   Expanded(
                     child: Container(
                       height: 50,
@@ -276,10 +293,10 @@ class _SearchPageState extends State<SearchPage> {
                         onChanged: (query) {
                           filterCourses(query, selectedCategory);
                         },
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
+                        decoration:  InputDecoration(
+                          hintText: S.of(context).Search,
                           border: InputBorder.none,
-                          prefixIcon: Icon(Icons.search, color: tdBlue),
+                          prefixIcon: const Icon(Icons.search, color: tdBlue),
                         ),
                         style: const TextStyle(color: tdBlue),
                       ),
@@ -296,7 +313,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             Expanded(
               child: filteredCourses.isEmpty
-                  ? const Center(child: Text('Course not found'))
+                  ?  Center(child: Text(S.of(context).CourseNotFound))
                   : ListView.builder(
                       itemCount: filteredCourses.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -304,12 +321,14 @@ class _SearchPageState extends State<SearchPage> {
                           padding: const EdgeInsets.all(5.0),
                           child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5), color: tdbrown),
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: tdbrown),
                               child: ListTile(
                                 title: Text(
                                   filteredCourses[index].title,
-                                  style:
-                                  const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      color: tdBlue,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Text(
                                   filteredCourses[index].description,
@@ -317,16 +336,18 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                                 trailing: Text(
                                   '\$${filteredCourses[index].price}',
-                                  style: const TextStyle(fontSize: 15, color: tdBlue),
+                                  style: const TextStyle(
+                                      fontSize: 15, color: tdBlue),
                                 ),
                                 onTap: () {
-                                  Navigator.push(context,
-                                      CustomPageRoute(child: CourseDetails(
+                                  Navigator.push(
+                                      context,
+                                      CustomPageRoute(
+                                          child: CourseDetails(
                                         courseid: filteredCourses[index].id,
                                       )));
                                 },
-                              )
-                          ),
+                              )),
                         );
                       },
                     ),

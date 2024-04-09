@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
-import 'package:learningplatformapp/futureapi/CourseApi.dart';
-import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
-import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
-import 'package:learningplatformapp/AllClass/course.dart';
+
+import '../generated/l10n.dart';
 
 class ForYouCourse extends StatefulWidget {
   const ForYouCourse({Key? key}) : super(key: key);
@@ -42,9 +40,9 @@ class _ForYouCourseState extends State<ForYouCourse> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Recommend Courses For You',
-          style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+        title: Text(
+          S.of(context).RecommendCFY,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
