@@ -22,6 +22,8 @@ class _CourseDetailsState extends State<CourseDetails>
   late AppDataProvider appDataProvider;
   late TabController _tabController;
   bool _isFavorite = false;
+  bool isStudent = false;
+
 
   @override
   void initState() {
@@ -32,7 +34,47 @@ class _CourseDetailsState extends State<CourseDetails>
       int userid = provider.userId;
       fetchFavoriteStatus(userid, widget.courseid);
       provider.fetchCourseByID(widget.courseid);
+      provider.getParticipation().then((_) {
+        checkStudents();
+      });
+
     });
+  }
+
+  void checkStudents() {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    var participationData = provider.participation;
+    int userId = provider.userId;
+    if (participationData.isNotEmpty) {
+      setState(() {
+        isStudent = false;
+        for (var participation in participationData) {
+          if (participation.userID == userId && participation.fullPlatform == 1) {
+            isStudent = true;
+            break;
+          }
+          else if(participation.userID == userId && participation.fullPlatform == 0){
+            provider.getCourseParticipated().then((_) {
+              checkStudentCourse(participation.parID);
+            });
+            return;
+          }
+        }
+      });
+    }
+  }
+
+  void checkStudentCourse(int parId)  {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    var data = provider.cParticipated;
+    for(var participation in data){
+      if(participation.parID == parId && participation.courseID == widget.courseid){
+        setState(() {
+          isStudent = true;
+        });
+        break;
+      }
+    }
   }
 
   @override
@@ -148,7 +190,7 @@ class _CourseDetailsState extends State<CourseDetails>
                     tabController: _tabController,
                     tabViews: [
                       CourseInformation(courseid: widget.courseid),
-                      Chapterpage(courseid: widget.courseid),
+                      Chapterpage(courseid: widget.courseid,isStudent: isStudent),
                       Quizzes(courseId: widget.courseid,), // Third tab with the stateful page
                     ],
                   ),

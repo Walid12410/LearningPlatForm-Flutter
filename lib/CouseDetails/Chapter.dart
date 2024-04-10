@@ -9,15 +9,15 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import '../AllClass/Lesson.dart';
 
 class Chapterpage extends StatefulWidget {
-  const Chapterpage({Key? key, required this.courseid}) : super(key: key);
+  const Chapterpage({Key? key, required this.courseid,required this.isStudent}) : super(key: key);
   final int courseid;
+  final bool isStudent;
 
   @override
   State<Chapterpage> createState() => _ChapterpageState();
 }
 
 class _ChapterpageState extends State<Chapterpage> {
-  bool isStudent = false;
 
   @override
   void initState() {
@@ -26,51 +26,8 @@ class _ChapterpageState extends State<Chapterpage> {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getChapterByID(widget.courseid);
       provider.getLessonById(widget.courseid);
-      provider.getParticipation().then((_) {
-        checkStudents();
-      });
     });
   }
-
-
-  void checkStudents() {
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
-    var participationData = provider.participation;
-    int userId = provider.userId;
-    if (participationData.isNotEmpty) {
-      setState(() {
-        isStudent = false;
-        for (var participation in participationData) {
-          if (participation.userID == userId && participation.fullPlatform == 1) {
-            isStudent = true;
-            break;
-          }
-          else if(participation.userID == userId && participation.fullPlatform == 0){
-            provider.getCourseParticipated().then((_) {
-              checkStudentCourse(participation.parID);
-            });
-            return;
-          }
-        }
-      });
-    }
-  }
-
-
-  void checkStudentCourse(int parId)  {
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
-    var data = provider.cParticipated;
-    for(var participation in data){
-      if(participation.parID == parId && participation.courseID == widget.courseid){
-        setState(() {
-          isStudent = true;
-        });
-        break;
-      }
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +102,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                       const Spacer(),
                                       if (lesson.mediatype == 'v')
                                         IconButton(
-                                          onPressed: () {
+                                          onPressed:widget.isStudent ? () {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -155,7 +112,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                                                 .mobilelink,
                                                             name:
                                                                 lesson.title)));
-                                          },
+                                          } : null,
                                           icon: const Icon(
                                             Icons.play_arrow,
                                             color: Colors.black,
@@ -164,7 +121,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                         ),
                                       if (lesson.mediatype != 'v')
                                         IconButton(
-                                          onPressed: () {
+                                          onPressed: widget.isStudent ?() {
                                             Navigator.push(
                                                 context,
                                                 CustomPageRoute2(
@@ -172,7 +129,7 @@ class _ChapterpageState extends State<Chapterpage> {
                                                   pdfUrl: lesson.filepath,
                                                   title: lesson.title,
                                                 )));
-                                          },
+                                          } : null,
                                           icon: const Icon(
                                             Icons.file_copy,
                                             color: Colors.black,
