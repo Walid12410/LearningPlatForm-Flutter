@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
-import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
 import 'package:learningplatformapp/CouseDetails/PdfViewer.dart';
 import 'package:learningplatformapp/CouseDetails/video.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -18,6 +17,8 @@ class Chapterpage extends StatefulWidget {
 }
 
 class _ChapterpageState extends State<Chapterpage> {
+  bool isStudent = false;
+
   @override
   void initState() {
     super.initState();
@@ -25,8 +26,51 @@ class _ChapterpageState extends State<Chapterpage> {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getChapterByID(widget.courseid);
       provider.getLessonById(widget.courseid);
+      provider.getParticipation().then((_) {
+        checkStudents();
+      });
     });
   }
+
+
+  void checkStudents() {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    var participationData = provider.participation;
+    int userId = provider.userId;
+    if (participationData.isNotEmpty) {
+      setState(() {
+        isStudent = false;
+        for (var participation in participationData) {
+          if (participation.userID == userId && participation.fullPlatform == 1) {
+            isStudent = true;
+            break;
+          }
+          else if(participation.userID == userId && participation.fullPlatform == 0){
+            provider.getCourseParticipated().then((_) {
+              checkStudentCourse(participation.parID);
+            });
+            return;
+          }
+        }
+      });
+    }
+  }
+
+
+  void checkStudentCourse(int parId)  {
+    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    var data = provider.cParticipated;
+    for(var participation in data){
+      if(participation.parID == parId && participation.courseID == widget.courseid){
+        setState(() {
+          isStudent = true;
+        });
+        break;
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

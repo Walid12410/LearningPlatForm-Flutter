@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:learningplatformapp/AllClass/course.dart';
 
 Future<List<Course>> getAllCourses() async {
-  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  Uri url = Uri.parse('http://192.168.1.2/api/webCourse.php?status=data');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     List<Course> courses = [];
@@ -23,7 +23,7 @@ Future<List<Course>> getAllCourses() async {
 }
 
 Future<List<Course>> getCourseByID(int courseID) async {
-  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=one&id=$courseID');
+  Uri url = Uri.parse('http://192.168.1.2/api/webCourse.php?status=one&id=$courseID');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     List<Course> courses = [];
@@ -45,7 +45,7 @@ Future<List<Course>> getCourseByID(int courseID) async {
 }
 
 Future<List<Course>> getCourseTrainer(int userId) async {
-  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  Uri url = Uri.parse('http://192.168.1.2/api/webCourse.php?status=data');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     dynamic jsonResponse = json.decode(response.body);
@@ -65,7 +65,7 @@ Future<List<Course>> getCourseTrainer(int userId) async {
 }
 
 Future<List<Course>> getCourse(int portalId) async {
-  Uri url = Uri.parse('http://192.168.1.12/api/webCourse.php?status=data');
+  Uri url = Uri.parse('http://192.168.1.2/api/webCourse.php?status=data');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     dynamic jsonResponse = json.decode(response.body);
@@ -89,7 +89,7 @@ Future<List<Course>> getCourse(int portalId) async {
 
 Future<List<Course>> getCourseView() async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.12/api/walid/courseapi.php?operation=mostview'));
+      'http://192.168.1.2/api/walid/courseapi.php?operation=mostview'));
   if (response.statusCode == 200) {
     List<Course> courses = [];
     dynamic jsonResponse = json.decode(response.body);
@@ -108,7 +108,7 @@ Future<List<Course>> getCourseView() async {
 
 
 Future<List<Course>> getCourseNew() async {
-  Uri url = Uri.parse('http://192.168.1.12/api/walid/courseapi.php?operation=latest');
+  Uri url = Uri.parse('http://192.168.1.2/api/walid/courseapi.php?operation=latest');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     List<Course> courses = [];
@@ -127,7 +127,7 @@ Future<List<Course>> getCourseNew() async {
 }
 
 Future<List<Course>> getRandomCourse() async {
-  final Uri url = Uri.parse('http://192.168.1.12/api/walid/courseapi.php?operation=random');
+  final Uri url = Uri.parse('http://192.168.1.2/api/walid/courseapi.php?operation=random');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final List<Course> courses = [];

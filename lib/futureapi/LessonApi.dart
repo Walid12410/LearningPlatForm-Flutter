@@ -4,7 +4,7 @@ import 'package:learningplatformapp/AllClass/Lesson.dart';
 
 Future<List<Lesson>> fetchLessonsByCourseID(int id) async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.12/api/walid/lesson.php?status=data&courseID=$id'));
+      'http://192.168.1.2/api/walid/lesson.php?status=data&courseID=$id'));
   if (response.statusCode == 200) {
     List<dynamic> responseData = json.decode(response.body);
     List<Lesson> lessons = [];

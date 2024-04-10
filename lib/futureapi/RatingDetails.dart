@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:learningplatformapp/AllClass/RatingDetails.dart';
 
 Future<List<CourseReview>> fetchCourseReview(int id) async {
-  Uri url = Uri.parse('http://192.168.1.12/api/walid/feedback.php?operation=data&course_id=$id');
+  Uri url = Uri.parse('http://192.168.1.2/api/walid/feedback.php?operation=data&course_id=$id');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     List<CourseReview> courseReview = [];
