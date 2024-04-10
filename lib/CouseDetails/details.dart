@@ -24,7 +24,6 @@ class _CourseDetailsState extends State<CourseDetails>
   bool _isFavorite = false;
   bool isStudent = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +36,6 @@ class _CourseDetailsState extends State<CourseDetails>
       provider.getParticipation().then((_) {
         checkStudents();
       });
-
     });
   }
 
@@ -49,11 +47,12 @@ class _CourseDetailsState extends State<CourseDetails>
       setState(() {
         isStudent = false;
         for (var participation in participationData) {
-          if (participation.userID == userId && participation.fullPlatform == 1) {
+          if (participation.userID == userId &&
+              participation.fullPlatform == 1) {
             isStudent = true;
             break;
-          }
-          else if(participation.userID == userId && participation.fullPlatform == 0){
+          } else if (participation.userID == userId &&
+              participation.fullPlatform == 0) {
             provider.getCourseParticipated().then((_) {
               checkStudentCourse(participation.parID);
             });
@@ -64,11 +63,12 @@ class _CourseDetailsState extends State<CourseDetails>
     }
   }
 
-  void checkStudentCourse(int parId)  {
+  void checkStudentCourse(int parId) {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
     var data = provider.cParticipated;
-    for(var participation in data){
-      if(participation.parID == parId && participation.courseID == widget.courseid){
+    for (var participation in data) {
+      if (participation.parID == parId &&
+          participation.courseID == widget.courseid) {
         setState(() {
           isStudent = true;
         });
@@ -190,8 +190,11 @@ class _CourseDetailsState extends State<CourseDetails>
                     tabController: _tabController,
                     tabViews: [
                       CourseInformation(courseid: widget.courseid),
-                      Chapterpage(courseid: widget.courseid,isStudent: isStudent),
-                      Quizzes(courseId: widget.courseid,), // Third tab with the stateful page
+                      Chapterpage(
+                          courseid: widget.courseid, isStudent: isStudent),
+                      Quizzes(
+                        courseId: widget.courseid,
+                      ), // Third tab with the stateful page
                     ],
                   ),
                 ],
@@ -203,20 +206,30 @@ class _CourseDetailsState extends State<CourseDetails>
       bottomNavigationBar: BottomAppBar(
         color: tdbrown, // Set the background color for the bottom app bar
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              // Add action for enrolling
-            },
-            child: const Text(
-              'Enroll Now',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
-        ),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: isStudent
+                ? const Text(
+                    'You Already Have This Course',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  )
+                : ElevatedButton(
+                    onPressed: () {
+                      // Add action for enrolling
+                    },
+                    child: const Center(
+                      child:  Text(
+                        'Enroll Now',
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    ),
+                  )),
       ),
     );
   }
