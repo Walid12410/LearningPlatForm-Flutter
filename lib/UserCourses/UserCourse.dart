@@ -10,6 +10,14 @@ class UserCourse extends StatefulWidget {
 class _UserCourseState extends State<UserCourse> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+
+          ],
+        ),
+      ),
+    );
   }
 }

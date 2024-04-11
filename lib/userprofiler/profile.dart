@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
-import 'package:learningplatformapp/userprofiler/profile&setting.dart';
+import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../SignInUp/signin.dart';
 import '../provider/provider_data.dart';
 import 'editprofile.dart';
+import 'information.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -33,38 +36,27 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: users.isEmpty
           ? const Center(
-              child: CircularProgressIndicator(color: tdbrown,)
-            )
+              child: CircularProgressIndicator(
+              color: tdbrown,
+            ))
           : SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            users[0].toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: Colors.black),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    CustomPageRoute(
-                                        child: const ProfileSetting()));
-                              },
-                              icon: const Icon(
-                                Icons.menu,
-                                color: Colors.black,
-                                size: 30,
-                              ))
-                        ],
-                      ),
+                    const Row(
+                      children: [
+                        Text(
+                          'Setting & Profile',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    const Divider(
+                      color: Colors.black,
+                      thickness: 3,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -98,6 +90,10 @@ class _ProfileState extends State<Profile> {
                       height: 10,
                     ),
                     Text(
+                      users[0].toString(),
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    Text(
                       users[0].email,
                       style: const TextStyle(fontSize: 15),
                     ),
@@ -127,28 +123,62 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Column(
                       children: [
-                         Padding(
-                           padding: EdgeInsets.only(left: 6),
-                           child: Text(
-                            'About Me',
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                                                   ),
-                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ProfileMenuWidget(
+                            icon: Icons.language,
+                            text: 'Language',
+                            onPressed: () {},
+                            textColor: tdBlue),
+                        const SizedBox(height: 10),
+                        ProfileMenuWidget(
+                            icon: Icons.person,
+                            text: 'Information',
+                            onPressed: () {
+                              Navigator.push(context,
+                                  CustomPageRoute(child: const Information()));
+                            },
+                            textColor: tdBlue),
+                        const SizedBox(height: 10),
+                        ProfileMenuWidget(
+                            icon: Icons.assignment,
+                            text: 'My Courses',
+                            onPressed: () {},
+                            textColor: tdBlue),
+                        const SizedBox(height: 10),
+                        const Divider(
+                          color: Colors.black,
+                          thickness: 3,
+                        ),
+                        ProfileMenuWidget(
+                            icon: Icons.password,
+                            text: 'Change Password',
+                            onPressed: () {},
+                            endIcon: false,
+                            textColor: Colors.red),
+                        const SizedBox(height: 10),
+                        ProfileMenuWidget(
+                            icon: Icons.logout_outlined,
+                            text: 'logout',
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs
+                                  .clear(); // Clear all stored preferences
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignIn()),
+                                (route) => false,
+                              );
+                            },
+                            endIcon: false,
+                            textColor: Colors.red)
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15,right: 12),
-                      child: Text(
-                        users[0].description,
-                        style: const TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                    )
                   ],
                 ),
               ),
