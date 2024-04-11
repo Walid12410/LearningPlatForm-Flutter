@@ -193,7 +193,7 @@ class _CourseDetailsState extends State<CourseDetails>
                       Chapterpage(
                           courseid: widget.courseid, isStudent: isStudent),
                       Quizzes(
-                        courseId: widget.courseid,
+                        courseId: widget.courseid,isStudent: isStudent,
                       ), // Third tab with the stateful page
                     ],
                   ),

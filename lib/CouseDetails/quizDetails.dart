@@ -5,8 +5,9 @@ import 'package:provider/provider.dart';
 import '../provider/provider_data.dart';
 
 class Quizzes extends StatefulWidget {
-  const Quizzes({Key? key, required this.courseId}) : super(key: key);
+  const Quizzes({Key? key, required this.courseId,required this.isStudent}) : super(key: key);
   final int courseId;
+  final bool isStudent;
 
   @override
   State<Quizzes> createState() => _QuizzesState();
@@ -67,13 +68,13 @@ class _QuizzesState extends State<Quizzes> {
                               ),
                               const Spacer(),
                               IconButton(
-                                  onPressed: () {
+                                  onPressed: widget.isStudent ? () {
                                     Navigator.push(
                                         context,
                                         CustomPageRoute(
                                             child: QuizPage(
                                                 chapterID: chapter[i].id)));
-                                  },
+                                  } : null,
                                   icon: const Icon(
                                     Icons.arrow_forward,
                                     color: Colors.black,
