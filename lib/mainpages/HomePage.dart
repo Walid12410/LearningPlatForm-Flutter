@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pages = [
       const MainPage(),
-      const UserCourse(),
+      const UserCoursePage(),
       const SearchCourse(),
       const Profile()
     ];
@@ -54,13 +54,16 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = newIndex;
             });
           },
-          items:  [
-            BottomNavigationBarItem(icon: const Icon(Icons.home), label: S.of(context).HomePage),
+          items: [
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.home), label: S.of(context).HomePage),
             BottomNavigationBarItem(
                 icon: const Icon(Icons.school), label: S.of(context).MyCourse),
-            BottomNavigationBarItem(icon: const Icon(Icons.search), label: S.of(context).Search),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.account_circle), label: S.of(context).Profile)
+                icon: const Icon(Icons.search), label: S.of(context).Search),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.account_circle),
+                label: S.of(context).Profile)
           ],
         ),
       ),

@@ -20,7 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       int userID = provider.userId;
       provider.getTrainer(userID);
@@ -53,10 +53,6 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold),
                         )
                       ],
-                    ),
-                    const Divider(
-                      color: Colors.black,
-                      thickness: 3,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
