@@ -6,7 +6,7 @@ import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
-
+import 'package:intl/intl.dart';
 import '../generated/l10n.dart';
 
 class SearchPage extends StatefulWidget {
@@ -23,6 +23,10 @@ class _SearchPageState extends State<SearchPage> {
 
   double minPrice = 0.0;
   double maxPrice = 5000.0;
+
+  bool isArabic() {
+    return Intl.getCurrentLocale() == 'ar';
+  }
 
   @override
   void initState() {
@@ -85,64 +89,68 @@ class _SearchPageState extends State<SearchPage> {
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: tdBlue,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: const BorderSide(
+                  Flexible(
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
                           color: tdBlue,
-                          width: 1,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: tdBlue,
+                            width: 1,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
                         ),
                       ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                          width: 1,
+                      value: selectedCategory,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCategory =
+                              newValue ?? ''; // Ensure newValue is not null
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem<String>(
+                          value: '',
+                          child: Text(S.of(context).AllCategoriesSelected),
                         ),
-                      ),
+                        ...portals
+                            .map<DropdownMenuItem<String>>((Portal portal) {
+                              if (!uniqueValues
+                                  .contains(portal.portalID.toString())) {
+                                uniqueValues.add(portal.portalID.toString());
+                                return DropdownMenuItem<String>(
+                                  value: portal.portalID.toString(),
+                                  child: Text(portal.portalName),
+                                );
+                              } else {
+                                return const DropdownMenuItem<String>(
+                                    value: '', child: SizedBox.shrink());
+                              }
+                            })
+                            .whereType<DropdownMenuItem<String>>()
+                            .toList(), // Filter out null values
+                      ],
                     ),
-                    value: selectedCategory,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedCategory =
-                            newValue ?? ''; // Ensure newValue is not null
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: '',
-                        child: Text(S.of(context).AllCategoriesSelected),
-                      ),
-                      ...portals
-                          .map<DropdownMenuItem<String>>((Portal portal) {
-                            if (!uniqueValues
-                                .contains(portal.portalID.toString())) {
-                              uniqueValues.add(portal.portalID.toString());
-                              return DropdownMenuItem<String>(
-                                value: portal.portalID.toString(),
-                                child: Text(portal.portalName),
-                              );
-                            } else {
-                              return const DropdownMenuItem<String>(
-                                  value: '', child: SizedBox.shrink());
-                            }
-                          })
-                          .whereType<DropdownMenuItem<String>>()
-                          .toList(), // Filter out null values
-                    ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
+                          padding:isArabic()?
+                          const EdgeInsets.only(left: 8.0):
+                          const EdgeInsets.only(right: 8.0),
                           child: TextField(
                             controller: TextEditingController(
                                 text: minPrice.toString()),
@@ -179,7 +187,9 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding: isArabic()?
+                          const EdgeInsets.only(right: 8.0)
+                          :const EdgeInsets.only(left: 8.0),
                           child: TextField(
                             controller: TextEditingController(
                                 text: maxPrice.toString()),

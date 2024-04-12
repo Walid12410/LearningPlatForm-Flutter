@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
+import '../generated/l10n.dart';
 import 'widget/viewprofile.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
@@ -34,9 +35,9 @@ class _InformationState extends State<Information> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Your Profile',
-          style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+        title: Text(
+          S.of(context).Profile,
+           style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
@@ -77,9 +78,9 @@ class _InformationState extends State<Information> {
                 ],
               ),
               const SizedBox(height: 20),
-              Profileview(title: 'Name', desc: users[0].toString()),
-              Profileview(title: 'Email', desc: users[0].email),
-              Profileview(title: 'Phone Number', desc: users[0].telephone),
+              Profileview(title: S.of(context).name, desc: users[0].toString()),
+              Profileview(title: S.of(context).emailAddress, desc: users[0].email),
+              Profileview(title: S.of(context).Telephone, desc: users[0].telephone),
             ],
           ),
         ),

@@ -76,6 +76,15 @@
   "MaximumPrice" : "السعر الأقصى",
   "Cancel": "إلغاء",
   "Done" : "موافق",
-  "CourseNotFound" : "الدورة غير موجودة"
+  "CourseNotFound" : "الدورة غير موجودة",
+  "settingProfile" : "الإعداد والملف الشخصي",
+  "EditProfile" : "تعديل الملف الشخصي",
+  "Language": "اللغة",
+  "ChangePassword": "تغيير كلمة المرور",
+  "information" : "معلومات عنك الملف الشخصي",
+  "name" : "اسمك",
+  "SaveEdit" : "حفظ التعديل",
+  "Success" : "أُنجز",
+  "ProfileUpdateS" : "تم تحديث الملف الشخصي بنجاح"
 
 }

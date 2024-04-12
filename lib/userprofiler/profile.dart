@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../SignInUp/signin.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 import 'editprofile.dart';
 import 'information.dart';
@@ -30,7 +31,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
+    final provider = Provider.of<AppDataProvider>(context, listen: true);
     var users = provider.users;
 
     return Scaffold(
@@ -43,11 +44,11 @@ class _ProfileState extends State<Profile> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const Row(
+                     Row(
                       children: [
                         Text(
-                          'Setting & Profile',
-                          style: TextStyle(
+                          S.of(context).settingProfile,
+                          style: const TextStyle(
                               fontSize: 25,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
@@ -109,9 +110,9 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: tdbrown,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text(
-                          'Edit Profile',
-                          style: TextStyle(
+                        child:Text(
+                          S.of(context).EditProfile,
+                          style: const TextStyle(
                               color: tdBlue,
                               fontWeight: FontWeight.bold,
                               fontSize: 25),
@@ -126,13 +127,13 @@ class _ProfileState extends State<Profile> {
                         ),
                         ProfileMenuWidget(
                             icon: Icons.language,
-                            text: 'Language',
+                            text: S.of(context).Language,
                             onPressed: () {},
                             textColor: tdBlue),
                         const SizedBox(height: 10),
                         ProfileMenuWidget(
                             icon: Icons.person,
-                            text: 'Information',
+                            text: S.of(context).information,
                             onPressed: () {
                               Navigator.push(context,
                                   CustomPageRoute(child: const Information()));
@@ -141,7 +142,7 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(height: 10),
                         ProfileMenuWidget(
                             icon: Icons.assignment,
-                            text: 'My Courses',
+                            text: S.of(context).MyCourse,
                             onPressed: () {},
                             textColor: tdBlue),
                         const SizedBox(height: 10),
@@ -151,14 +152,14 @@ class _ProfileState extends State<Profile> {
                         ),
                         ProfileMenuWidget(
                             icon: Icons.password,
-                            text: 'Change Password',
+                            text: S.of(context).ChangePassword,
                             onPressed: () {},
                             endIcon: false,
                             textColor: Colors.red),
                         const SizedBox(height: 10),
                         ProfileMenuWidget(
                             icon: Icons.logout_outlined,
-                            text: 'logout',
+                            text: S.of(context).LogOut,
                             onPressed: () async {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();

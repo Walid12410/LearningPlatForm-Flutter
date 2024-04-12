@@ -33,12 +33,16 @@ class MessageLookup extends MessageLookupByLibrary {
             " بالضغط على تسجيل فإنك توافق على لدينا "),
         "Cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "Categories": MessageLookupByLibrary.simpleMessage("تصنيفات"),
+        "ChangePassword":
+            MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
         "Close": MessageLookupByLibrary.simpleMessage("يغلق"),
         "CourseNotFound":
             MessageLookupByLibrary.simpleMessage("الدورة غير موجودة"),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "Done": MessageLookupByLibrary.simpleMessage("موافق"),
+        "EditProfile":
+            MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "الرجاء إدخال كلمة المرور الخاصة بك مرة أخرى"),
         "Female": MessageLookupByLibrary.simpleMessage("أنثى"),
@@ -50,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "مجال البريد الإلكتروني غير صالح. استخدم @gmail.com أو @hotmail.com"),
         "InvalidEmail":
             MessageLookupByLibrary.simpleMessage("رجاءا أدخل بريدك الإلكتروني"),
+        "Language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "LastName": MessageLookupByLibrary.simpleMessage("اسم العائلة"),
         "LatestCAdded":
             MessageLookupByLibrary.simpleMessage("أحدث دورة المضافة"),
@@ -95,16 +100,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "توضح سياسة الخصوصية الخاصة بنا كيفية جمع معلوماتك الشخصية واستخدامها وحمايتها عند استخدام خدماتنا. نحن ملتزمون بحماية خصوصيتك وضمان أمان بياناتك."),
         "PrivacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "Profile": MessageLookupByLibrary.simpleMessage("حسابك"),
+        "ProfileUpdateS":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
         "QuickFilter": MessageLookupByLibrary.simpleMessage("فلاتر سريعة"),
         "RecommendCFY":
             MessageLookupByLibrary.simpleMessage("الدورات المقترحة لك"),
         "RememberMe": MessageLookupByLibrary.simpleMessage("حفظ تسجيل الدخول"),
+        "SaveEdit": MessageLookupByLibrary.simpleMessage("حفظ التعديل"),
         "Search": MessageLookupByLibrary.simpleMessage("بحث"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("المزيد"),
         "Signup": MessageLookupByLibrary.simpleMessage("اشتراك"),
         "SignupSpace": MessageLookupByLibrary.simpleMessage("اشتراك"),
         "StartLeaning":
             MessageLookupByLibrary.simpleMessage("ابدأ التعلم الآن!"),
+        "Success": MessageLookupByLibrary.simpleMessage("أُنجز"),
         "SuccessSignUp":
             MessageLookupByLibrary.simpleMessage("تم التسجيل بنجاح"),
         "Telephone": MessageLookupByLibrary.simpleMessage("هاتف"),
@@ -139,7 +148,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "تعزيز المهارات: تمكينك من خلال التعليم الديناميكي عبر الإنترنت"),
         "getStartP4": MessageLookupByLibrary.simpleMessage(
             "بوابتك إلى التعلم الرقمي المبتكر"),
+        "information":
+            MessageLookupByLibrary.simpleMessage("معلومات عنك الملف الشخصي"),
+        "name": MessageLookupByLibrary.simpleMessage("اسمك"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+        "settingProfile":
+            MessageLookupByLibrary.simpleMessage("الإعداد والملف الشخصي"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول")
       };
 }

@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           "/information" : (context) =>const Information(),
           "/mostview" : (context) => const MostView()
         },
-        locale: Locale('en'),
+        locale: const Locale('ar'),
         localizationsDelegates:const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,

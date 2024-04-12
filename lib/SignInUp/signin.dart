@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
 
   Future<void> checkLogin(
       BuildContext context, String username, String password) async {
-    String apiUrl = 'http://192.168.1.12/api/walid/login.php';
+    String apiUrl = 'http://192.168.1.4/api/walid/login.php';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 Future<double> fetchAverageRating(int courseId) async {
   try {
-    final apiUrl = 'http://192.168.1.2/api/walid/feedback.php?operation=getAverageRating&course_id=$courseId';
+    final apiUrl = 'http://192.168.1.4/api/walid/feedback.php?operation=getAverageRating&course_id=$courseId';
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);

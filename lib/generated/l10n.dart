@@ -610,10 +610,10 @@ class S {
     );
   }
 
-  /// `LogOut`
+  /// `Logout`
   String get LogOut {
     return Intl.message(
-      'LogOut',
+      'Logout',
       name: 'LogOut',
       desc: '',
       args: [],
@@ -825,6 +825,96 @@ class S {
     return Intl.message(
       'Course not found',
       name: 'CourseNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting & Profile`
+  String get settingProfile {
+    return Intl.message(
+      'Setting & Profile',
+      name: 'settingProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get EditProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'EditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get Language {
+    return Intl.message(
+      'Language',
+      name: 'Language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get ChangePassword {
+    return Intl.message(
+      'Change Password',
+      name: 'ChangePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Information`
+  String get information {
+    return Intl.message(
+      'Information',
+      name: 'information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Edit`
+  String get SaveEdit {
+    return Intl.message(
+      'Save Edit',
+      name: 'SaveEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success`
+  String get Success {
+    return Intl.message(
+      'Success',
+      name: 'Success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile updated successfully`
+  String get ProfileUpdateS {
+    return Intl.message(
+      'Profile updated successfully',
+      name: 'ProfileUpdateS',
       desc: '',
       args: [],
     );

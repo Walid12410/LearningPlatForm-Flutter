@@ -5,7 +5,7 @@ import 'package:learningplatformapp/AllClass/QuestionChoice.dart';
 
 Future<List<Question>> fetchQuizQuestion(int chapterID) async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.2/api/walid/quiz.php?status=dataQuestion&ChapterID=$chapterID'));
+      'http://192.168.1.4/api/walid/quiz.php?status=dataQuestion&ChapterID=$chapterID'));
   if (response.statusCode == 200) {
     List<dynamic> responseData = json.decode(response.body);
     List<Question> qZ = [];
@@ -22,7 +22,7 @@ Future<List<Question>> fetchQuizQuestion(int chapterID) async {
 
 Future<List<questionChoice>> fetchQuestionChoice() async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.2/api/webQuestionChoice.php?status=data'));
+      'http://192.168.1.4/api/webQuestionChoice.php?status=data'));
   if (response.statusCode == 200) {
     final responseData = json.decode(response.body)['data']; // Accessing the 'data' key
     List<questionChoice> qC = [];

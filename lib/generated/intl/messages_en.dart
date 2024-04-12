@@ -33,12 +33,15 @@ class MessageLookup extends MessageLookupByLibrary {
             " By clicking in signup You agree to our "),
         "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "Categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "ChangePassword":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
         "Close": MessageLookupByLibrary.simpleMessage("Close"),
         "CourseNotFound":
             MessageLookupByLibrary.simpleMessage("Course not found"),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "Done": MessageLookupByLibrary.simpleMessage("Done"),
+        "EditProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "Please enter your password again"),
         "Female": MessageLookupByLibrary.simpleMessage("Female"),
@@ -50,12 +53,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Invalid email domain. Use @gmail.com or @hotmail.com"),
         "InvalidEmail":
             MessageLookupByLibrary.simpleMessage("Please enter your email"),
+        "Language": MessageLookupByLibrary.simpleMessage("Language"),
         "LastName": MessageLookupByLibrary.simpleMessage("Last Name"),
         "LatestCAdded":
             MessageLookupByLibrary.simpleMessage("Latest Course Added"),
         "LearningPlatformApp":
             MessageLookupByLibrary.simpleMessage("Learning Platform App"),
-        "LogOut": MessageLookupByLibrary.simpleMessage("LogOut"),
+        "LogOut": MessageLookupByLibrary.simpleMessage("Logout"),
         "LoginFail": MessageLookupByLibrary.simpleMessage("Login Failed"),
         "MViewCourse":
             MessageLookupByLibrary.simpleMessage("Most Viewed Courses"),
@@ -95,16 +99,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Our Privacy Policy outlines how we collect, use, and protect your personal information when you use our services. We are committed to safeguarding your privacy and ensuring the security of your data."),
         "PrivacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "ProfileUpdateS": MessageLookupByLibrary.simpleMessage(
+            "Profile updated successfully"),
         "QuickFilter": MessageLookupByLibrary.simpleMessage("Quick Filters"),
         "RecommendCFY":
             MessageLookupByLibrary.simpleMessage("Recommend Courses For You"),
         "RememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
+        "SaveEdit": MessageLookupByLibrary.simpleMessage("Save Edit"),
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("see more"),
         "Signup": MessageLookupByLibrary.simpleMessage("Signup"),
         "SignupSpace": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "StartLeaning":
             MessageLookupByLibrary.simpleMessage("Start learning now!"),
+        "Success": MessageLookupByLibrary.simpleMessage("Success"),
         "SuccessSignUp":
             MessageLookupByLibrary.simpleMessage("SignUp Successfully Done"),
         "Telephone": MessageLookupByLibrary.simpleMessage("Telephone"),
@@ -136,7 +144,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "SkillBoost: Empowering You with Dynamic Online Education"),
         "getStartP4": MessageLookupByLibrary.simpleMessage(
             "LearnX: Your Gateway to Innovative Digital Learning"),
+        "information": MessageLookupByLibrary.simpleMessage("Information"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "settingProfile":
+            MessageLookupByLibrary.simpleMessage("Setting & Profile"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In")
       };
 }

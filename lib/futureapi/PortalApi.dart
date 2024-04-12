@@ -4,7 +4,7 @@ import 'package:learningplatformapp/AllClass/portal.dart';
 
 Future<List<Portal>> getPortals() async {
   try {
-    Uri url = Uri.parse('http://192.168.1.2/api/webCoursePortal.php?status=data');
+    Uri url = Uri.parse('http://192.168.1.4/api/webCoursePortal.php?status=data');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final dynamic jsonResponse = jsonDecode(response.body);

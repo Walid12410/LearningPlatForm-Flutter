@@ -7,6 +7,8 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../generated/l10n.dart';
+
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key});
 
@@ -19,7 +21,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   late TextEditingController lnameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
-  late TextEditingController aboutController;
   late int userid = 0;
   bool _isLoading = true;
 
@@ -43,15 +44,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           TextEditingController(text: users.isNotEmpty ? users[0].email : '');
       phoneController = TextEditingController(
           text: users.isNotEmpty ? users[0].telephone : '');
-      aboutController = TextEditingController(
-          text: users.isNotEmpty ? users[0].description : '');
       _isLoading = false;
     });
   }
 
   Future<void> updateProfile() async {
     final url = Uri.parse(
-        'http://192.168.1.12/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
+        'http://192.168.1.4/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
     final response = await http.post(
       url,
       body: {
@@ -74,8 +73,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Success'),
-        content: const Text('Profile updated successfully'),
+        title: Text(S.of(context).Success),
+        content: Text(S.of(context).ProfileUpdateS),
         actions: <Widget>[
           TextButton(
             onPressed: () {
@@ -85,9 +84,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 (route) => false,
               );
             },
-            child: const Text(
-              'OK',
-              style: TextStyle(color: tdBlue),
+            child: Text(
+              S.of(context).OK,
+              style: const TextStyle(color: tdBlue),
             ),
           ),
         ],
@@ -108,12 +107,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           icon: const Icon(
             Icons.arrow_back,
             color: tdBlue,
-            size: 40,
+            size: 25,
           ),
         ),
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(fontSize: 35, color: tdBlue),
+        title: Text(
+          S.of(context).EditProfile,
+          style: const TextStyle(fontSize: 25, color: tdBlue),
         ),
         backgroundColor: tdbrown,
       ),
@@ -172,7 +171,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         children: [
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'First Name',
+                              labelText: S.of(context).FirstName,
                               labelStyle: const TextStyle(color: tdBlue),
                               prefixIcon: const Icon(Icons.account_circle),
                               border: OutlineInputBorder(
@@ -189,7 +188,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const SizedBox(height: 20),
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'Last Name',
+                              labelText: S.of(context).LastName,
                               labelStyle: const TextStyle(color: tdBlue),
                               prefixIcon: const Icon(Icons.account_circle),
                               border: OutlineInputBorder(
@@ -206,7 +205,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const SizedBox(height: 20),
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: S.of(context).emailAddress,
                               labelStyle: const TextStyle(color: tdBlue),
                               prefixIcon: const Icon(Icons.email),
                               border: OutlineInputBorder(
@@ -223,7 +222,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const SizedBox(height: 20),
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'Phone Number',
+                              labelText: S.of(context).Telephone,
                               labelStyle: const TextStyle(color: tdBlue),
                               prefixIcon: const Icon(Icons.phone),
                               border: OutlineInputBorder(
@@ -238,35 +237,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             controller: phoneController,
                           ),
                           const SizedBox(height: 10),
-                          TextField(
-                            controller: aboutController,
-                            maxLines: null,
-                            keyboardType: TextInputType.multiline,
-                            decoration: InputDecoration(
-                              labelText: 'About',
-                              labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(
-                                  Icons.account_balance_wallet_outlined),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(color: tdBlue),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide: const BorderSide(color: tdBlue),
-                              ),
-                            ),
-                            onChanged: (text) {
-                              // Split the text into words
-                              List<String> words = text.trim().split(' ');
-                              // Check if the number of words exceeds 50
-                              if (words.length > 50) {
-                                // Remove extra words
-                                aboutController.text = words.take(50).join(' ');
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -278,9 +248,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 side: BorderSide.none,
                                 shape: const StadiumBorder(),
                               ),
-                              child: const Text(
-                                'Save Edit',
-                                style: TextStyle(
+                              child: Text(
+                                S.of(context).SaveEdit,
+                                style: const TextStyle(
                                     color: tdBlue,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20),
