@@ -4,6 +4,7 @@ import 'package:learningplatformapp/AllClass/QuestionChoice.dart';
 import 'package:learningplatformapp/CouseDetails/ResultOfQuiz.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 import 'widget/QWidget.dart';
 
@@ -36,10 +37,10 @@ class _QuizPageState extends State<QuizPage> {
 
     return Scaffold(
       body: questions.isEmpty
-          ? const Center(
+          ?  Center(
               child: Text(
-                'No quiz added yet for this chapter',
-                style: TextStyle(
+                S.of(context).NoQuizAddYet,
+                style:const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                   color: Colors.black,
@@ -61,17 +62,17 @@ class _QuizPageState extends State<QuizPage> {
                           size: 25,
                         ),
                       ),
-                      const Text(
-                        'Quiz',
-                        style: TextStyle(
+                       Text(
+                        S.of(context).quiz,
+                        style:const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
-                      const Text(
-                        'Challenge',
-                        style: TextStyle(
+                       Text(
+                        S.of(context).challenge,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                           color: tdbrown,
@@ -104,9 +105,9 @@ class _QuizPageState extends State<QuizPage> {
                       Icons.calculate_rounded,
                       color: Colors.black,
                     ),
-                    label: const Text(
-                      'Submit Quiz',
-                      style: TextStyle(
+                    label:  Text(
+                      S.of(context).SubmitQuiz,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,

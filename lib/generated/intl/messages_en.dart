@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AboutCourse": MessageLookupByLibrary.simpleMessage("About The Course"),
         "AllCategories": MessageLookupByLibrary.simpleMessage("All Categories"),
         "AllCategoriesSelected":
             MessageLookupByLibrary.simpleMessage("All Category Selected"),
@@ -29,19 +30,34 @@ class MessageLookup extends MessageLookupByLibrary {
         "AllInstructor": MessageLookupByLibrary.simpleMessage("All Instructor"),
         "AlreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Already Have Account?"),
+        "BackToHome": MessageLookupByLibrary.simpleMessage("Back To HomePage"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " By clicking in signup You agree to our "),
         "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "Categories": MessageLookupByLibrary.simpleMessage("Categories"),
+        "Certification":
+            MessageLookupByLibrary.simpleMessage("Certification Available"),
         "ChangePassword":
             MessageLookupByLibrary.simpleMessage("Change Password"),
+        "Chapters": MessageLookupByLibrary.simpleMessage("Chapters"),
         "Close": MessageLookupByLibrary.simpleMessage("Close"),
+        "Congrats": MessageLookupByLibrary.simpleMessage("Congratulations!"),
+        "CongratsDetails": MessageLookupByLibrary.simpleMessage(
+            "You have successfully passed the exam. Well done!"),
+        "CourseDetailDesc": MessageLookupByLibrary.simpleMessage(
+            "Unlock your potential today and take the next step towards success by purchasing our comprehensive course"),
+        "CourseEnroll": MessageLookupByLibrary.simpleMessage(
+            "You Already Have This Course"),
+        "CourseLanguage": MessageLookupByLibrary.simpleMessage("Arabic"),
         "CourseNotFound":
             MessageLookupByLibrary.simpleMessage("Course not found"),
+        "DidNotPass": MessageLookupByLibrary.simpleMessage(
+            "Sorry, you did not pass the exam."),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "Done": MessageLookupByLibrary.simpleMessage("Done"),
         "EditProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "EnrollNow": MessageLookupByLibrary.simpleMessage("Enroll Now"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "Please enter your password again"),
         "Female": MessageLookupByLibrary.simpleMessage("Female"),
@@ -49,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ForYou": MessageLookupByLibrary.simpleMessage("For You"),
         "GoBack": MessageLookupByLibrary.simpleMessage("Go Back"),
         "HomePage": MessageLookupByLibrary.simpleMessage("Home"),
+        "HourCourse": MessageLookupByLibrary.simpleMessage("Hours"),
+        "InfoCourse": MessageLookupByLibrary.simpleMessage("Info"),
         "InvalidDomainEmail": MessageLookupByLibrary.simpleMessage(
             "Invalid email domain. Use @gmail.com or @hotmail.com"),
         "InvalidEmail":
@@ -59,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Latest Course Added"),
         "LearningPlatformApp":
             MessageLookupByLibrary.simpleMessage("Learning Platform App"),
+        "Lesson": MessageLookupByLibrary.simpleMessage("Lesson"),
+        "Lessons": MessageLookupByLibrary.simpleMessage("Lessons"),
         "LogOut": MessageLookupByLibrary.simpleMessage("Logout"),
         "LoginFail": MessageLookupByLibrary.simpleMessage("Login Failed"),
         "MViewCourse":
@@ -69,8 +89,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "MyCourse": MessageLookupByLibrary.simpleMessage("MyCourse"),
         "NoCategoriesAvailable":
             MessageLookupByLibrary.simpleMessage("No Categories available"),
+        "NoChapterAvailable":
+            MessageLookupByLibrary.simpleMessage("No chapters available"),
         "NoCourseAvailable":
             MessageLookupByLibrary.simpleMessage("No Course available"),
+        "NoDetailYet": MessageLookupByLibrary.simpleMessage("No Details Yet"),
+        "NoFeedBackOfThisCourse":
+            MessageLookupByLibrary.simpleMessage("no feedback for this course"),
+        "NoLessonOfChapter": MessageLookupByLibrary.simpleMessage(
+            "No lessons available for this chapter"),
+        "NoQuizAddYet": MessageLookupByLibrary.simpleMessage(
+            "No quiz added yet for this chapter"),
+        "NoQuizAvailable":
+            MessageLookupByLibrary.simpleMessage("No Quiz Available"),
         "NoTrainerAvailable":
             MessageLookupByLibrary.simpleMessage("No Instructor available"),
         "OK": MessageLookupByLibrary.simpleMessage("OK"),
@@ -102,16 +133,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "ProfileUpdateS": MessageLookupByLibrary.simpleMessage(
             "Profile updated successfully"),
         "QuickFilter": MessageLookupByLibrary.simpleMessage("Quick Filters"),
+        "Quiz": MessageLookupByLibrary.simpleMessage("Quizzes"),
+        "RatingAndReview":
+            MessageLookupByLibrary.simpleMessage("Rating & Review"),
+        "RatingDesc": MessageLookupByLibrary.simpleMessage(
+            "Unlock the potential of collaborative learning by contributing your unique insights and experiences to Course Review. Join our vibrant community in shaping the future of online education, one review at a time."),
         "RecommendCFY":
             MessageLookupByLibrary.simpleMessage("Recommend Courses For You"),
         "RememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
         "SaveEdit": MessageLookupByLibrary.simpleMessage("Save Edit"),
+        "Score": MessageLookupByLibrary.simpleMessage("Score:"),
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("see more"),
+        "ShowLess": MessageLookupByLibrary.simpleMessage("show less"),
+        "ShowMore": MessageLookupByLibrary.simpleMessage("show more"),
         "Signup": MessageLookupByLibrary.simpleMessage("Signup"),
         "SignupSpace": MessageLookupByLibrary.simpleMessage("Sign Up"),
         "StartLeaning":
             MessageLookupByLibrary.simpleMessage("Start learning now!"),
+        "SubmitQuiz": MessageLookupByLibrary.simpleMessage("Submit Quiz"),
         "Success": MessageLookupByLibrary.simpleMessage("Success"),
         "SuccessSignUp":
             MessageLookupByLibrary.simpleMessage("SignUp Successfully Done"),
@@ -129,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutOurAppFullSentence":
             MessageLookupByLibrary.simpleMessage("About Our Application"),
         "and": MessageLookupByLibrary.simpleMessage(", and "),
+        "challenge": MessageLookupByLibrary.simpleMessage("Challenge"),
         "cookiesDetails": MessageLookupByLibrary.simpleMessage(
             "Our Cookies Policy explains how we use cookies and similar technologies to enhance your browsing experience and improve our services. We use cookies for analytics, personalization, and targeted advertising."),
         "cookiesPolicy": MessageLookupByLibrary.simpleMessage("Cookies Policy"),
@@ -147,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "information": MessageLookupByLibrary.simpleMessage("Information"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "quiz": MessageLookupByLibrary.simpleMessage("Quiz"),
         "settingProfile":
             MessageLookupByLibrary.simpleMessage("Setting & Profile"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In")

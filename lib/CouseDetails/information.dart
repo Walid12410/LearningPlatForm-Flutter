@@ -5,6 +5,8 @@ import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
+import 'package:intl/intl.dart';
+import '../generated/l10n.dart';
 
 class CourseInformation extends StatefulWidget {
   const CourseInformation({required this.courseid});
@@ -46,6 +48,9 @@ class _CourseInformationState extends State<CourseInformation> {
     }
   }
 
+  bool isArabic() {
+    return Intl.getCurrentLocale() == 'ar';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +130,9 @@ class _CourseInformationState extends State<CourseInformation> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 40, top: 4),
+                      padding: isArabic() ?
+                      const EdgeInsets.only(right: 40, top: 4) :
+                      const EdgeInsets.only(left: 40, top: 4),
                       child: Column(
                         children: [
                           Row(
@@ -135,32 +142,32 @@ class _CourseInformationState extends State<CourseInformation> {
                               const SizedBox(width: 3),
                               if (TotalCoureTime.isNotEmpty && mounted)
                                 Text(
-                                  '${TotalCoureTime[0].getTotalHours()} Hours (${partNumbers.length} Lessons)',
+                                  '${TotalCoureTime[0].getTotalHours()} ${S.of(context).HourCourse} (${partNumbers.length} ${S.of(context).Lessons})',
                                 )
                             ],
                           ),
-                          const Row(
+                           Row(
                             children: [
-                              Icon(Icons.school),
-                              SizedBox(width: 3),
-                              Text('Certification Available'),
+                              const Icon(Icons.school),
+                              const SizedBox(width: 3),
+                              Text(S.of(context).Certification),
                             ],
                           ),
-                          const Row(
+                           Row(
                             children: [
-                              Icon(Icons.language),
-                              SizedBox(width: 3),
-                              Text('Arabic'),
+                              const Icon(Icons.language),
+                              const SizedBox(width: 3),
+                              Text(S.of(context).CourseLanguage),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(8),
+                     Padding(
+                      padding:const EdgeInsets.all(8),
                       child: Text(
-                        'About The Course',
-                        style: TextStyle(
+                        S.of(context).AboutCourse,
+                        style: const TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -176,10 +183,10 @@ class _CourseInformationState extends State<CourseInformation> {
                         ),
                       )
                     else
-                      const Center(
+                       Center(
                         child: Text(
-                          "No Details Yet",
-                          style: TextStyle(
+                          S.of(context).NoDetailYet,
+                          style:const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),

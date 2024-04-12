@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AboutCourse": MessageLookupByLibrary.simpleMessage("حول الدورة"),
         "AllCategories": MessageLookupByLibrary.simpleMessage("جميع التصنيفات"),
         "AllCategoriesSelected":
             MessageLookupByLibrary.simpleMessage("تم تحديد جميع الفئات"),
@@ -29,20 +30,35 @@ class MessageLookup extends MessageLookupByLibrary {
         "AllInstructor": MessageLookupByLibrary.simpleMessage("جميع المدربين"),
         "AlreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
+        "BackToHome":
+            MessageLookupByLibrary.simpleMessage("العودة إلى الصفحة الرئيسية"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " بالضغط على تسجيل فإنك توافق على لدينا "),
         "Cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "Categories": MessageLookupByLibrary.simpleMessage("تصنيفات"),
+        "Certification": MessageLookupByLibrary.simpleMessage("الشهادة متاحة"),
         "ChangePassword":
             MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
+        "Chapters": MessageLookupByLibrary.simpleMessage("فصول"),
         "Close": MessageLookupByLibrary.simpleMessage("يغلق"),
+        "Congrats": MessageLookupByLibrary.simpleMessage("تهانينا!"),
+        "CongratsDetails": MessageLookupByLibrary.simpleMessage(
+            "لقد اجتزت الامتحان بنجاح. أحسنت!"),
+        "CourseDetailDesc": MessageLookupByLibrary.simpleMessage(
+            "أطلق العنان لإمكاناتك اليوم واتخذ الخطوة التالية نحو النجاح من خلال شراء دورتنا الشاملة"),
+        "CourseEnroll": MessageLookupByLibrary.simpleMessage(
+            "لقد امتلكت الدورة التدريبية بالفعل"),
+        "CourseLanguage": MessageLookupByLibrary.simpleMessage("عربي"),
         "CourseNotFound":
             MessageLookupByLibrary.simpleMessage("الدورة غير موجودة"),
+        "DidNotPass": MessageLookupByLibrary.simpleMessage(
+            "آسف، أنت لم تنجح في الامتحان."),
         "DoNotHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "Done": MessageLookupByLibrary.simpleMessage("موافق"),
         "EditProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
+        "EnrollNow": MessageLookupByLibrary.simpleMessage("تسجيل الآن"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "الرجاء إدخال كلمة المرور الخاصة بك مرة أخرى"),
         "Female": MessageLookupByLibrary.simpleMessage("أنثى"),
@@ -50,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ForYou": MessageLookupByLibrary.simpleMessage("اخترنا لك"),
         "GoBack": MessageLookupByLibrary.simpleMessage("ارجع"),
         "HomePage": MessageLookupByLibrary.simpleMessage("الصفحة الرئيسية"),
+        "HourCourse": MessageLookupByLibrary.simpleMessage("ساعات"),
+        "InfoCourse": MessageLookupByLibrary.simpleMessage("معلومات"),
         "InvalidDomainEmail": MessageLookupByLibrary.simpleMessage(
             "مجال البريد الإلكتروني غير صالح. استخدم @gmail.com أو @hotmail.com"),
         "InvalidEmail":
@@ -60,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أحدث دورة المضافة"),
         "LearningPlatformApp":
             MessageLookupByLibrary.simpleMessage("تطبيق منصة التعلم"),
+        "Lesson": MessageLookupByLibrary.simpleMessage("الدروس"),
+        "Lessons": MessageLookupByLibrary.simpleMessage("دروس"),
         "LogOut": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
         "LoginFail": MessageLookupByLibrary.simpleMessage("فشل تسجيل الدخول"),
         "MViewCourse":
@@ -67,12 +87,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "Male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "MaximumPrice": MessageLookupByLibrary.simpleMessage("السعر الأقصى"),
         "MinimumPrice": MessageLookupByLibrary.simpleMessage("السعر الأدنى"),
-        "MyCourse":
-            MessageLookupByLibrary.simpleMessage("الدورة التدريبية الخاصة بي"),
+        "MyCourse": MessageLookupByLibrary.simpleMessage("الدورة التدريبية"),
         "NoCategoriesAvailable":
             MessageLookupByLibrary.simpleMessage("لا توجد تصنيفات متاحة"),
+        "NoChapterAvailable":
+            MessageLookupByLibrary.simpleMessage("لا توجد فصول متاحة"),
         "NoCourseAvailable":
             MessageLookupByLibrary.simpleMessage("لا توجد دورة متاحة"),
+        "NoDetailYet":
+            MessageLookupByLibrary.simpleMessage("لا توجد تفاصيل بعد"),
+        "NoFeedBackOfThisCourse":
+            MessageLookupByLibrary.simpleMessage("لا توجد تعليقات لهذه الدورة"),
+        "NoLessonOfChapter": MessageLookupByLibrary.simpleMessage(
+            "لا توجد دروس متاحة لهذا الفصل"),
+        "NoQuizAddYet": MessageLookupByLibrary.simpleMessage(
+            "لم تتم إضافة أي اختبار حتى الآن لهذا الفصل"),
+        "NoQuizAvailable":
+            MessageLookupByLibrary.simpleMessage("لا يوجد اختبار متاح"),
         "NoTrainerAvailable":
             MessageLookupByLibrary.simpleMessage("لا يوجد مدربون متاحون"),
         "OK": MessageLookupByLibrary.simpleMessage("موافق"),
@@ -103,16 +134,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "ProfileUpdateS":
             MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
         "QuickFilter": MessageLookupByLibrary.simpleMessage("فلاتر سريعة"),
+        "Quiz": MessageLookupByLibrary.simpleMessage("الإختبارات"),
+        "RatingAndReview":
+            MessageLookupByLibrary.simpleMessage("التقييم والمراجعة"),
+        "RatingDesc": MessageLookupByLibrary.simpleMessage(
+            "أطلق العنان لإمكانات التعلم التعاوني من خلال المساهمة بأفكارك وخبراتك الفريدة في مراجعة الدورة التدريبية. انضم إلى مجتمعنا النابض بالحياة في تشكيل مستقبل التعليم عبر الإنترنت، بمراجعة واحدة في كل مرة."),
         "RecommendCFY":
             MessageLookupByLibrary.simpleMessage("الدورات المقترحة لك"),
         "RememberMe": MessageLookupByLibrary.simpleMessage("حفظ تسجيل الدخول"),
         "SaveEdit": MessageLookupByLibrary.simpleMessage("حفظ التعديل"),
+        "Score": MessageLookupByLibrary.simpleMessage("نتيجة:"),
         "Search": MessageLookupByLibrary.simpleMessage("بحث"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("المزيد"),
+        "ShowLess": MessageLookupByLibrary.simpleMessage("أظهر أقل"),
+        "ShowMore": MessageLookupByLibrary.simpleMessage("أظهر المزيد"),
         "Signup": MessageLookupByLibrary.simpleMessage("اشتراك"),
         "SignupSpace": MessageLookupByLibrary.simpleMessage("اشتراك"),
         "StartLeaning":
             MessageLookupByLibrary.simpleMessage("ابدأ التعلم الآن!"),
+        "SubmitQuiz": MessageLookupByLibrary.simpleMessage("إرسال الاختبار"),
         "Success": MessageLookupByLibrary.simpleMessage("أُنجز"),
         "SuccessSignUp":
             MessageLookupByLibrary.simpleMessage("تم التسجيل بنجاح"),
@@ -131,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutOurAppFullSentence":
             MessageLookupByLibrary.simpleMessage("حول تطبيقنا"),
         "and": MessageLookupByLibrary.simpleMessage(", و "),
+        "challenge": MessageLookupByLibrary.simpleMessage("تحدي"),
         "cookiesDetails": MessageLookupByLibrary.simpleMessage(
             "تشرح سياسة ملفات تعريف الارتباط الخاصة بنا كيف نستخدم ملفات تعريف الارتباط والتقنيات المشابهة لتحسين تجربة التصفح لديك وتحسين خدماتنا. نحن نستخدم ملفات تعريف الارتباط للتحليلات والتخصيص والإعلانات المستهدفة."),
         "cookiesPolicy": MessageLookupByLibrary.simpleMessage(
@@ -152,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("معلومات عنك الملف الشخصي"),
         "name": MessageLookupByLibrary.simpleMessage("اسمك"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+        "quiz": MessageLookupByLibrary.simpleMessage("اختبار"),
         "settingProfile":
             MessageLookupByLibrary.simpleMessage("الإعداد والملف الشخصي"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول")

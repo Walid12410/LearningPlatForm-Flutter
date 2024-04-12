@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/CouseDetails/QuizPage.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:provider/provider.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 
 class Quizzes extends StatefulWidget {
@@ -30,10 +31,10 @@ class _QuizzesState extends State<Quizzes> {
 
     return Scaffold(
       body: chapter.isEmpty
-          ? const Center(
+          ?  Center(
               child: Text(
-                'No Quiz Available ',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+               S.of(context).NoQuizAvailable,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             )
           : SafeArea(
@@ -62,9 +63,9 @@ class _QuizzesState extends State<Quizzes> {
                                 color: Colors.black,
                                 size: 33,
                               ),
-                              const Text(
-                                'Quiz',
-                                style: TextStyle(fontSize: 20),
+                               Text(
+                                S.of(context).quiz,
+                                style:const TextStyle(fontSize: 20),
                               ),
                               const Spacer(),
                               IconButton(

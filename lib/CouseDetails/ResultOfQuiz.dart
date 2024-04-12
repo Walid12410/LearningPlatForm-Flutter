@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:provider/provider.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 
 class ResultQuiz extends StatefulWidget {
@@ -63,9 +64,9 @@ class _ResultQuizState extends State<ResultQuiz> {
                                       const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
                                       Image.asset(
-                                        'assets/user.png',
-                                        fit: BoxFit.cover,
-                                      ),
+                                    'assets/user.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                   width: 150,
                                   height: 150,
                                 ),
@@ -80,22 +81,22 @@ class _ResultQuizState extends State<ResultQuiz> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Score: ${widget.score.toStringAsFixed(2)}',
+                          '${S.of(context).Score} ${widget.score.toStringAsFixed(2)}',
                           style: const TextStyle(
                               fontSize: 18, color: Colors.black),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'Congratulations!',
-                          style: TextStyle(
+                        Text(
+                          S.of(context).Congrats,
+                          style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'You have successfully passed the exam. Well done!',
-                          style: TextStyle(
+                        Text(
+                          S.of(context).CongratsDetails,
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
@@ -111,9 +112,9 @@ class _ResultQuizState extends State<ResultQuiz> {
                             Icons.home,
                             color: Colors.black,
                           ),
-                          label: const Text(
-                            'Back To HomePage',
-                            style: TextStyle(
+                          label: Text(
+                            S.of(context).BackToHome,
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -160,9 +161,9 @@ class _ResultQuizState extends State<ResultQuiz> {
                                     const CircularProgressIndicator(),
                                 errorWidget: (context, url, error) =>
                                     Image.asset(
-                                      'assets/user.png',
-                                      fit: BoxFit.cover,
-                                    ),
+                                  'assets/user.png',
+                                  fit: BoxFit.cover,
+                                ),
                                 width: 150,
                                 height: 150,
                               ),
@@ -177,14 +178,14 @@ class _ResultQuizState extends State<ResultQuiz> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Score: ${widget.score.toStringAsFixed(2)}',
+                        '${S.of(context).Score} ${widget.score.toStringAsFixed(2)}',
                         style:
                             const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Sorry, you did not pass the exam.',
-                        style: TextStyle(
+                      Text(
+                        S.of(context).DidNotPass,
+                        style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
@@ -198,9 +199,9 @@ class _ResultQuizState extends State<ResultQuiz> {
                           Icons.replay,
                           color: Colors.white,
                         ),
-                        label: const Text(
-                          'Back To HomePage',
-                          style: TextStyle(
+                        label: Text(
+                          S.of(context).BackToHome,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 15,

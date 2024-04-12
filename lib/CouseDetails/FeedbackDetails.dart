@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 import 'package:readmore/readmore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -33,10 +34,10 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
     return Scaffold(
       body: SafeArea(
         child: reviewDetails.isEmpty
-            ? const Center(
+            ? Center(
                 child: Text(
-                  'no feedback for this course',
-                  style: TextStyle(
+                  S.of(context).NoFeedBackOfThisCourse,
+                  style: const TextStyle(
                       fontSize: 15,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
@@ -57,9 +58,9 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                             color: Colors.black,
                           ),
                         ),
-                        const Text(
-                          'Rating & Review',
-                          style: TextStyle(
+                        Text(
+                          S.of(context).RatingAndReview,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -68,11 +69,11 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(20),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
                     child: Text(
-                      'Unlock the potential of collaborative learning by contributing your unique insights and experiences to Course Review. Join our vibrant community in shaping the future of online education, one review at a time.',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      S.of(context).RatingDesc,
+                      style: const TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ),
                   Expanded(
@@ -106,9 +107,9 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Image.asset(
-                                                        'assets/user.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                'assets/user.png',
+                                                fit: BoxFit.cover,
+                                              ),
                                               fit: BoxFit.cover,
                                             )
                                           : Container(), // Use Container if user is null
@@ -148,8 +149,8 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                                   reviewDetails[index].comment,
                                   trimLines: 3,
                                   trimMode: TrimMode.Line,
-                                  trimExpandedText: 'show less',
-                                  trimCollapsedText: 'show more',
+                                  trimExpandedText: S.of(context).ShowLess,
+                                  trimCollapsedText: S.of(context).ShowMore,
                                   moreStyle: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,

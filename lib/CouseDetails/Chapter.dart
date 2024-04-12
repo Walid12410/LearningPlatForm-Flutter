@@ -7,6 +7,7 @@ import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import '../AllClass/Lesson.dart';
+import '../generated/l10n.dart';
 
 class Chapterpage extends StatefulWidget {
   const Chapterpage({Key? key, required this.courseid,required this.isStudent}) : super(key: key);
@@ -38,8 +39,8 @@ class _ChapterpageState extends State<Chapterpage> {
             List<Chapter> chapters = provider.allchapter;
             List<Lesson> lessons = provider.lesson;
             if (chapters.isEmpty) {
-              return const Center(
-                child: Text('No chapters available'),
+              return Center(
+                child: Text(S.of(context).NoChapterAvailable),
               );
             } else {
               return Column(
@@ -71,10 +72,10 @@ class _ChapterpageState extends State<Chapterpage> {
                           ],
                         ),
                       ),
-                      const Center(
+                       Center(
                         child: Text(
-                          'Lesson',
-                          style: TextStyle(
+                          S.of(context).Lesson,
+                          style:const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ),
                       ),
@@ -145,11 +146,11 @@ class _ChapterpageState extends State<Chapterpage> {
                           }).toList(),
                         )
                       else
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                         Padding(
+                          padding:const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            'No lessons available for this chapter',
-                            style: TextStyle(color: Colors.grey),
+                            S.of(context). NoLessonOfChapter,
+                            style:const TextStyle(color: Colors.grey),
                           ),
                         ),
                       const Divider(

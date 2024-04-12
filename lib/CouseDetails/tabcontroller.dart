@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
+
+import '../generated/l10n.dart';
+
 class CustomTabBarView extends StatelessWidget {
   final TabController tabController;
   final List<Widget> tabViews;
@@ -17,28 +20,27 @@ class CustomTabBarView extends StatelessWidget {
           color: tdbrown,
           child: TabBar(
             controller: tabController,
-            indicatorColor: Colors.black, // Change the color of the indicator to black
-            tabs: const [
+            indicatorColor:
+                Colors.black, // Change the color of the indicator to black
+            tabs: [
               Tab(
                 child: Text(
-                  'Info',
-                  style: TextStyle(
+                  S.of(context).InfoCourse,
+                  style: const TextStyle(
                     color: tdBlue,
                   ),
                 ),
               ),
               Tab(
                 child: Text(
-                  'Chapters',
-                  style: TextStyle(
-                    color: tdBlue
-                  ),
+                  S.of(context).Chapters,
+                  style: const TextStyle(color: tdBlue),
                 ),
               ),
               Tab(
                 child: Text(
-                  'Quizzes',
-                  style: TextStyle(
+                  S.of(context).Quiz,
+                  style: const TextStyle(
                     color: tdBlue,
                   ),
                 ),
@@ -47,7 +49,10 @@ class CustomTabBarView extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - kToolbarHeight - kBottomNavigationBarHeight - 200.0,
+          height: MediaQuery.of(context).size.height -
+              kToolbarHeight -
+              kBottomNavigationBarHeight -
+              200.0,
           child: TabBarView(
             controller: tabController,
             children: tabViews,

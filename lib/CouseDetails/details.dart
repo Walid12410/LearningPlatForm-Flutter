@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:learningplatformapp/futureapi/FavoriteApi.dart';
 
+import '../generated/l10n.dart';
+
 class CourseDetails extends StatefulWidget {
   const CourseDetails({required this.courseid, super.key});
   final int courseid;
@@ -165,20 +167,10 @@ class _CourseDetailsState extends State<CourseDetails>
                                   size: 25,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  // Handle onPressed for more options button
-                                },
-                                icon: const Icon(
-                                  Icons.more_vert,
-                                  color: tdBlue,
-                                  size: 25,
-                                ),
-                              ),
                             ],
                           ),
-                        const Text(
-                          'Unlock your potential today and take the next step towards success by purchasing our comprehensive course',
+                         Text(
+                          S.of(context).CourseDetailDesc,
                         ),
                         const SizedBox(
                           height: 10,
@@ -209,9 +201,9 @@ class _CourseDetailsState extends State<CourseDetails>
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: isStudent
-                ? const Text(
-                    'You Already Have This Course',
-                    style: TextStyle(
+                ?  Text(
+                    S.of(context).CourseEnroll,
+                    style:const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
@@ -220,10 +212,10 @@ class _CourseDetailsState extends State<CourseDetails>
                     onPressed: () {
                       // Add action for enrolling
                     },
-                    child: const Center(
+                    child:  Center(
                       child:  Text(
-                        'Enroll Now',
-                        style: TextStyle(
+                        S.of(context).EnrollNow,
+                        style:const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),

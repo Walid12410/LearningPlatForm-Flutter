@@ -919,6 +919,306 @@ class S {
       args: [],
     );
   }
+
+  /// `Unlock your potential today and take the next step towards success by purchasing our comprehensive course`
+  String get CourseDetailDesc {
+    return Intl.message(
+      'Unlock your potential today and take the next step towards success by purchasing our comprehensive course',
+      name: 'CourseDetailDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You Already Have This Course`
+  String get CourseEnroll {
+    return Intl.message(
+      'You Already Have This Course',
+      name: 'CourseEnroll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enroll Now`
+  String get EnrollNow {
+    return Intl.message(
+      'Enroll Now',
+      name: 'EnrollNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info`
+  String get InfoCourse {
+    return Intl.message(
+      'Info',
+      name: 'InfoCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chapters`
+  String get Chapters {
+    return Intl.message(
+      'Chapters',
+      name: 'Chapters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quizzes`
+  String get Quiz {
+    return Intl.message(
+      'Quizzes',
+      name: 'Quiz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No chapters available`
+  String get NoChapterAvailable {
+    return Intl.message(
+      'No chapters available',
+      name: 'NoChapterAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lesson`
+  String get Lesson {
+    return Intl.message(
+      'Lesson',
+      name: 'Lesson',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No lessons available for this chapter`
+  String get NoLessonOfChapter {
+    return Intl.message(
+      'No lessons available for this chapter',
+      name: 'NoLessonOfChapter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no feedback for this course`
+  String get NoFeedBackOfThisCourse {
+    return Intl.message(
+      'no feedback for this course',
+      name: 'NoFeedBackOfThisCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rating & Review`
+  String get RatingAndReview {
+    return Intl.message(
+      'Rating & Review',
+      name: 'RatingAndReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock the potential of collaborative learning by contributing your unique insights and experiences to Course Review. Join our vibrant community in shaping the future of online education, one review at a time.`
+  String get RatingDesc {
+    return Intl.message(
+      'Unlock the potential of collaborative learning by contributing your unique insights and experiences to Course Review. Join our vibrant community in shaping the future of online education, one review at a time.',
+      name: 'RatingDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `show more`
+  String get ShowMore {
+    return Intl.message(
+      'show more',
+      name: 'ShowMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `show less`
+  String get ShowLess {
+    return Intl.message(
+      'show less',
+      name: 'ShowLess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hours`
+  String get HourCourse {
+    return Intl.message(
+      'Hours',
+      name: 'HourCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lessons`
+  String get Lessons {
+    return Intl.message(
+      'Lessons',
+      name: 'Lessons',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certification Available`
+  String get Certification {
+    return Intl.message(
+      'Certification Available',
+      name: 'Certification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arabic`
+  String get CourseLanguage {
+    return Intl.message(
+      'Arabic',
+      name: 'CourseLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About The Course`
+  String get AboutCourse {
+    return Intl.message(
+      'About The Course',
+      name: 'AboutCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Details Yet`
+  String get NoDetailYet {
+    return Intl.message(
+      'No Details Yet',
+      name: 'NoDetailYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Score:`
+  String get Score {
+    return Intl.message(
+      'Score:',
+      name: 'Score',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Congratulations!`
+  String get Congrats {
+    return Intl.message(
+      'Congratulations!',
+      name: 'Congrats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have successfully passed the exam. Well done!`
+  String get CongratsDetails {
+    return Intl.message(
+      'You have successfully passed the exam. Well done!',
+      name: 'CongratsDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back To HomePage`
+  String get BackToHome {
+    return Intl.message(
+      'Back To HomePage',
+      name: 'BackToHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, you did not pass the exam.`
+  String get DidNotPass {
+    return Intl.message(
+      'Sorry, you did not pass the exam.',
+      name: 'DidNotPass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No quiz added yet for this chapter`
+  String get NoQuizAddYet {
+    return Intl.message(
+      'No quiz added yet for this chapter',
+      name: 'NoQuizAddYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quiz`
+  String get quiz {
+    return Intl.message(
+      'Quiz',
+      name: 'quiz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Challenge`
+  String get challenge {
+    return Intl.message(
+      'Challenge',
+      name: 'challenge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit Quiz`
+  String get SubmitQuiz {
+    return Intl.message(
+      'Submit Quiz',
+      name: 'SubmitQuiz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Quiz Available`
+  String get NoQuizAvailable {
+    return Intl.message(
+      'No Quiz Available',
+      name: 'NoQuizAvailable',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
