@@ -14,61 +14,68 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/l10n.dart';
 
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter has initialized
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Locale savedLocale = Locale(prefs.getString('language_code') ?? 'ar');
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppDataProvider(),
+      child: MyApp(savedLocale: savedLocale),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Locale savedLocale;
+
+  const MyApp({Key? key, required this.savedLocale}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppDataProvider(),
-      child: MaterialApp(
-        title: 'App',
-        debugShowCheckedModeBanner: false,
-        color: Colors.red,
-        home: FutureBuilder<SharedPreferences>(
-          future: SharedPreferences.getInstance(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              final prefs = snapshot.data;
-              final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false;
-              final userId = prefs?.getInt('uid') ?? 0;
-              if (isLoggedIn) {
-                Provider.of<AppDataProvider>(context, listen: false)
-                    .setUserId(userId);
-                return const HomePage();
-              } else {
-                return const PageViewScreen();
-              }
+    return MaterialApp(
+      title: 'App',
+      debugShowCheckedModeBanner: false,
+      color: Colors.red,
+      home: FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final prefs = snapshot.data;
+            final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false;
+            final userId = prefs?.getInt('uid') ?? 0;
+            if (isLoggedIn) {
+              Provider.of<AppDataProvider>(context, listen: false).setUserId(userId);
+              return const HomePage();
             } else {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
+              return const PageViewScreen();
             }
-          },
-        ),
-        routes: {
-          "/SignIn": (context) => const SignIn(),
-          "/portal": (context) => const PortalPage(),
-          "/trainer" : (context) => const TrainerPage(),
-          "/profile" : (context) => const Profile(),
-          "/information" : (context) =>const Information(),
-          "/mostview" : (context) => const MostView()
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
         },
-        locale: Locale('en'),
-        localizationsDelegates:const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
       ),
+      routes: {
+        "/SignIn": (context) => const SignIn(),
+        "/portal": (context) => const PortalPage(),
+        "/trainer": (context) => const TrainerPage(),
+        "/profile": (context) => const Profile(),
+        "/information": (context) => const Information(),
+        "/mostview": (context) => const MostView(),
+      },
+      locale: savedLocale,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
     );
   }
 }

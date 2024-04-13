@@ -134,7 +134,7 @@ class _ProfileState extends State<Profile> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const LanguageSelectionPage()));
+                                          const Language()));
                             },
                             textColor: tdBlue),
                         const SizedBox(height: 10),
