@@ -115,5 +115,8 @@
   "quiz" : "Quiz",
   "challenge" : "Challenge",
   "SubmitQuiz" : "Submit Quiz",
-  "NoQuizAvailable" : "No Quiz Available"
+  "NoQuizAvailable" : "No Quiz Available",
+  "NoChoicesAvailable" : "No choices available",
+  "YourCourse" : "Your Courses",
+  "YourFavoriteCourse" : "Your Favorite Course"
 }

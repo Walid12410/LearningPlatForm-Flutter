@@ -115,6 +115,9 @@
   "quiz" : "اختبار",
   "challenge" : "تحدي",
   "SubmitQuiz" : "إرسال الاختبار",
-  "NoQuizAvailable" : "لا يوجد اختبار متاح"
+  "NoQuizAvailable" : "لا يوجد اختبار متاح",
+  "NoChoicesAvailable" : "لا توجد خيارات متاحة",
+  "YourCourse" : "الدورات الخاصة بك",
+  "YourFavoriteCourse" : "الدورة المفضلة لديك"
 
 }

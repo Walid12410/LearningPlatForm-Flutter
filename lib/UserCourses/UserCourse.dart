@@ -5,6 +5,7 @@ import 'package:learningplatformapp/UserCourses/MyCoures.dart';
 import 'package:learningplatformapp/UserCourses/Widgets/listTile.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
+import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 
 class UserCoursePage extends StatefulWidget {
@@ -92,7 +93,7 @@ class _UserCoursePageState extends State<UserCoursePage> {
                     Column(
                       children: [
                         TileList(
-                          name: 'Your Courses',
+                          name: S.of(context).YourCourse,
                           press: () {
                             Navigator.push(
                                 context,
@@ -102,7 +103,7 @@ class _UserCoursePageState extends State<UserCoursePage> {
                           requiredIcon: Icons.school_outlined,
                         ),
                         TileList(
-                          name: 'Your Favorite Course',
+                          name: S.of(context).YourFavoriteCourse,
                           press: () {
                             Navigator.push(
                                 context,

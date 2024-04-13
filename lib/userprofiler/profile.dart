@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
+import 'package:learningplatformapp/userprofiler/Language.dart';
 import 'package:learningplatformapp/userprofiler/widget/profilemenu.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -44,7 +45,7 @@ class _ProfileState extends State<Profile> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                     Row(
+                    Row(
                       children: [
                         Text(
                           S.of(context).settingProfile,
@@ -110,7 +111,7 @@ class _ProfileState extends State<Profile> {
                             backgroundColor: tdbrown,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child:Text(
+                        child: Text(
                           S.of(context).EditProfile,
                           style: const TextStyle(
                               color: tdBlue,
@@ -128,7 +129,13 @@ class _ProfileState extends State<Profile> {
                         ProfileMenuWidget(
                             icon: Icons.language,
                             text: S.of(context).Language,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LanguageSelectionPage()));
+                            },
                             textColor: tdBlue),
                         const SizedBox(height: 10),
                         ProfileMenuWidget(

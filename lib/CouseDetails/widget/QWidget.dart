@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learningplatformapp/AllClass/Question.dart';
 import 'package:learningplatformapp/AllClass/QuestionChoice.dart';
 import 'package:provider/provider.dart';
+import '../../generated/l10n.dart';
 import '../../provider/provider_data.dart';
 
 class QuestionWidget extends StatelessWidget {
@@ -55,7 +56,7 @@ class QuestionWidget extends StatelessWidget {
                         .map((choice) => buildOption(context, choice))
                         .toList(),
                   )
-                      : const Text('No choices available'),
+                      : Text(S.of(context).NoChoicesAvailable),
                 ),
               ],
             ),

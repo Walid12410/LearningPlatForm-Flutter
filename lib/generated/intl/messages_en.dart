@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No Categories available"),
         "NoChapterAvailable":
             MessageLookupByLibrary.simpleMessage("No chapters available"),
+        "NoChoicesAvailable":
+            MessageLookupByLibrary.simpleMessage("No choices available"),
         "NoCourseAvailable":
             MessageLookupByLibrary.simpleMessage("No Course available"),
         "NoDetailYet": MessageLookupByLibrary.simpleMessage("No Details Yet"),
@@ -163,6 +165,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "WelcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back"),
         "WelcomeSignUp": MessageLookupByLibrary.simpleMessage(
             "Welcome To Our Learning Platform App,Please Login To Your App"),
+        "YourCourse": MessageLookupByLibrary.simpleMessage("Your Courses"),
+        "YourFavoriteCourse":
+            MessageLookupByLibrary.simpleMessage("Your Favorite Course"),
         "aboutDetails": MessageLookupByLibrary.simpleMessage(
             "Embark on a transformative journey of learning and personal development through our cutting-edge learning platform app, where boundless knowledge meets endless possibilities for growth and exploration."),
         "aboutOurApp": MessageLookupByLibrary.simpleMessage("About Our App"),

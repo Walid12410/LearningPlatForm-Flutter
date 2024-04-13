@@ -17,6 +17,7 @@ class S {
 
   static S? _current;
 
+
   static S get current {
     assert(_current != null,
         'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
@@ -1215,6 +1216,36 @@ class S {
     return Intl.message(
       'No Quiz Available',
       name: 'NoQuizAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No choices available`
+  String get NoChoicesAvailable {
+    return Intl.message(
+      'No choices available',
+      name: 'NoChoicesAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Courses`
+  String get YourCourse {
+    return Intl.message(
+      'Your Courses',
+      name: 'YourCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Favorite Course`
+  String get YourFavoriteCourse {
+    return Intl.message(
+      'Your Favorite Course',
+      name: 'YourFavoriteCourse',
       desc: '',
       args: [],
     );

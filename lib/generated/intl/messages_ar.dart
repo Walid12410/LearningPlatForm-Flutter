@@ -92,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد تصنيفات متاحة"),
         "NoChapterAvailable":
             MessageLookupByLibrary.simpleMessage("لا توجد فصول متاحة"),
+        "NoChoicesAvailable":
+            MessageLookupByLibrary.simpleMessage("لا توجد خيارات متاحة"),
         "NoCourseAvailable":
             MessageLookupByLibrary.simpleMessage("لا توجد دورة متاحة"),
         "NoDetailYet":
@@ -164,6 +166,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "WelcomeBack": MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك"),
         "WelcomeSignUp": MessageLookupByLibrary.simpleMessage(
             "مرحبًا بك في تطبيق منصة التعلم الخاصة بنا، يرجى تسجيل الدخول إلى تطبيقك"),
+        "YourCourse": MessageLookupByLibrary.simpleMessage("الدورات الخاصة بك"),
+        "YourFavoriteCourse":
+            MessageLookupByLibrary.simpleMessage("الدورة المفضلة لديك"),
         "aboutDetails": MessageLookupByLibrary.simpleMessage(
             "انطلق في رحلة تحويلية للتعلم والتطوير الشخصي من خلال تطبيق منصة التعلم المتطورة لدينا، حيث تلبي المعرفة اللامحدودة الإمكانيات التي لا نهاية لها للنمو والاستكشاف."),
         "aboutOurApp":

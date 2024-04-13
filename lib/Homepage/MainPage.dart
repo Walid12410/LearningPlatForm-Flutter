@@ -31,7 +31,13 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      reloadPage();
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+      final userId = provider.userId;
+      provider.getCourseadd();
+      provider.getcourseview();
+      provider.getrandomcourse();
+      provider.getportal();
+      provider.getTrainer(userId);
     });
     super.initState();
   }
@@ -49,15 +55,7 @@ class _MainPageState extends State<MainPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  Future<void> reloadPage() async {
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
-    final userId = provider.userId;
-    await provider.getCourseadd();
-    await provider.getcourseview();
-    await provider.getrandomcourse();
-    await provider.getportal();
-    await provider.getTrainer(userId);
-  }
+  Future<void> reloadPage() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +282,7 @@ class _MainPageState extends State<MainPage> {
                                               }
                                             },
                                           ),
-                                        const SizedBox(width:2),
+                                        const SizedBox(width: 2),
                                       ],
                                     )),
                               ),
@@ -365,9 +363,7 @@ class _MainPageState extends State<MainPage> {
                                                         CustomPageRoute(
                                                             child: CourseDetails(
                                                                 courseid: random
-                                                                    .id)
-                                                        )
-                                                    );
+                                                                    .id)));
                                                   },
                                                   averagerate: averageRating,
                                                   desc: random.description,

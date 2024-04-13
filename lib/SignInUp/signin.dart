@@ -39,7 +39,7 @@ class _SignInState extends State<SignIn> {
     prefs.setString('username', username);
     prefs.setInt('uid', uid);
     Provider.of<AppDataProvider>(context, listen: false)
-        .setUserId(uid); // Update the user ID in the provider
+        .setUserId(uid);
   }
 
   Future<void> checkLogin(
