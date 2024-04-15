@@ -18,8 +18,10 @@ import 'package:learningplatformapp/futureapi/TotalCourseTime.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/futureapi/UserCourseApi.dart';
 import '../AllClass/Chapter.dart';
 import '../AllClass/CourseParticipated.dart';
+import '../AllClass/CourseUser.dart';
 import '../AllClass/Lesson.dart';
 import '../AllClass/Participation.dart';
 import '../AllClass/Question.dart';
@@ -230,6 +232,13 @@ class AppDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<UserCourse> _userCourses = [];
+  List<UserCourse> get userCourse => _userCourses;
+  getUserCourse(int id) async{
+    final res = await fetchUserCourse(id);
+    _userCourses = res;
+    notifyListeners();
+  }
 }
 
 

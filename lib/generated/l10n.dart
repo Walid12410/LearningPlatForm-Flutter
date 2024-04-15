@@ -17,7 +17,6 @@ class S {
 
   static S? _current;
 
-
   static S get current {
     assert(_current != null,
         'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
@@ -1246,6 +1245,66 @@ class S {
     return Intl.message(
       'Your Favorite Course',
       name: 'YourFavoriteCourse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Language`
+  String get SelectLanguage {
+    return Intl.message(
+      'Select Language',
+      name: 'SelectLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Arabic`
+  String get Arabic {
+    return Intl.message(
+      'Arabic',
+      name: 'Arabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get English {
+    return Intl.message(
+      'English',
+      name: 'English',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restart App`
+  String get restartApp {
+    return Intl.message(
+      'Restart App',
+      name: 'restartApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to restart the app for the language change to take effect.`
+  String get restartAppDetails {
+    return Intl.message(
+      'You need to restart the app for the language change to take effect.',
+      name: 'restartAppDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You Do Not Have Courses Yet! Buy Now`
+  String get YouDoNotHaveCourse {
+    return Intl.message(
+      'You Do Not Have Courses Yet! Buy Now',
+      name: 'YouDoNotHaveCourse',
       desc: '',
       args: [],
     );

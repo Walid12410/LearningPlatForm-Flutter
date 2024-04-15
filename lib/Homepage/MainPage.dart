@@ -19,6 +19,7 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'widget/Categories.dart';
+import 'package:intl/intl.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -53,6 +54,10 @@ class _MainPageState extends State<MainPage> {
       duration: Duration(seconds: 3),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  bool isArabic() {
+    return Intl.getCurrentLocale() == 'ar';
   }
 
   Future<void> reloadPage() async {}
@@ -242,7 +247,9 @@ class _MainPageState extends State<MainPage> {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: isArabic()
+                                        ? const EdgeInsets.all(10)
+                                        : const EdgeInsets.all(1),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -293,9 +300,6 @@ class _MainPageState extends State<MainPage> {
                         ? Container() // Display nothing if the array is empty
                         : Column(
                             children: [
-                              const Divider(
-                                color: Colors.black,
-                              ),
                               const SizedBox(height: 5),
                               Specialforyou(
                                   text: S.of(context).LatestCAdded,
@@ -307,11 +311,17 @@ class _MainPageState extends State<MainPage> {
                                   }),
                               const SizedBox(height: 2),
                               Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: LatestCourseAdd(courses: courseadd)),
-                              const Divider(
-                                color: Colors.black,
-                              )
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: tdbrown)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child:
+                                          LatestCourseAdd(courses: courseadd)),
+                                ),
+                              ),
                             ],
                           ),
                     randomcourse.isEmpty
@@ -331,7 +341,9 @@ class _MainPageState extends State<MainPage> {
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: isArabic()
+                                        ? const EdgeInsets.all(10)
+                                        : const EdgeInsets.all(1),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

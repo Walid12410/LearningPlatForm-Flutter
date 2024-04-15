@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learningplatformapp/UserCourses/MyCoures.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/userprofiler/Language.dart';
@@ -133,8 +134,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Language()));
+                                      builder: (context) => const Language()));
                             },
                             textColor: tdBlue),
                         const SizedBox(height: 10),
@@ -150,7 +150,10 @@ class _ProfileState extends State<Profile> {
                         ProfileMenuWidget(
                             icon: Icons.assignment,
                             text: S.of(context).MyCourse,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context,
+                                  CustomPageRoute(child: const UserCourse()));
+                            },
                             textColor: tdBlue),
                         const SizedBox(height: 10),
                         const Divider(

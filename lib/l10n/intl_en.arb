@@ -118,5 +118,11 @@
   "NoQuizAvailable" : "No Quiz Available",
   "NoChoicesAvailable" : "No choices available",
   "YourCourse" : "Your Courses",
-  "YourFavoriteCourse" : "Your Favorite Course"
+  "YourFavoriteCourse" : "Your Favorite Course",
+  "SelectLanguage" : "Select Language",
+  "Arabic" : "Arabic",
+  "English" : "English",
+  "restartApp" : "Restart App",
+  "restartAppDetails" : "You need to restart the app for the language change to take effect.",
+  "YouDoNotHaveCourse" : "You Do Not Have Courses Yet! Buy Now"
 }

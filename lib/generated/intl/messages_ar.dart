@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "AllInstructor": MessageLookupByLibrary.simpleMessage("جميع المدربين"),
         "AlreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
+        "Arabic": MessageLookupByLibrary.simpleMessage("عربي"),
         "BackToHome":
             MessageLookupByLibrary.simpleMessage("العودة إلى الصفحة الرئيسية"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
@@ -58,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Done": MessageLookupByLibrary.simpleMessage("موافق"),
         "EditProfile":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
+        "English": MessageLookupByLibrary.simpleMessage("إنجليزي"),
         "EnrollNow": MessageLookupByLibrary.simpleMessage("تسجيل الآن"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "الرجاء إدخال كلمة المرور الخاصة بك مرة أخرى"),
@@ -148,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Score": MessageLookupByLibrary.simpleMessage("نتيجة:"),
         "Search": MessageLookupByLibrary.simpleMessage("بحث"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("المزيد"),
+        "SelectLanguage": MessageLookupByLibrary.simpleMessage("اختار اللغة"),
         "ShowLess": MessageLookupByLibrary.simpleMessage("أظهر أقل"),
         "ShowMore": MessageLookupByLibrary.simpleMessage("أظهر المزيد"),
         "Signup": MessageLookupByLibrary.simpleMessage("اشتراك"),
@@ -166,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "WelcomeBack": MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك"),
         "WelcomeSignUp": MessageLookupByLibrary.simpleMessage(
             "مرحبًا بك في تطبيق منصة التعلم الخاصة بنا، يرجى تسجيل الدخول إلى تطبيقك"),
+        "YouDoNotHaveCourse": MessageLookupByLibrary.simpleMessage(
+            "ليس لديك دورات بعد! اشتري الآن"),
         "YourCourse": MessageLookupByLibrary.simpleMessage("الدورات الخاصة بك"),
         "YourFavoriteCourse":
             MessageLookupByLibrary.simpleMessage("الدورة المفضلة لديك"),
@@ -199,6 +204,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("اسمك"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "quiz": MessageLookupByLibrary.simpleMessage("اختبار"),
+        "restartApp":
+            MessageLookupByLibrary.simpleMessage("إعادة تشغيل التطبيق"),
+        "restartAppDetails": MessageLookupByLibrary.simpleMessage(
+            "تحتاج إلى إعادة تشغيل التطبيق ليصبح تغيير اللغة ساري المفعول."),
         "settingProfile":
             MessageLookupByLibrary.simpleMessage("الإعداد والملف الشخصي"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول")

@@ -15,7 +15,7 @@ import 'generated/l10n.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter has initialized
+  WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Locale savedLocale = Locale(prefs.getString('language_code') ?? 'ar');
 

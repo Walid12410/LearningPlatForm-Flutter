@@ -123,8 +123,8 @@ class _SignInState extends State<SignIn> {
                     child: TextField(
                       controller: usernameController,
                       decoration: InputDecoration(
-                        hintText: S.of(context).emailAddress,
-                        fillColor: Color(0xffD8D8DD),
+                        hintText: S.of(context).UserName,
+                        fillColor: const Color(0xffD8D8DD),
                         filled: true,
                       ),
                     ),

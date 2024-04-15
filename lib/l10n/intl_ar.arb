@@ -118,6 +118,12 @@
   "NoQuizAvailable" : "لا يوجد اختبار متاح",
   "NoChoicesAvailable" : "لا توجد خيارات متاحة",
   "YourCourse" : "الدورات الخاصة بك",
-  "YourFavoriteCourse" : "الدورة المفضلة لديك"
+  "YourFavoriteCourse" : "الدورة المفضلة لديك",
+  "SelectLanguage" : "اختار اللغة",
+  "Arabic" : "عربي",
+  "English" : "إنجليزي",
+  "restartApp" : "إعادة تشغيل التطبيق",
+  "restartAppDetails" : "تحتاج إلى إعادة تشغيل التطبيق ليصبح تغيير اللغة ساري المفعول.",
+  "YouDoNotHaveCourse" : "ليس لديك دورات بعد! اشتري الآن"
 
 }

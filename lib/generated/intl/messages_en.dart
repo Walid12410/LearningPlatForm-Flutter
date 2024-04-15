@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "AllInstructor": MessageLookupByLibrary.simpleMessage("All Instructor"),
         "AlreadyHaveAcc":
             MessageLookupByLibrary.simpleMessage("Already Have Account?"),
+        "Arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "BackToHome": MessageLookupByLibrary.simpleMessage("Back To HomePage"),
         "ByClicking": MessageLookupByLibrary.simpleMessage(
             " By clicking in signup You agree to our "),
@@ -57,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "Done": MessageLookupByLibrary.simpleMessage("Done"),
         "EditProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "English": MessageLookupByLibrary.simpleMessage("English"),
         "EnrollNow": MessageLookupByLibrary.simpleMessage("Enroll Now"),
         "EnterPassAgain": MessageLookupByLibrary.simpleMessage(
             "Please enter your password again"),
@@ -147,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Score": MessageLookupByLibrary.simpleMessage("Score:"),
         "Search": MessageLookupByLibrary.simpleMessage("Search"),
         "SeeMore": MessageLookupByLibrary.simpleMessage("see more"),
+        "SelectLanguage":
+            MessageLookupByLibrary.simpleMessage("Select Language"),
         "ShowLess": MessageLookupByLibrary.simpleMessage("show less"),
         "ShowMore": MessageLookupByLibrary.simpleMessage("show more"),
         "Signup": MessageLookupByLibrary.simpleMessage("Signup"),
@@ -165,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "WelcomeBack": MessageLookupByLibrary.simpleMessage("Welcome Back"),
         "WelcomeSignUp": MessageLookupByLibrary.simpleMessage(
             "Welcome To Our Learning Platform App,Please Login To Your App"),
+        "YouDoNotHaveCourse": MessageLookupByLibrary.simpleMessage(
+            "You Do Not Have Courses Yet! Buy Now"),
         "YourCourse": MessageLookupByLibrary.simpleMessage("Your Courses"),
         "YourFavoriteCourse":
             MessageLookupByLibrary.simpleMessage("Your Favorite Course"),
@@ -194,6 +200,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "quiz": MessageLookupByLibrary.simpleMessage("Quiz"),
+        "restartApp": MessageLookupByLibrary.simpleMessage("Restart App"),
+        "restartAppDetails": MessageLookupByLibrary.simpleMessage(
+            "You need to restart the app for the language change to take effect."),
         "settingProfile":
             MessageLookupByLibrary.simpleMessage("Setting & Profile"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In")
