@@ -1309,6 +1309,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You Do not Added Any Course In Favorite`
+  String get NoFavCourse {
+    return Intl.message(
+      'You Do not Added Any Course In Favorite',
+      name: 'NoFavCourse',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

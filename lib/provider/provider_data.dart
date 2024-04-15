@@ -19,6 +19,7 @@ import 'package:learningplatformapp/futureapi/TrainerApi.dart';
 import 'package:learningplatformapp/futureapi/TrainerCourseShowApi.dart';
 import 'package:flutter/material.dart';
 import 'package:learningplatformapp/futureapi/UserCourseApi.dart';
+import 'package:learningplatformapp/futureapi/UserFavoriteCourseApi.dart';
 import '../AllClass/Chapter.dart';
 import '../AllClass/CourseParticipated.dart';
 import '../AllClass/CourseUser.dart';
@@ -27,6 +28,7 @@ import '../AllClass/Participation.dart';
 import '../AllClass/Question.dart';
 import '../AllClass/QuestionChoice.dart';
 import '../AllClass/RatingDetails.dart';
+import '../AllClass/UserFavorite.dart';
 
 class AppDataProvider extends ChangeNotifier {
   int _userId = 0;
@@ -239,6 +241,15 @@ class AppDataProvider extends ChangeNotifier {
     _userCourses = res;
     notifyListeners();
   }
+
+  List<UserFavorite> _userFavoriteCourse =[];
+  List<UserFavorite> get userFavoriteCourse => _userFavoriteCourse;
+  getUserFavoriteCourse(int id) async{
+    final res = await fetchUserFavoriteCourse(id);
+    _userFavoriteCourse = res;
+    notifyListeners();
+  }
+
 }
 
 

@@ -124,5 +124,6 @@
   "English" : "English",
   "restartApp" : "Restart App",
   "restartAppDetails" : "You need to restart the app for the language change to take effect.",
-  "YouDoNotHaveCourse" : "You Do Not Have Courses Yet! Buy Now"
+  "YouDoNotHaveCourse" : "You Do Not Have Courses Yet! Buy Now",
+  "NoFavCourse" : "You Do not Added Any Course In Favorite"
 }

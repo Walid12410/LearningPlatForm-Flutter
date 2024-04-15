@@ -100,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد دورة متاحة"),
         "NoDetailYet":
             MessageLookupByLibrary.simpleMessage("لا توجد تفاصيل بعد"),
+        "NoFavCourse": MessageLookupByLibrary.simpleMessage(
+            "لم تقم بإضافة أي دورة في المفضلة"),
         "NoFeedBackOfThisCourse":
             MessageLookupByLibrary.simpleMessage("لا توجد تعليقات لهذه الدورة"),
         "NoLessonOfChapter": MessageLookupByLibrary.simpleMessage(

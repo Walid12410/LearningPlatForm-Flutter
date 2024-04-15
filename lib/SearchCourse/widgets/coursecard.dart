@@ -59,21 +59,18 @@ class _CourseCardState extends State<CourseCard> {
           if (averageRatingValue != null) {
             setState(() {
               averageRating = double.parse(averageRatingValue.toString());
-              // print('Average Rating: $averageRating');
+               print('Average Rating: $averageRating');
             });
           } else {
-            // print('Average rating is null');
+            print('Average rating is null');
           }
         } else {
-          // Handle error
-          //print('Error: ${data['message']}');
+          print('Error: ${data['message']}');
         }
       } else {
-        // Handle errors
-        // print('Failed to load data. Status code: ${response.statusCode}');
+        print('Failed to load data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle error
       print('Error fetching average rating: $e');
     }
   }

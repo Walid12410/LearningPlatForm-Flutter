@@ -4,7 +4,6 @@ import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:provider/provider.dart';
-
 import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 
@@ -19,7 +18,7 @@ class _UserCourseState extends State<UserCourse> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getParticipation().then((_) {
         checkStudents();

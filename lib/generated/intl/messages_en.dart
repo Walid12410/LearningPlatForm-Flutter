@@ -98,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "NoCourseAvailable":
             MessageLookupByLibrary.simpleMessage("No Course available"),
         "NoDetailYet": MessageLookupByLibrary.simpleMessage("No Details Yet"),
+        "NoFavCourse": MessageLookupByLibrary.simpleMessage(
+            "You Do not Added Any Course In Favorite"),
         "NoFeedBackOfThisCourse":
             MessageLookupByLibrary.simpleMessage("no feedback for this course"),
         "NoLessonOfChapter": MessageLookupByLibrary.simpleMessage(
