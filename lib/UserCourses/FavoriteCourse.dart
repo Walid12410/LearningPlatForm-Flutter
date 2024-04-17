@@ -28,7 +28,6 @@ class _UserFavoriteState extends State<UserFavorite> {
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var userCourses = provider.userFavoriteCourse;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(

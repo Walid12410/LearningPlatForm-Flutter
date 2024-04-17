@@ -263,11 +263,10 @@ class _MainPageState extends State<MainPage> {
                                                           .averageRatings[
                                                       courseView.id];
                                               if (averageRating == null) {
-                                                // Fetch the average rating if it's not available
                                                 averageRatingProvider
                                                     .fetchAndSetAverageRating(
                                                         courseView.id);
-                                                return const CircularProgressIndicator(); // Placeholder while loading
+                                                return Container();// Placeholder while loading
                                               } else {
                                                 return CourseView(
                                                   cname: courseView.title,
@@ -297,7 +296,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                     const SizedBox(height: 5),
                     courseadd.isEmpty
-                        ? Container() // Display nothing if the array is empty
+                        ? Container()
                         : Column(
                             children: [
                               const SizedBox(height: 5),
@@ -357,13 +356,10 @@ class _MainPageState extends State<MainPage> {
                                                           .averageRatings[
                                                       random.id];
                                               if (averageRating == null) {
-                                                // Fetch the average rating if it's not available
                                                 averageRatingProvider
                                                     .fetchAndSetAverageRating(
                                                         random.id);
-                                                return const CircularProgressIndicator(
-                                                  color: tdbrown,
-                                                ); // Placeholder while loading
+                                                return Container();
                                               } else {
                                                 return RandomCourse(
                                                   cname: random.title,
