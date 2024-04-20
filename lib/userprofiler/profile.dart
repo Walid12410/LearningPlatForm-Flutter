@@ -171,10 +171,10 @@ class _ProfileState extends State<Profile> {
                             icon: Icons.logout_outlined,
                             text: S.of(context).LogOut,
                             onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs
-                                  .clear(); // Clear all stored preferences
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              await prefs.remove('isLoggedIn');
+                              await prefs.remove('username');
+                              await prefs.remove('uid');
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
