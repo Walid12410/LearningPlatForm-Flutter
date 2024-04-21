@@ -60,8 +60,6 @@ class _MainPageState extends State<MainPage> {
     return Intl.getCurrentLocale() == 'ar';
   }
 
-  Future<void> reloadPage() async {}
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AppDataProvider>(builder: (context, provider, child) {
@@ -75,16 +73,13 @@ class _MainPageState extends State<MainPage> {
           randomcourse.isEmpty &&
           users.isEmpty &&
           portal.isEmpty) {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: tdbrown,
-          ),
+        return  Center(
+          child: Image.asset('assets/gif-unscreen.gif',
+            fit: BoxFit.fill,width: 100,height: 100),
         );
       } else {
         return Scaffold(
           body: SafeArea(
-            child: RefreshIndicator(
-              onRefresh: reloadPage,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -131,9 +126,8 @@ class _MainPageState extends State<MainPage> {
                                             child: CachedNetworkImage(
                                               imageUrl: users[0].picture,
                                               placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(
-                                                color: tdbrown,
-                                              ),
+                                                  Image.asset('assets/gif-unscreen.gif',
+                                                    fit: BoxFit.cover,),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Image.asset(
@@ -386,10 +380,15 @@ class _MainPageState extends State<MainPage> {
                             ],
                           ),
                     const SizedBox(height: 10),
+                    Container(
+                      width: double.infinity,
+                      height: 100,
+                      child: Image.asset('assets/Elearning.jpeg',fit: BoxFit.cover,),
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
-            ),
           ),
         );
       }

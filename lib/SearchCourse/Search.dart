@@ -19,25 +19,19 @@ class _SearchCourseState extends State<SearchCourse> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      reloadPage();
+      final provider = Provider.of<AppDataProvider>(context, listen: false);
+       provider.getAllCourse();
+       provider.getportal();
     });
-  }
-
-  Future<void> reloadPage() async{
-    final provider = Provider.of<AppDataProvider>(context, listen: false);
-    await provider.getAllCourse();
-    await provider.getportal();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: reloadPage,
           child: Column(
             children: [
-              const SearchTextField(), // Add the SearchCourse widget here
+              const SearchTextField(),
               Expanded(
                 child: Consumer<AppDataProvider>(
                   builder: (context, appDataProvider, _) {
@@ -55,6 +49,7 @@ class _SearchCourseState extends State<SearchCourse> {
                           List<Course> portalCourses = allCourses
                               .where((course) => course.portalID == portal.portalID)
                               .toList();
+                          portalCourses = portalCourses.take(3).toList();
                           if (portalCourses.isNotEmpty) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +77,6 @@ class _SearchCourseState extends State<SearchCourse> {
                               ],
                             );
                           } else {
-                            // Return an empty container if the portal has no courses
                             return Container();
                           }
                         },
@@ -93,7 +87,6 @@ class _SearchCourseState extends State<SearchCourse> {
               ),
             ],
           ),
-        ),
       ),
     );
   }

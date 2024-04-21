@@ -87,6 +87,8 @@ flutter:
     - assets/user.png
     - assets/congrats.jpeg
     - assets/badluck.jpeg
+    - assets/Elearning.jpeg
+    - assets/gif-unscreen.gif
 
   # To add assets to your application, add an assets section, like this:
   # assets:

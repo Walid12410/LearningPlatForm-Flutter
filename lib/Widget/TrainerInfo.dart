@@ -30,8 +30,9 @@ class TrainerInfo extends StatelessWidget {
                 : CachedNetworkImage(
                     imageUrl: trainers.picture,
                     placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
+                        Image.asset('assets/gif-unscreen.gif',
+                          fit: BoxFit.cover,),
+              errorWidget: (context, url, error) =>
                         Image.asset('assets/user.png', fit: BoxFit.cover),
                     width: 50.0,
                     height: 50.0,

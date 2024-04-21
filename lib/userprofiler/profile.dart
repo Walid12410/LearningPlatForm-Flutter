@@ -74,8 +74,8 @@ class _ProfileState extends State<Profile> {
                                       imageUrl: users[0].picture,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) =>
-                                          const CircularProgressIndicator(
-                                              color: tdbrown),
+                                          Image.asset('assets/gif-unscreen.gif',
+                                          fit: BoxFit.cover,),
                                       errorWidget: (context, url, error) =>
                                           Image.asset(
                                         'assets/user.png',

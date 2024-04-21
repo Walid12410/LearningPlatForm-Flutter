@@ -50,18 +50,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> updateProfile() async {
     final url = Uri.parse(
-        'http://192.168.1.4/EduPlatform/CMS/api/TrainersCrudOperation.php?operation=UpdateProfile');
+        'http://192.168.1.4/api/walid/userapi.php?status=UpdateProfile');
     final response = await http.post(
       url,
       body: {
         "UserID": userid.toString(),
-        "UserFirstName": fnameController.text,
-        "UserLastName": lnameController.text,
-        "UserEmail": emailController.text,
-        "UserTelephone": phoneController.text,
+        "FName": fnameController.text,
+        "LName": lnameController.text,
+        "Email": emailController.text,
+        "Phone": phoneController.text,
       },
     );
-
     if (response.statusCode == 200) {
       showUpdateSuccessMessage(context);
     } else {
