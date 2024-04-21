@@ -383,7 +383,7 @@ class _MainPageState extends State<MainPage> {
                     Container(
                       width: double.infinity,
                       height: 100,
-                      child: Image.asset('assets/Elearning.jpeg',fit: BoxFit.cover,),
+                      child: Image.asset('assets/Elearning.jpeg',fit: BoxFit.cover,)
                     ),
                     const SizedBox(height: 10),
                   ],

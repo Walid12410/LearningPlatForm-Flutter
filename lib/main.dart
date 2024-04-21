@@ -20,25 +20,25 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppDataProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(savedLocale: savedLocale),
-        localizationsDelegates:const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        routes: {
-          "/SignIn": (context) => const SignIn(),
-          "/portal": (context) => const PortalPage(),
-          "/trainer": (context) => const TrainerPage(),
-          "/profile": (context) => const Profile(),
-          "/information": (context) => const Information(),
-          "/mostview": (context) => const MostView(),
-        },
-      ),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(savedLocale: savedLocale),
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            routes: {
+              "/SignIn": (context) => const SignIn(),
+              "/portal": (context) => const PortalPage(),
+              "/trainer": (context) => const TrainerPage(),
+              "/profile": (context) => const Profile(),
+              "/information": (context) => const Information(),
+              "/mostview": (context) => const MostView(),
+            },
+          ),
+
     ),
   );
 }
-
