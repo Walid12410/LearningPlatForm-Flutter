@@ -92,9 +92,7 @@ class _CourseInformationState extends State<CourseInformation> {
                                 child: CachedNetworkImage(
                                   imageUrl: data[0].profilePicture,
                                   placeholder: (context, url) =>
-                                  const CircularProgressIndicator(
-                                    color: tdbrown,
-                                  ),
+                                  Image.asset('assets/gif-unscreen.gif',fit: BoxFit.cover,),
                                   errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                                   fit: BoxFit.cover,

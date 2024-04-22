@@ -380,12 +380,6 @@ class _MainPageState extends State<MainPage> {
                             ],
                           ),
                     const SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      height: 100,
-                      child: Image.asset('assets/Elearning.jpeg',fit: BoxFit.cover,)
-                    ),
-                    const SizedBox(height: 10),
                   ],
                 ),
               ),

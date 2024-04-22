@@ -38,7 +38,6 @@ void main() async {
               "/mostview": (context) => const MostView(),
             },
           ),
-
     ),
   );
 }
