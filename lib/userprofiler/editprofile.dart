@@ -50,7 +50,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> updateProfile() async {
     final url = Uri.parse(
-        'http://192.168.1.4/api/walid/userapi.php?status=UpdateProfile');
+        'http://192.168.1.5/api/walid/userapi.php?status=UpdateProfile');
     final response = await http.post(
       url,
       body: {

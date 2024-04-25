@@ -4,7 +4,7 @@ import 'package:learningplatformapp/AllClass/Participation.dart';
 
 Future<List<Participation>> fetchAllParticipation() async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.4/api/webParticipation.php?status=data'));
+      'http://192.168.1.5/api/webParticipation.php?status=data'));
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     List<dynamic> jsonData = data['data'];

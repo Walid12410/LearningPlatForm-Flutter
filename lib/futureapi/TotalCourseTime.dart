@@ -6,7 +6,7 @@ import 'package:learningplatformapp/AllClass/CourseTime.dart';
 Future<List<CourseTime>> TotalCourseTime(int CourseID) async {
   try {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.4/api/walid/CourseTime.php?operation=Time&CourseID=$CourseID'));
+        'http://192.168.1.5/api/walid/CourseTime.php?operation=Time&CourseID=$CourseID'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as List<dynamic>;
       List<CourseTime> time = jsonData.map((json) => CourseTime.fromJson(json)).toList();

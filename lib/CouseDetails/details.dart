@@ -101,128 +101,146 @@ class _CourseDetailsState extends State<CourseDetails>
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var courseDetail = provider.CourseByID;
     var userId = provider.userId;
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(Icons.arrow_back_ios),
-                        ),
-                        if (courseDetail.isNotEmpty)
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  courseDetail[0].title,
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FeedbackCourse(
-                                              courseId: widget.courseid)));
-                                },
-                                icon: const Icon(
-                                  Icons.feedback,
-                                  color: tdBlue,
-                                  size: 25,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  try {
-                                    bool newFavoriteStatus = !_isFavorite;
-                                    FavoriteService.toggleFavorite(userId,
-                                        widget.courseid, newFavoriteStatus);
-                                    setState(() {
-                                      _isFavorite = newFavoriteStatus;
-                                    });
-                                  } catch (e) {
-                                    print('Error toggling favorite status: $e');
-                                  }
-                                },
-                                icon: Icon(
-                                  _isFavorite
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: tdBlue,
-                                  size: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                         Text(
-                          S.of(context).CourseDetailDesc,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                  CustomTabBarView(
-                    tabController: _tabController,
-                    tabViews: [
-                      CourseInformation(courseid: widget.courseid),
-                      Chapterpage(
-                          courseid: widget.courseid, isStudent: isStudent),
-                      Quizzes(
-                        courseId: widget.courseid,isStudent: isStudent,
-                      ), // Third tab with the stateful page
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+    if (courseDetail.isNotEmpty && widget.courseid != courseDetail[0].id) {
+      return Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Image.asset(
+            'assets/gif-unscreen.gif',
+            width: 150,
+            height: 150,
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: tdbrown, // Set the background color for the bottom app bar
-        child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: isStudent
-                ?  Text(
-                    S.of(context).CourseEnroll,
-                    style:const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  )
-                : ElevatedButton(
-                    onPressed: () {
-                      // Add action for enrolling
-                    },
-                    child:  Center(
-                      child:  Text(
-                        S.of(context).EnrollNow,
-                        style:const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+      );
+    } else {
+      return Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                          ),
+                          if (courseDetail.isNotEmpty)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    courseDetail[0].title,
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FeedbackCourse(
+                                                    courseId:
+                                                        widget.courseid)));
+                                  },
+                                  icon: const Icon(
+                                    Icons.feedback,
+                                    color: tdBlue,
+                                    size: 25,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    try {
+                                      bool newFavoriteStatus = !_isFavorite;
+                                      FavoriteService.toggleFavorite(userId,
+                                          widget.courseid, newFavoriteStatus);
+                                      setState(() {
+                                        _isFavorite = newFavoriteStatus;
+                                      });
+                                    } catch (e) {
+                                      print(
+                                          'Error toggling favorite status: $e');
+                                    }
+                                  },
+                                  icon: Icon(
+                                    _isFavorite
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: tdBlue,
+                                    size: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          Text(
+                            S.of(context).CourseDetailDesc,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
                     ),
-                  )),
-      ),
-    );
+                    CustomTabBarView(
+                      tabController: _tabController,
+                      tabViews: [
+                        CourseInformation(courseid: widget.courseid),
+                        Chapterpage(
+                            courseid: widget.courseid, isStudent: isStudent),
+                        Quizzes(
+                          courseId: widget.courseid,
+                          isStudent: isStudent,
+                        ), // Third tab with the stateful page
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: tdbrown, // Set the background color for the bottom app bar
+          child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: isStudent
+                  ? Text(
+                      S.of(context).CourseEnroll,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        // Add action for enrolling
+                      },
+                      child: Center(
+                        child: Text(
+                          S.of(context).EnrollNow,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                      ),
+                    )),
+        ),
+      );
+    }
   }
 }

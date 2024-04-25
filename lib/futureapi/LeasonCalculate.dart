@@ -3,7 +3,7 @@ import 'dart:convert';
 
 Future<List> fetchPartNumbers(int courseId) async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.4/api/walid/countlesson.php?operation=CLesson&CourseID=$courseId'));
+        'http://192.168.1.5/api/walid/countlesson.php?operation=CLesson&CourseID=$courseId'));
     if (response.statusCode == 200) {
       final dynamic parsedData = json.decode(response.body);
       if (parsedData is List) {

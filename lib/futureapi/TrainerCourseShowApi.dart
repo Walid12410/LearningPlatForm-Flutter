@@ -4,7 +4,7 @@ import 'dart:convert';
 
 Future<List<TrainerCourseShow>> getDataTrainerCourse(int courseId) async {
   try {
-    Uri url = Uri.parse('http://192.168.1.4/api/walid/userapi.php?status=TrainerCourseShow&UserID=$courseId');
+    Uri url = Uri.parse('http://192.168.1.5/api/walid/userapi.php?status=TrainerCourseShow&UserID=$courseId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

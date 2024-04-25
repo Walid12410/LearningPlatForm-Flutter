@@ -5,7 +5,7 @@ import 'package:learningplatformapp/AllClass/trainer.dart';
 
 Future<List<Trainer>> fetchTrainers(int userId) async {
     final response = await http.get(Uri.parse(
-        'http://192.168.1.4/api/walid/userapi.php?status=SelectOne&UserID=$userId'));
+        'http://192.168.1.5/api/walid/userapi.php?status=SelectOne&UserID=$userId'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
       return jsonData.map((json) => Trainer.fromJson(json)).toList();
@@ -17,7 +17,7 @@ Future<List<Trainer>> fetchTrainers(int userId) async {
 
 
 Future<List<Trainer>> fetchAllTrainers() async {
-  final response = await http.get(Uri.parse('http://192.168.1.4/api/walid/userapi.php?status=UserData'));
+  final response = await http.get(Uri.parse('http://192.168.1.5/api/walid/userapi.php?status=UserData'));
 
   if (response.statusCode == 200) {
     final List<dynamic> jsonData = json.decode(response.body);

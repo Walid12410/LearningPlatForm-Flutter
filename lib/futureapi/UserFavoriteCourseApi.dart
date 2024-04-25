@@ -4,7 +4,7 @@ import '../AllClass/UserFavorite.dart';
 
 Future<List<UserFavorite>> fetchUserFavoriteCourse(int id) async {
   final response = await http.get(Uri.parse(
-      'http://192.168.1.4/api/walid/UserFavoriteCourse.php?status=Data&UserID=$id'));
+      'http://192.168.1.5/api/walid/UserFavoriteCourse.php?status=Data&UserID=$id'));
   if (response.statusCode == 200) {
     List<dynamic> responseData = json.decode(response.body);
     List<UserFavorite> uF = [];
