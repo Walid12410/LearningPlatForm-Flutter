@@ -107,14 +107,14 @@ class _CourseDetailsState extends State<CourseDetails>
         body: Center(
           child: Image.asset(
             'assets/gif-unscreen.gif',
-            width: 150,
-            height: 150,
-            fit: BoxFit.cover,
+            width: 100,
+            height: 100,
+            fit: BoxFit.fill,
           ),
         ),
       );
-    } else {
-      return Scaffold(
+    }
+    return Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
@@ -241,6 +241,6 @@ class _CourseDetailsState extends State<CourseDetails>
                     )),
         ),
       );
-    }
+
   }
 }
