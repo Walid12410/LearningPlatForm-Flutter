@@ -1,8 +1,6 @@
 import 'package:learningplatformapp/GetStart/pageview.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import '../generated/l10n.dart';
@@ -25,9 +23,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             final prefs = snapshot.data;
             final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false;
-            final userId = prefs?.getInt('uid') ?? 0;
             if (isLoggedIn) {
-              Provider.of<AppDataProvider>(context, listen: false).setUserId(userId);
               return const HomePage();
             } else {
               return const PageViewScreen();
@@ -41,7 +37,6 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-
       locale: savedLocale,
       localizationsDelegates: const [
         S.delegate,

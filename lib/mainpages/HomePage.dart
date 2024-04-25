@@ -30,25 +30,19 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  void _onPageTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: tdbrown, // Set your desired background color here
+      color: tdbrown,
       child: Scaffold(
         body: _pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: tdbrown, // Set the background color here
-          selectedItemColor: tdBlue, // Set the selected item color if needed
+          backgroundColor: tdbrown,
+          selectedItemColor: tdBlue,
           unselectedItemColor:
-              tdBGColor, // Set the unselected item color if needed
+              tdBGColor,
           onTap: (int newIndex) {
             setState(() {
               _selectedIndex = newIndex;

@@ -15,11 +15,12 @@ import 'mainpages/Trainer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  final userId = prefs.getInt('uid') ?? 0;
   Locale savedLocale = Locale(prefs.getString('language_code') ?? 'ar');
 
   runApp(
     ChangeNotifierProvider(
-      create: (context) => AppDataProvider(),
+      create: (context) => AppDataProvider()..setUserId(userId),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             home: SplashScreen(savedLocale: savedLocale),
