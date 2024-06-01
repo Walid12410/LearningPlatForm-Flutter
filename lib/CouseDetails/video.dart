@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -39,8 +40,8 @@ class _YoutubeVideoState extends State<YoutubeVideo> {
           : AppBar(
               title: Text(
                 widget.name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+                style:  TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black,fontSize: 12.sp),
                 overflow: TextOverflow.ellipsis,
               ),
               backgroundColor: tdbrown,

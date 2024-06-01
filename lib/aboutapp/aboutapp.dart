@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 import '../generated/l10n.dart';
@@ -17,7 +18,7 @@ class _AboutState extends State<About> {
       appBar: AppBar(
         title: Text(
           S.of(context).aboutOurAppFullSentence,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style:  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
@@ -35,7 +36,7 @@ class _AboutState extends State<About> {
               ),
             )),
              Padding(
-              padding:const EdgeInsets.all(8),
+              padding:const EdgeInsets.all(5).w,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -43,10 +44,11 @@ class _AboutState extends State<About> {
                   children: [
                     Text(
                       S.of(context).aboutDetails,
-                      style:const TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                          fontSize: 18.sp,
                           color: Colors.black),
+                      textAlign: TextAlign.center,
                     )
                   ],
                 ),

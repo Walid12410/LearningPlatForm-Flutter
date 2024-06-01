@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/userprofiler/profile.dart';
 import '../Homepage/MainPage.dart';
 import 'package:learningplatformapp/UserCourses/UserCourse.dart';
@@ -50,13 +51,13 @@ class _HomePageState extends State<HomePage> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: const Icon(Icons.home), label: S.of(context).HomePage),
+                icon:  Icon(Icons.home,size: 20.w), label: S.of(context).HomePage),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.school), label: S.of(context).MyCourse),
+                icon:  Icon(Icons.school,size: 20.w), label: S.of(context).MyCourse),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.search), label: S.of(context).Search),
+                icon:  Icon(Icons.search,size: 20.w,), label: S.of(context).Search),
             BottomNavigationBarItem(
-                icon: const Icon(Icons.account_circle),
+                icon:  Icon(Icons.account_circle,size: 20.w,),
                 label: S.of(context).Profile)
           ],
         ),

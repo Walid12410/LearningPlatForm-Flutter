@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/SearchCourse/Searchpage.dart';
 import 'package:learningplatformapp/pageroute/BottomAndMore.dart';
@@ -19,21 +20,21 @@ class SearchTextField extends StatelessWidget {
         );
       },
       child: Container(
-        height: 50,
-        margin: const EdgeInsets.all(8.0),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        height: 35.h,
+        margin: const EdgeInsets.all(5.0).w,
+        padding: const EdgeInsets.symmetric(horizontal: 12.0).w,
         decoration: BoxDecoration(
           color: tdbrown, // Use your desired color here
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7).w,
         ),
         child: Row(
           children: [
-            const Icon(Icons.search, color: tdBlue), // Use your desired color here
-            const SizedBox(width: 8),
+             Icon(Icons.search, color: tdBlue,size: 20.w,), // Use your desired color here
+             SizedBox(width: 5.w),
             Expanded(
               child: Text(
                 S.of(context).Search,
-                style: const TextStyle(color: tdBlue), // Use your desired color here
+                style:  TextStyle(color: tdBlue,fontSize: 12.sp), // Use your desired color here
               ),
             ),
           ],

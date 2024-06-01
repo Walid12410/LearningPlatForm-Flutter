@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/portal.dart';
 import 'package:learningplatformapp/mainpages/CoursePage.dart';
@@ -14,25 +15,27 @@ class CoursePortal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0), // Add vertical margin
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: tdbrown,
-      ),
-      child: ListTile(
-        title: Text(
-         portals.portalName,
-          style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.all(5.0).w,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7).w,
+          color: tdbrown,
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            CustomPageRoute(
-              child: CourseListView(portalid: portals.portalID),
-            ),
-          );
-        },
+        child: ListTile(
+          title: Text(
+           portals.portalName,
+            style:  TextStyle(color: tdBlue, fontWeight: FontWeight.bold,fontSize: 12.sp),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              CustomPageRoute(
+                child: CourseListView(portalid: portals.portalID),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

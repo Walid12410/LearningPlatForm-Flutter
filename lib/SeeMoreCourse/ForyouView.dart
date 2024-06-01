@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
@@ -25,16 +26,17 @@ class _ForYouCourseState extends State<ForYouCourse> {
     });
     super.initState();
   }
+
   Future<void> getData() async {
     final provider = Provider.of<AppDataProvider>(context, listen: false);
     await provider.getAllCourse();
     setState(() {});
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     AppDataProvider appDataProvider =
-    Provider.of<AppDataProvider>(context, listen: false);
+        Provider.of<AppDataProvider>(context, listen: false);
     var allCourses = appDataProvider.allCourses;
     var coursesToShow = allCourses.take(4).toList();
 
@@ -42,7 +44,7 @@ class _ForYouCourseState extends State<ForYouCourse> {
       appBar: AppBar(
         title: Text(
           S.of(context).RecommendCFY,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+          style:  TextStyle(fontWeight: FontWeight.bold, color: tdBlue,fontSize: 12.sp),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
@@ -50,147 +52,123 @@ class _ForYouCourseState extends State<ForYouCourse> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: tdBlue),
+          icon:  Icon(Icons.arrow_back, color: tdBlue,size: 20.w,),
         ),
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFEC9D52),
-                    Color(0xFF000000),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(2),
-                    topRight: Radius.circular(2),
-                  ),
-                ),
-                height: double.infinity,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return ResponsiveGridList(
-                        minItemWidth: 150,
-                        children: coursesToShow.map((course) {
-                          final courseId = course.id;
-                          final provider =
-                          Provider.of<AppDataProvider>(context, listen: false);
-                          final averageRating =
-                              provider.averageRatings[courseId] ?? 0.0;
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CustomPageRoute(
-                                  child: CourseDetails(
-                                    courseid: course.id,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.0),
-                                    color: tdbrown,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      AspectRatio(
-                                        aspectRatio: 16 / 9,
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(16.0),
-                                            topLeft: Radius.circular(16.0),
-                                          ),
-                                          child: Image.asset(
-                                            'assets/image1.png',
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              course.title,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                color: tdBlue,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 1),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  '\$${course.price}',
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    color: tdBlue,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                const Icon(Icons.visibility, color: tdBlue),
-                                                const SizedBox(width: 1),
-                                                Text(
-                                                  '${course.view}',
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    color: tdBlue,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 1),
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.star, color: tdBlue),
-                                                Text(
-                                                  '$averageRating',
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    color: tdBlue,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(5).w,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return ResponsiveGridList(
+                minItemWidth: 150.w,
+                children: coursesToShow.map((course) {
+                  final courseId = course.id;
+                  final provider =
+                      Provider.of<AppDataProvider>(context, listen: false);
+                  final averageRating =
+                      provider.averageRatings[courseId] ?? 0.0;
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CustomPageRoute(
+                          child: CourseDetails(
+                            courseid: course.id,
+                          ),
+                        ),
                       );
                     },
-                  ),
-                ),
-              ),
-            ),
-          ],
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0).w,
+                            color: tdbrown,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: ClipRRect(
+                                  borderRadius:  BorderRadius.only(
+                                    topRight: const Radius.circular(16.0).w,
+                                    topLeft:const Radius.circular(16.0).w,
+                                  ),
+                                  child: Image.asset(
+                                    'assets/image1.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0).w,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      course.title,
+                                      style:  TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12.sp,
+                                        color: tdBlue,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 1),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '\$${course.price}',
+                                          style:  TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: tdBlue,
+                                            fontSize: 10.sp
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                         Icon(Icons.visibility,
+                                            color: tdBlue,size: 20.w,),
+                                         SizedBox(width: 2.w),
+                                        Text(
+                                          '${course.view}',
+                                          style:  TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: tdBlue,
+                                            fontSize: 10.sp
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                     SizedBox(height: 5.h),
+                                    Row(
+                                      children: [
+                                         Icon(Icons.star, color: tdBlue,size: 20.w,),
+                                        Text(
+                                          '$averageRating',
+                                          style:  TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: tdBlue,
+                                            fontSize: 10.sp
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.h),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              );
+            },
+          ),
         ),
       ),
     );

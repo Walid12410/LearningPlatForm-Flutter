@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 
@@ -18,7 +19,7 @@ class Categories extends StatelessWidget {
       decoration: BoxDecoration(
         color: tdbrown,
         borderRadius:
-        BorderRadius.circular(8), // Add border radius for rounded corners
+        BorderRadius.circular(8).w, // Add border radius for rounded corners
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -30,11 +31,11 @@ class Categories extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4).w,
           child: Text(
             name,
             style:
-            const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+             TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 10.sp),
           ),
         ),
       ),

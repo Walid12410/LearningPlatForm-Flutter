@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/QuizPage.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,8 @@ import '../generated/l10n.dart';
 import '../provider/provider_data.dart';
 
 class Quizzes extends StatefulWidget {
-  const Quizzes({Key? key, required this.courseId,required this.isStudent}) : super(key: key);
+  const Quizzes({Key? key, required this.courseId, required this.isStudent})
+      : super(key: key);
   final int courseId;
   final bool isStudent;
 
@@ -31,15 +33,15 @@ class _QuizzesState extends State<Quizzes> {
 
     return Scaffold(
       body: chapter.isEmpty
-          ?  Center(
+          ? Center(
               child: Text(
-               S.of(context).NoQuizAvailable,
-                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                S.of(context).NoQuizAvailable,
+                style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
               ),
             )
           : SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5.0).w,
                 child: ListView.builder(
                   itemCount: chapter.length,
                   itemBuilder: (context, i) {
@@ -48,38 +50,41 @@ class _QuizzesState extends State<Quizzes> {
                       children: [
                         Text(
                           chapter[i].title,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 25,
+                              fontSize: 18.sp,
                               color: Colors.black),
                           overflow: TextOverflow.ellipsis,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(5).w,
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.quiz,
                                 color: Colors.black,
-                                size: 33,
+                                size: 25.w,
                               ),
-                               Text(
+                              Text(
                                 S.of(context).quiz,
-                                style:const TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 15.sp),
                               ),
                               const Spacer(),
-                              IconButton(
-                                  onPressed: widget.isStudent ? () {
-                                    Navigator.push(
-                                        context,
-                                        CustomPageRoute(
-                                            child: QuizPage(
-                                                chapterID: chapter[i].id)));
-                                  } : null,
-                                  icon: const Icon(
+                              GestureDetector(
+                                  onTap: widget.isStudent
+                                      ? () {
+                                          Navigator.push(
+                                              context,
+                                              CustomPageRoute(
+                                                  child: QuizPage(
+                                                      chapterID:
+                                                          chapter[i].id)));
+                                        }
+                                      : null,
+                                  child: Icon(
                                     Icons.arrow_forward,
                                     color: Colors.black,
-                                    size: 33,
+                                    size: 25.w,
                                   ))
                             ],
                           ),

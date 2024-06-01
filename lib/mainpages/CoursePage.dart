@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/Widget/CourseOfPortal.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -6,8 +7,8 @@ import 'package:learningplatformapp/provider/provider_data.dart';
 import '../generated/l10n.dart';
 
 class CourseListView extends StatefulWidget {
-  int portalid;
-  CourseListView({super.key, required this.portalid});
+  final int portalid;
+  CourseListView({Key? key, required this.portalid}) : super(key: key);
 
   @override
   State<CourseListView> createState() => _CourseListViewState();
@@ -19,7 +20,7 @@ class _CourseListViewState extends State<CourseListView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppDataProvider provider =
-          Provider.of<AppDataProvider>(context, listen: false);
+      Provider.of<AppDataProvider>(context, listen: false);
       provider.getCoursePortal(widget.portalid);
     });
   }
@@ -27,12 +28,12 @@ class _CourseListViewState extends State<CourseListView> {
   @override
   Widget build(BuildContext context) {
     AppDataProvider appDataProvider =
-        Provider.of<AppDataProvider>(context, listen: true);
+    Provider.of<AppDataProvider>(context, listen: true);
     var courses = appDataProvider.courses;
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
             Row(
               children: [
@@ -40,39 +41,41 @@ class _CourseListViewState extends State<CourseListView> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios,
-                      size: 25,
+                      size: 20.w,
                       color: Colors.black,
                     )),
-                 Text(
-                 S.of(context).GoBack,
-                  style: const TextStyle(
+                Text(
+                  S.of(context).GoBack,
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 18.sp,
                       color: Colors.black),
                 )
               ],
             ),
             if (courses.isEmpty)
-               Center(
-                child: Text(
-                  S.of(context).NoCourseAvailable,
-                  style: const TextStyle(fontSize: 18, color: Colors.black),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    S.of(context).NoCourseAvailable,
+                    style: TextStyle(fontSize: 12.sp, color: Colors.black),
+                  ),
                 ),
               )
             else
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
+              Expanded(
                 child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      )),
+                  decoration:  BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(15).w,
+                      topRight:const Radius.circular(15).w,
+                    ),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0).w,
                     child: ListView.builder(
                       itemCount: courses.length,
                       itemBuilder: (context, i) {

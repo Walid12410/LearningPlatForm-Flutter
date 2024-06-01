@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/AllClass/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/PdfViewer.dart';
 import 'package:learningplatformapp/CouseDetails/video.dart';
@@ -40,7 +41,7 @@ class _ChapterpageState extends State<Chapterpage> {
             List<Lesson> lessons = provider.lesson;
             if (chapters.isEmpty) {
               return Center(
-                child: Text(S.of(context).NoChapterAvailable),
+                child: Text(S.of(context).NoChapterAvailable,style: TextStyle(fontSize: 12.sp),),
               );
             } else {
               return Column(
@@ -53,21 +54,21 @@ class _ChapterpageState extends State<Chapterpage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(5).w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               c.title,
-                              style: const TextStyle(
-                                fontSize: 30,
+                              style:  TextStyle(
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                                 color: tdBlue,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(c.description),
+                              padding: const EdgeInsets.all(5.0).w,
+                              child: Text(c.description,style: TextStyle(fontSize: 10.sp),),
                             )
                           ],
                         ),
@@ -75,8 +76,8 @@ class _ChapterpageState extends State<Chapterpage> {
                        Center(
                         child: Text(
                           S.of(context).Lesson,
-                          style:const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15.sp),
                         ),
                       ),
                       if (chapterLessons.isNotEmpty)
@@ -86,14 +87,14 @@ class _ChapterpageState extends State<Chapterpage> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
+                                      horizontal: 16.0).w,
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: Text(
                                           lesson.title,
-                                          style: const TextStyle(
-                                            fontSize: 15,
+                                          style:  TextStyle(
+                                            fontSize: 12.sp,
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -102,8 +103,8 @@ class _ChapterpageState extends State<Chapterpage> {
                                       ),
                                       const Spacer(),
                                       if (lesson.mediatype == 'v')
-                                        IconButton(
-                                          onPressed:widget.isStudent ? () {
+                                        GestureDetector(
+                                          onTap:widget.isStudent ? () {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -114,15 +115,15 @@ class _ChapterpageState extends State<Chapterpage> {
                                                             name:
                                                                 lesson.title)));
                                           } : null,
-                                          icon: const Icon(
+                                          child:  Icon(
                                             Icons.play_arrow,
                                             color: Colors.black,
-                                            size: 25,
+                                            size: 20.w,
                                           ),
                                         ),
                                       if (lesson.mediatype != 'v')
-                                        IconButton(
-                                          onPressed: widget.isStudent ?() {
+                                        GestureDetector(
+                                          onTap: widget.isStudent ?() {
                                             Navigator.push(
                                                 context,
                                                 CustomPageRoute2(
@@ -131,10 +132,10 @@ class _ChapterpageState extends State<Chapterpage> {
                                                   title: lesson.title,
                                                 )));
                                           } : null,
-                                          icon: const Icon(
+                                          child:  Icon(
                                             Icons.file_copy,
                                             color: Colors.black,
-                                            size: 25,
+                                            size: 20.w,
                                           ),
                                         ),
                                     ],
@@ -147,10 +148,10 @@ class _ChapterpageState extends State<Chapterpage> {
                         )
                       else
                          Padding(
-                          padding:const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding:const EdgeInsets.symmetric(horizontal: 16.0).w,
                           child: Text(
                             S.of(context). NoLessonOfChapter,
-                            style:const TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey,fontSize: 12.sp),
                           ),
                         ),
                       const Divider(

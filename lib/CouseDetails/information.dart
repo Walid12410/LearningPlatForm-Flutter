@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:learningplatformapp/futureapi/RatingCourses.dart';
@@ -64,29 +65,29 @@ class _CourseInformationState extends State<CourseInformation> {
             var courses = provider.CourseByID;
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10).w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 150,
+                    SizedBox(
+                      height: 120.h,
                       width: double.infinity,
-                      child: Image.asset('assets/image1.png',fit: BoxFit.cover,),
+                      child: Image.asset('assets/image1.png',fit: BoxFit.contain,),
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 10.h),
                     Padding(
-                      padding: const EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(2).w,
                       child: Row(
                         children: [
                           if (data.isNotEmpty)
                             Container(
-                              width: 50,
-                              height: 50,
+                              width: 40.w,
+                              height: 35.h,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border:
-                                Border.all(color: Colors.black, width: 2),
+                                Border.all(color: Colors.black, width: 2.w),
                               ),
                               child: ClipOval(
                                 child: CachedNetworkImage(
@@ -99,15 +100,15 @@ class _CourseInformationState extends State<CourseInformation> {
                                 ),
                               ),
                             ),
-                          const SizedBox(
-                            width: 2,
+                           SizedBox(
+                            width: 5.w,
                           ),
                           if (data.isNotEmpty)
                             Text(
                               data[0].toString(),
-                              style: const TextStyle(
+                              style:  TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 12.sp,
                               ),
                             ),
                           const Spacer(),
@@ -117,10 +118,10 @@ class _CourseInformationState extends State<CourseInformation> {
                             const Icon(Icons.star, color: Colors.red),
                             onRatingUpdate: (index) {},
                             itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 4),
+                            const EdgeInsets.symmetric(horizontal: 2).w,
                             minRating: 1,
                             itemCount: 5,
-                            itemSize: 18,
+                            itemSize: 15.w,
                             initialRating: _averageRating ?? 1,
                             ignoreGestures: true,
                           ),
@@ -129,54 +130,56 @@ class _CourseInformationState extends State<CourseInformation> {
                     ),
                     Padding(
                       padding: isArabic() ?
-                      const EdgeInsets.only(right: 40, top: 4) :
-                      const EdgeInsets.only(left: 40, top: 4),
+                      const EdgeInsets.only(right: 45, top: 5,bottom: 5).w :
+                      const EdgeInsets.only(left: 45, top: 5,bottom: 5).w,
                       child: Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const Icon(Icons.access_time_outlined),
-                              const SizedBox(width: 3),
+                               Icon(Icons.access_time_outlined,size: 20.w,),
+                               SizedBox(width: 2.w),
                               if (TotalCoureTime.isNotEmpty && mounted)
                                 Text(
                                   '${TotalCoureTime[0].getTotalHours()} ${S.of(context).HourCourse} (${partNumbers.length} ${S.of(context).Lessons})',
-                                )
+                                style: TextStyle(fontSize: 10.sp),)
                             ],
                           ),
                            Row(
                             children: [
-                              const Icon(Icons.school),
-                              const SizedBox(width: 3),
-                              Text(S.of(context).Certification),
+                               Icon(Icons.school,size: 20.w,),
+                              SizedBox(width: 2.w),
+                              Text(S.of(context).Certification,style: TextStyle(fontSize: 10.sp),),
                             ],
                           ),
                            Row(
                             children: [
-                              const Icon(Icons.language),
-                              const SizedBox(width: 3),
-                              Text(S.of(context).CourseLanguage),
+                               Icon(Icons.language,size: 20.w,),
+                              SizedBox(width: 2.w),
+                              Text(S.of(context).CourseLanguage,style: TextStyle(fontSize: 10.sp),),
                             ],
                           ),
                         ],
                       ),
                     ),
                      Padding(
-                      padding:const EdgeInsets.all(8),
+                      padding:const EdgeInsets.all(5).w,
                       child: Text(
                         S.of(context).AboutCourse,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                        style:  TextStyle(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                     ),
                     if (courses.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(left: 8),
+                        padding:isArabic() ?
+                        const EdgeInsets.only(right: 5).w :
+                        const EdgeInsets.only(left: 5).w,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                                '${courses[0].title}.${courses[0].description}'),
+                                '${courses[0].title}.${courses[0].description}',style: TextStyle(fontSize: 10.sp),),
                           ],
                         ),
                       )
@@ -184,8 +187,8 @@ class _CourseInformationState extends State<CourseInformation> {
                        Center(
                         child: Text(
                           S.of(context).NoDetailYet,
-                          style:const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 12.sp, fontWeight: FontWeight.bold),
                         ),
                       ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:provider/provider.dart';
@@ -92,22 +93,23 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0).w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
+                      icon:  Icon(
                         Icons.arrow_back_ios,
                         color: tdbrown,
+                        size: 20.w,
                       )),
                   Expanded(
                     child: Container(
-                      height: 50,
+                      height: 35.h,
                       decoration: BoxDecoration(
                         color: tdbrown,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(7).w,
                       ),
                       child: TextField(
                         focusNode: _focusNode,
@@ -118,15 +120,16 @@ class _SearchPageState extends State<SearchPage> {
                         decoration: InputDecoration(
                           hintText: S.of(context).Search,
                           border: InputBorder.none,
-                          prefixIcon: const Icon(Icons.search, color: tdBlue),
+                          prefixIcon:  Icon(Icons.search, color: tdBlue,size: 20.w,),
                         ),
-                        style: const TextStyle(color: tdBlue),
+                        style:  TextStyle(color: tdBlue,fontSize: 12.sp),
                       ),
                     ),
                   ),
-                  IconButton(
-                      icon: const Icon(Icons.filter_list, color: tdbrown),
-                      onPressed: () {
+                  SizedBox(width: 10.w,),
+                  GestureDetector(
+                      child:  Icon(Icons.filter_list, color: tdbrown,size: 20.w,),
+                      onTap: () {
                         _showPriceDialog(context);
                       }),
                 ],
@@ -139,22 +142,23 @@ class _SearchPageState extends State<SearchPage> {
                       itemCount: filteredCourses.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(3.0).w,
                           child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(5).w,
                                   color: tdbrown),
                               child: ListTile(
                                 title: Text(
                                   filteredCourses[index].title,
-                                  style: const TextStyle(
+                                  style:  TextStyle(
                                       color: tdBlue,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 trailing: Text(
                                   '\$${filteredCourses[index].price}',
-                                  style: const TextStyle(
-                                      fontSize: 15, color: tdBlue),
+                                  style:  TextStyle(
+                                      fontSize: 10.sp, color: tdBlue),
                                 ),
                                 onTap: () {
                                   Navigator.push(

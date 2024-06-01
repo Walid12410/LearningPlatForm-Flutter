@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/SignInUp/WidgetsForSignUp/signupform.dart';
 
 
@@ -12,19 +13,19 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-             Positioned.fill(
+             const Positioned.fill(
               child: Image(
                 fit: BoxFit.cover,
                 image: AssetImage('assets/Signup.jpeg'),
               ),
             ),
              Padding(
-              padding:  EdgeInsets.all(10),
-              child: SignUpForm(),
+              padding: const  EdgeInsets.all(10).w,
+              child:const SignUpForm(),
             )
           ],
         ),

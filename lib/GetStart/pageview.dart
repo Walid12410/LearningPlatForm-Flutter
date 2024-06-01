@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/aboutapp/aboutapp.dart';
 import '../generated/l10n.dart';
@@ -42,22 +43,22 @@ class _PageViewScreenState extends State<PageViewScreen> {
       children: <Widget>[
         Expanded(
           child: Container(
-            margin: const EdgeInsets.all(32),
+            margin: const EdgeInsets.all(25).w,
             child: Image.asset(slide.Image, fit: BoxFit.contain),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 20).w,
           child: Text(
             slide.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
+            style: TextStyle(
+              fontSize: 18.sp,
               fontWeight: FontWeight.w900,
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 10.h),
       ],
     );
   }
@@ -65,18 +66,19 @@ class _PageViewScreenState extends State<PageViewScreen> {
   Widget _buildPageIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: List<Widget>.generate(
         _slides.length,
-            (index) => _buildPageIndicatorItem(index),
-      ).expand((widget) => [widget, const SizedBox(width: 12)]).toList(),
+        (index) => _buildPageIndicatorItem(index),
+      ).expand((widget) => [widget, SizedBox(width: 5.w)]).toList(),
     );
   }
 
   Widget _buildPageIndicatorItem(int index) {
     return Container(
-      width: index == _currentPage ? 8 : 5,
-      height: index == _currentPage ? 8 : 5,
-      margin: const EdgeInsets.symmetric(horizontal: 6),
+      width: index == _currentPage ? 8.w : 5.w,
+      height: index == _currentPage ? 8.h : 5.h,
+      margin: const EdgeInsets.symmetric(horizontal: 6).w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: index == _currentPage ? tdbrown : Colors.grey,
@@ -105,27 +107,30 @@ class _PageViewScreenState extends State<PageViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(12).w,
               child: Column(
                 children: [
                   _buildPageIndicator(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 12.h),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const About()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const About()));
                     },
                     child: Container(
-                      height: 48,
+                      height: 40.h,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(20).w,
                         color: tdbrown,
                       ),
-                      child:  Center(
+                      child: Center(
                         child: Text(
                           S.of(context).aboutOurApp,
-                          style: const TextStyle(
+                          style: TextStyle(
                             letterSpacing: 1,
-                            fontSize: 16,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -133,17 +138,21 @@ class _PageViewScreenState extends State<PageViewScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Container(
+                  SizedBox(height: 10.h),
+                  SizedBox(
+                    height: 40.h,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignIn()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignIn()));
                       },
                       child: Text(
                         S.of(context).signIn,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
@@ -151,13 +160,13 @@ class _PageViewScreenState extends State<PageViewScreen> {
                       style: ElevatedButton.styleFrom(
                         primary: tdbrown,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(20).w,
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 12).w,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 15.h),
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/mainpages/TrainerCourses.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
@@ -17,10 +18,10 @@ class TrainerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(3.0).w,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(5).w,
           color: tdbrown,
         ),
         child: ListTile(
@@ -41,24 +42,25 @@ class TrainerInfo extends StatelessWidget {
           ),
           title: Text(
             '$trainers',
-            style: const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
+            style:  TextStyle(color: tdBlue, fontWeight: FontWeight.bold,fontSize: 12.sp),
           ),
           subtitle: Text(
             trainers.email,
-            style: const TextStyle(color: tdBlue),
+            style:  TextStyle(color: tdBlue,fontSize: 10.sp),
           ),
           trailing: TextButton.icon(
             onPressed: () {
               Navigator.push(context,
                   CustomPageRoute(child: TrainerCourse(userid: trainers.id)));
             },
-            icon: const Icon(
+            icon:  Icon(
               Icons.forward,
               color: tdBlue,
+              size: 20.w,
             ),
             label: Text(
               S.of(context).AllCourses,
-              style: const TextStyle(color: tdBlue),
+              style:  TextStyle(color: tdBlue,fontSize: 10.sp),
             ),
             style: TextButton.styleFrom(
               backgroundColor: Colors.white,

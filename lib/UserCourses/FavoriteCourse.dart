@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
 import '../CouseDetails/details.dart';
@@ -32,8 +33,8 @@ class _UserFavoriteState extends State<UserFavorite> {
       appBar: AppBar(
         title: Text(
           S.of(context).YourFavoriteCourse,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+          style:  TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12.sp),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
@@ -42,8 +43,8 @@ class _UserFavoriteState extends State<UserFavorite> {
           ? Center(
               child: Text(
                 S.of(context).NoFavCourse,
-                style: const TextStyle(
-                    fontSize: 20,
+                style:  TextStyle(
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
@@ -53,30 +54,31 @@ class _UserFavoriteState extends State<UserFavorite> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0).w,
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20).w,
                         border: Border.all(color: tdbrown),
                       ),
                       child: ListView.builder(
                         itemCount: userCourses.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(5).w,
                             child: ListTile(
                               title: Text(
                                 userCourses[index].title,
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 12.sp,
                                 ),
                               ),
                               subtitle: Text(
                                 userCourses[index].courseDescription,
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   color: Colors.grey,
+                                  fontSize: 10.sp,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RandomCourse extends StatelessWidget {
   const RandomCourse({
@@ -22,68 +23,77 @@ class RandomCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 5,right: 5).w,
       child: Container(
-        width: 200,
-        height: 265,
+        width: 170.w,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10).w,
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 3,
-                  blurRadius: 10,
-                  offset: Offset(0, 3)
+                  blurRadius: 5,
+                  offset: const Offset(0, 0)
               ),
             ]
         ),
         child: GestureDetector(
           onTap: press,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10).w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  // alignment: Alignment.center,
-                  child: Image.asset(image,height: 150,),
+                SizedBox(
+                  child: Image.asset(
+                    image,
+                    height: 100.h,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: Text(
                         cname,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 23,
+                          fontSize: 12.sp,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
-                    const Icon(Icons.verified, size: 20),
+                    Icon(Icons.verified, size: 15.w),
                   ],
                 ),
+                SizedBox(height: 5.h),
                 Text(desc,
-                    style:const TextStyle(fontSize: 15,overflow: TextOverflow.ellipsis)
+                    style: TextStyle(fontSize: 10.sp,overflow: TextOverflow.ellipsis)
                 ),
-                const SizedBox(height: 2),
+                 SizedBox(height: 10.h),
                 RatingBar.builder(
                   direction: Axis.horizontal,
                   itemBuilder: (context, _) =>
                   const Icon(Icons.star, color: Colors.red),
                   onRatingUpdate: (index) {},
                   itemPadding:
-                  const EdgeInsets.symmetric(horizontal: 4),
+                  const EdgeInsets.symmetric(horizontal: 4).w,
                   minRating: 1,
                   itemCount: 5,
-                  itemSize: 18,
+                  itemSize: 15.w,
                   initialRating: averagerate ?? 1,
                   ignoreGestures: true,
                 ),
-                const SizedBox(height: 1),
-                    Text('\$$price',
-                      style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)
+                 SizedBox(height: 10.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('\$$price',
+                          style:  TextStyle(fontSize: 10.sp,fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                SizedBox(height: 5.h),
               ],
             ),
           ),

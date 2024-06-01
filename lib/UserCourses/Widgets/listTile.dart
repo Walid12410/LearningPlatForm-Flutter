@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 
@@ -17,20 +18,20 @@ class TileList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding:const EdgeInsets.all(3.0).w,
       child: GestureDetector(
         onTap: press,
         child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), color: tdbrown),
+                borderRadius: BorderRadius.circular(5).w, color: tdbrown),
             child: ListTile(
               title: Text(
                 name,
                 style:
-                const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
+                 TextStyle(color: tdBlue, fontWeight: FontWeight.bold,fontSize: 12.sp),
               ),
               trailing: Icon(requiredIcon,color: Colors.black,
-                  size: 20,)
+                  size: 20.w,)
 
             )
         ),

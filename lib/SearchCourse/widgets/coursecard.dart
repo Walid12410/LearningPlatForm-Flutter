@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -82,7 +83,7 @@ class _CourseCardState extends State<CourseCard> {
         .userId;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0).w,
       child: GestureDetector(
         onTap: () {
           Navigator.push(context, CustomPageRoute(child: CourseDetails(
@@ -90,12 +91,12 @@ class _CourseCardState extends State<CourseCard> {
           )));
         },
         child: SizedBox(
-          width: 250,
+          width: 200.w,
           child: Card(
             color: Colors.white,
             elevation: 3,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0).w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -105,47 +106,47 @@ class _CourseCardState extends State<CourseCard> {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 8),
+                   SizedBox(height: 5.h),
                   Text(
                     widget.course.title,
-                    style: const TextStyle(
-                        fontSize: 22,
+                    style:  TextStyle(
+                        fontSize: 15.sp,
                         color: tdBlue,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis
                     ),
                   ),
-                  const SizedBox(height: 4),
+                   SizedBox(height: 2.h),
                   Text(
                     widget.course.description,
-                    style: const TextStyle(
-                        fontSize: 16,
+                    style:  TextStyle(
+                        fontSize: 10.h,
                         color: tdBlue,
                         overflow: TextOverflow.ellipsis
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 10.h),
                   RatingBar.builder(
                     direction: Axis.horizontal,
                     itemBuilder: (context, _) =>
                     const Icon(Icons.star, color: Colors.red),
                     onRatingUpdate: (index) {},
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 2).w,
                     minRating: 1,
                     itemCount: 5,
-                    itemSize: 18,
+                    itemSize: 15.w,
                     initialRating: averageRating,
                     // Use fetched average rating
                     ignoreGestures: true,
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 2.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         '\$${widget.course.price}',
-                        style: const TextStyle(
-                          fontSize: 14,
+                        style:  TextStyle(
+                          fontSize: 10.sp,
                           color: tdBlue,
                         ),
                       ),
@@ -154,7 +155,7 @@ class _CourseCardState extends State<CourseCard> {
                           _isFavorite
                               ? Icons.bookmark
                               : Icons.bookmark_border,
-                          size: 30,
+                          size: 20.w,
                           color: tdBlue,
                         ),
                         onPressed: () {

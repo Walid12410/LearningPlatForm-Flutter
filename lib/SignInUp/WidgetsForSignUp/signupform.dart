@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import '../../generated/l10n.dart';
@@ -21,17 +22,17 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _telephoneController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _genderController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: const Radius.circular(20).w,
+          topRight: const Radius.circular(20).w,
         ),
       ),
       width: double.infinity,
@@ -39,17 +40,17 @@ class _SignUpFormState extends State<SignUpForm> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 15),
-             Text(
+            SizedBox(height: 10.h),
+            Text(
               S.of(context).createAccount,
-              style: const TextStyle(
-                fontSize: 40,
+              style: TextStyle(
+                fontSize: 30.sp,
                 fontWeight: FontWeight.bold,
                 color: tdbrown,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(3.0).w,
               child: SignUpFields(
                 formKey: _formKey, // Pass the form key
                 firstNameController: _firstNameController,
@@ -59,44 +60,56 @@ class _SignUpFormState extends State<SignUpForm> {
                 userNameController: _userNameController,
                 passwordController: _passwordController,
                 confirmPasswordController: _confirmPasswordController,
-                genderController: _genderController, // Pass the gender controller
+                genderController:
+                    _genderController, // Pass the gender controller
               ),
             ),
-            const TermsAndConditionsCheckbox(),
-            const SizedBox(height: 20,),
+            //const TermsAndConditionsCheckbox(),
+            SizedBox(height: 10.h),
             Container(
-              height: 50,
-              width: 300,
+              height: 35.h,
+              width: 200.w,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: tdbrown
-              ),
+                  borderRadius: BorderRadius.circular(40).w, color: tdbrown),
               child: TextButton(
                 onPressed: _signup,
-                child:  Text(
+                child: Text(
                   S.of(context).SignupSpace,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 15.sp,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            SizedBox(
+              height: 15.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 Text(S.of(context).AlreadyHaveAcc,
-                  style: const TextStyle(fontWeight: FontWeight.bold,
-                      fontSize: 15,color: tdBlue),),
-                TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                  const SignIn()));
-                }, child: Text(S.of(context).signIn,style:const TextStyle(
-                    fontSize: 15,fontWeight: FontWeight.bold,
-                    color: Colors.blue
-                ),))
+                Text(
+                  S.of(context).AlreadyHaveAcc,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.sp,
+                      color: tdBlue),
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignIn()));
+                    },
+                    child: Text(
+                      S.of(context).signIn,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    ))
               ],
             ),
           ],
@@ -116,12 +129,21 @@ class _SignUpFormState extends State<SignUpForm> {
       final confirmPassword = _confirmPasswordController.text;
       final gender = _genderController.text;
 
-      insertTrainerData(firstName, lastName, email, telephone, userName, password,gender);
+      insertTrainerData(
+          firstName, lastName, email, telephone, userName, password, gender);
     }
   }
 
-  Future<void> insertTrainerData(String firstName, String lastName, String email, String telephone, String userName, String password,String gender) async {
-    String url = 'http://192.168.1.12/EduPlatform/CMS/api/TrainersCrudOperation.php';
+  Future<void> insertTrainerData(
+      String firstName,
+      String lastName,
+      String email,
+      String telephone,
+      String userName,
+      String password,
+      String gender) async {
+    String url =
+        'http://192.168.1.12/EduPlatform/CMS/api/TrainersCrudOperation.php';
     String operation = 'Insert';
 
     DateTime now = DateTime.now();
@@ -154,12 +176,13 @@ class _SignUpFormState extends State<SignUpForm> {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                  const SignIn()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SignIn()));
                 },
-                child: Text(S.of(context).signIn, style: TextStyle(
-                    fontWeight: FontWeight.bold,color: tdBlue
-                ),),
+                child: Text(
+                  S.of(context).signIn,
+                  style: TextStyle(fontWeight: FontWeight.bold, color: tdBlue,fontSize: 12.sp),
+                ),
               ),
             ],
           );

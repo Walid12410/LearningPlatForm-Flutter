@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
@@ -15,23 +16,23 @@ class Courseofportal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(3.0).w,
       child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5), color: tdbrown),
+              borderRadius: BorderRadius.circular(5).w, color: tdbrown),
           child: ListTile(
             title: Text(
               course.title,
               style:
-                  const TextStyle(color: tdBlue, fontWeight: FontWeight.bold),
+                   TextStyle(color: tdBlue, fontWeight: FontWeight.bold,fontSize: 12.sp),
             ),
             subtitle: Text(
               course.description,
-              style: const TextStyle(color: tdBlue),
+              style:  TextStyle(color: tdBlue,fontSize: 10.sp),overflow: TextOverflow.ellipsis,maxLines: 2,
             ),
             trailing: Text(
               '\$${course.price}',
-              style: const TextStyle(fontSize: 15, color: tdBlue),
+              style:  TextStyle(fontSize: 10.sp, color: tdBlue),
             ),
             onTap: () {
               Navigator.push(context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/Chapter.dart';
 import 'package:learningplatformapp/CouseDetails/FeedbackDetails.dart';
 import 'package:learningplatformapp/CouseDetails/information.dart';
@@ -107,8 +108,8 @@ class _CourseDetailsState extends State<CourseDetails>
         body: Center(
           child: Image.asset(
             'assets/gif-unscreen.gif',
-            width: 100,
-            height: 100,
+            width: 70.w,
+            height: 70.h,
             fit: BoxFit.fill,
           ),
         ),
@@ -122,7 +123,7 @@ class _CourseDetailsState extends State<CourseDetails>
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(5.0).w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -130,7 +131,7 @@ class _CourseDetailsState extends State<CourseDetails>
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(Icons.arrow_back_ios),
+                            icon:  Icon(Icons.arrow_back_ios,size: 20.w,color: Colors.black,),
                           ),
                           if (courseDetail.isNotEmpty)
                             Row(
@@ -138,15 +139,15 @@ class _CourseDetailsState extends State<CourseDetails>
                                 Expanded(
                                   child: Text(
                                     courseDetail[0].title,
-                                    style: const TextStyle(
-                                      fontSize: 25,
+                                    style:  TextStyle(
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w900,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
+                                GestureDetector(
+                                  onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -155,14 +156,14 @@ class _CourseDetailsState extends State<CourseDetails>
                                                     courseId:
                                                         widget.courseid)));
                                   },
-                                  icon: const Icon(
+                                  child: Icon(
                                     Icons.feedback,
                                     color: tdBlue,
-                                    size: 25,
+                                    size: 20.w,
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
+                                GestureDetector(
+                                  onTap: () {
                                     try {
                                       bool newFavoriteStatus = !_isFavorite;
                                       FavoriteService.toggleFavorite(userId,
@@ -171,25 +172,25 @@ class _CourseDetailsState extends State<CourseDetails>
                                         _isFavorite = newFavoriteStatus;
                                       });
                                     } catch (e) {
-                                      print(
-                                          'Error toggling favorite status: $e');
+                                      print('Error toggling favorite status: $e');
                                     }
                                   },
-                                  icon: Icon(
+                                  child: Icon(
                                     _isFavorite
                                         ? Icons.bookmark
                                         : Icons.bookmark_border,
                                     color: tdBlue,
-                                    size: 25,
+                                    size: 20.w,
                                   ),
                                 ),
                               ],
                             ),
+                          SizedBox(height: 5.h),
                           Text(
-                            S.of(context).CourseDetailDesc,
+                            S.of(context).CourseDetailDesc,style: TextStyle(fontSize: 10.sp),
                           ),
-                          const SizedBox(
-                            height: 10,
+                           SizedBox(
+                            height: 5.h,
                           ),
                         ],
                       ),
@@ -203,7 +204,7 @@ class _CourseDetailsState extends State<CourseDetails>
                         Quizzes(
                           courseId: widget.courseid,
                           isStudent: isStudent,
-                        ), // Third tab with the stateful page
+                        ),
                       ],
                     ),
                   ],
@@ -213,15 +214,15 @@ class _CourseDetailsState extends State<CourseDetails>
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: tdbrown, // Set the background color for the bottom app bar
+          color: tdbrown,
           child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0).w,
               child: isStudent
                   ? Text(
                       S.of(context).CourseEnroll,
-                      style: const TextStyle(
-                          fontSize: 15,
+                      style:  TextStyle(
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     )
@@ -232,8 +233,8 @@ class _CourseDetailsState extends State<CourseDetails>
                       child: Center(
                         child: Text(
                           S.of(context).EnrollNow,
-                          style: const TextStyle(
-                              fontSize: 15,
+                          style:  TextStyle(
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),

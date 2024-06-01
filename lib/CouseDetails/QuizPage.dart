@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/AllClass/Question.dart';
 import 'package:learningplatformapp/AllClass/QuestionChoice.dart';
 import 'package:learningplatformapp/CouseDetails/ResultOfQuiz.dart';
@@ -40,9 +41,9 @@ class _QuizPageState extends State<QuizPage> {
           ?  Center(
               child: Text(
                 S.of(context).NoQuizAddYet,
-                style:const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 15,
+                  fontSize: 12.sp,
                   color: Colors.black,
                 ),
               ),
@@ -52,29 +53,30 @@ class _QuizPageState extends State<QuizPage> {
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(
+                        child:  Icon(
                           Icons.arrow_back_ios_new,
                           color: Colors.black,
-                          size: 25,
+                          size: 20.w,
                         ),
                       ),
+                       SizedBox(width: 10.w,),
                        Text(
                         S.of(context).quiz,
-                        style:const TextStyle(
-                          fontSize: 20,
+                        style: TextStyle(
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                        Text(
                         S.of(context).challenge,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 15.sp,
                           color: tdbrown,
                         ),
                       ),
@@ -101,16 +103,17 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: canSubmit() ? submitQuiz : null,
-                    icon: const Icon(
+                    icon:  Icon(
                       Icons.calculate_rounded,
                       color: Colors.black,
+                      size: 20.w,
                     ),
                     label:  Text(
                       S.of(context).SubmitQuiz,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 12.sp,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(

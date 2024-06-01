@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/Widget/TrainerInfo.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -31,29 +32,25 @@ class _TrainerPageState extends State<TrainerPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            Column(
+            Row(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.black,
-                          size: 25,
-                        )),
-                    Text(
-                      S.of(context).GoBack,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 30),
-                    )
-                  ],
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                      size: 20.w,
+                    )),
+                Text(
+                  S.of(context).GoBack,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18.sp),
                 )
               ],
             ),
@@ -61,23 +58,20 @@ class _TrainerPageState extends State<TrainerPage> {
               Center(
                 child: Text(
                   S.of(context).NoTrainerAvailable,
-                  style: const TextStyle(fontSize: 18, color: Colors.black),
+                  style: TextStyle(fontSize: 12.sp, color: Colors.black),
                 ),
               )
             else
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
+              Expanded(
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                        topLeft: const Radius.circular(15).w,
+                        topRight: const Radius.circular(15).w,
                       )),
-                  height: double.infinity,
-                  width: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0).w,
                     child: ListView.builder(
                       itemCount: trainers
                           .where((trainer) => trainer.usertype == 'TR')
@@ -87,7 +81,7 @@ class _TrainerPageState extends State<TrainerPage> {
                             .where((trainer) => trainer.usertype == 'TR')
                             .toList();
                         if (filteredTrainers.isEmpty) {
-                          return  Text(S.of(context).NoTrainerAvailable);
+                          return Text(S.of(context).NoTrainerAvailable);
                         } else {
                           return TrainerInfo(trainers: filteredTrainers[i]);
                         }

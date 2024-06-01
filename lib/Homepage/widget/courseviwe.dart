@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CourseView extends StatelessWidget {
-  const CourseView({
-    Key? key,
-    required this.cname,
-    required this.image,
-    required this.price,
-    required this.view,
-    required this.press,
-    required this.desc,
-    required this.averageRating
-  }) : super(key: key);
+  const CourseView(
+      {Key? key,
+      required this.cname,
+      required this.image,
+      required this.price,
+      required this.view,
+      required this.press,
+      required this.desc,
+      required this.averageRating})
+      : super(key: key);
 
   final String cname;
   final String image;
@@ -25,76 +25,82 @@ class CourseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 5,right: 5).w,
       child: Container(
-        width: 200,
-        height: 265,
+        width: 170.w,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 10,
-              offset: const Offset(0, 3)
-            ),
-          ]
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10).w,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  blurRadius: 5,
+                  offset: const Offset(0, 0)),
+            ]),
         child: GestureDetector(
           onTap: press,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10).w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                 // alignment: Alignment.center,
-                  child: Image.asset(image,height: 150,),
+                SizedBox(
+                  child: Image.asset(
+                    image,
+                    height: 100.h,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: Text(
                         cname,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 23,
+                          fontSize: 12.sp,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
-                    const Icon(Icons.verified, size: 20),
+                     Icon(Icons.verified, size: 15.w),
                   ],
                 ),
+                SizedBox(height: 5.h),
                 Text(desc,
-                  style:const TextStyle(fontSize: 15,overflow: TextOverflow.ellipsis)
-                  ),
-                const SizedBox(height: 2),
+                    style:  TextStyle(
+                        fontSize: 10.sp, overflow: TextOverflow.ellipsis)),
+                 SizedBox(height: 10.h),
                 RatingBar.builder(
                   direction: Axis.horizontal,
                   itemBuilder: (context, _) =>
-                  const Icon(Icons.star, color: Colors.red),
+                      const Icon(Icons.star, color: Colors.red),
                   onRatingUpdate: (index) {},
-                  itemPadding:
-                  const EdgeInsets.symmetric(horizontal: 4),
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 2).w,
                   minRating: 1,
                   itemCount: 5,
-                  itemSize: 18,
+                  itemSize: 15.w,
                   initialRating: averageRating ?? 1,
                   ignoreGestures: true,
                 ),
-                const SizedBox(height: 1),
+                SizedBox(height: 5.h),
                 Row(
                   children: [
                     const Icon(Icons.remove_red_eye),
-                    Text('$view',style:const TextStyle(fontWeight: FontWeight.bold,
-                    fontSize: 15),),
+                    Text(
+                      '$view',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12.sp),
+                    ),
                     const Spacer(),
-                    Text('\$$price',
-                      style: const TextStyle(fontSize: 15,fontWeight: FontWeight.bold),)
+                    Text(
+                      '\$$price',
+                      style:  TextStyle(
+                          fontSize: 10.sp, fontWeight: FontWeight.bold),
+                    )
                   ],
-                )
+                ),
+                SizedBox(height: 5.h),
               ],
             ),
           ),
@@ -103,5 +109,3 @@ class CourseView extends StatelessWidget {
     );
   }
 }
-
-

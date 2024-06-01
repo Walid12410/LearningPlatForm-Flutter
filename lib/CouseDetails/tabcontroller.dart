@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 import '../generated/l10n.dart';
@@ -49,10 +50,7 @@ class CustomTabBarView extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height -
-              kToolbarHeight -
-              kBottomNavigationBarHeight -
-              200.0,
+          height: 550.h,
           child: TabBarView(
             controller: tabController,
             children: tabViews,

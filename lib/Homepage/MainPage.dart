@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/SeeMoreCourse/ForyouView.dart';
 import 'package:learningplatformapp/SeeMoreCourse/LatestCourseView.dart';
@@ -75,7 +76,7 @@ class _MainPageState extends State<MainPage> {
           portal.isEmpty) {
         return  Center(
           child: Image.asset('assets/gif-unscreen.gif',
-            fit: BoxFit.fill,width: 100,height: 100),
+            fit: BoxFit.fill,width: 70.w,height: 70.h),
         );
       } else {
         return Scaffold(
@@ -83,91 +84,93 @@ class _MainPageState extends State<MainPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Text(
-                                S.of(context).LearningPlatformApp,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: tdBlue,
-                                    fontSize: 25),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5,right: 5).w,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0).w,
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0).w,
+                                child: Text(
+                                  S.of(context).LearningPlatformApp,
+                                  style:  TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: tdBlue,
+                                      fontSize: 18.sp),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return DialogPage(); // Custom dialog page
-                                },
-                              );
-                            },
-                            child: users.isNotEmpty
-                                ? Container(
-                                    width: 50,
-                                    height: 50,
-                                    child: users[0].picture == ''
-                                        ? ClipOval(
-                                            child: Image.asset(
-                                              'assets/user.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        : ClipOval(
-                                            child: CachedNetworkImage(
-                                              imageUrl: users[0].picture,
-                                              placeholder: (context, url) =>
-                                                  Image.asset('assets/gif-unscreen.gif',
-                                                    fit: BoxFit.cover,),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Image.asset(
+                          InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return DialogPage(); // Custom dialog page
+                                  },
+                                );
+                              },
+                              child: users.isNotEmpty
+                                  ? Container(
+                                      width: 40.w,
+                                      height: 35.h,
+                                      child: users[0].picture == ''
+                                          ? ClipOval(
+                                              child: Image.asset(
                                                 'assets/user.png',
                                                 fit: BoxFit.cover,
                                               ),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ))
-                                : const CircularProgressIndicator(
-                                    color: tdbrown,
-                                  )),
-                      ],
+                                            )
+                                          : ClipOval(
+                                              child: CachedNetworkImage(
+                                                imageUrl: users[0].picture,
+                                                placeholder: (context, url) =>
+                                                    Image.asset('assets/gif-unscreen.gif',
+                                                      fit: BoxFit.cover,),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Image.asset(
+                                                  'assets/user.png',
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ))
+                                  : const CircularProgressIndicator(
+                                      color: tdbrown,
+                                    )),
+                        ],
+                      ),
                     ),
                     SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0).w,
                         child: Container(
                           width: double.infinity,
-                          height: 90,
                           decoration: BoxDecoration(
                             color: tdbrown,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15).w,
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(8.0).w,
                             child: Text.rich(
                               TextSpan(
                                 text:
                                     '${S.of(context).WelcomeBack} ${users.isNotEmpty ? users[0].toString() : ""}\n',
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   color: tdBlue,
-                                  fontSize: 25,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: S.of(context).StartLeaning,
-                                    style: const TextStyle(
-                                        color: tdBlue, fontSize: 20),
+                                    style:  TextStyle(
+                                        color: tdBlue, fontSize: 18.sp),
                                   )
                                 ],
                               ),
@@ -188,14 +191,14 @@ class _MainPageState extends State<MainPage> {
                                         CustomPageRoute(
                                             child: const PortalPage()));
                                   }),
-                              const SizedBox(height: 5),
+                               SizedBox(height: 5.h),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(2),
+                                  padding: const EdgeInsets.all(2).w,
                                   child: Row(
                                     children: [
-                                      const SizedBox(width: 5),
+                                       SizedBox(width: 5.w),
                                       for (int i = 0;
                                           i < 6 && i < portal.length;
                                           i++)
@@ -213,18 +216,19 @@ class _MainPageState extends State<MainPage> {
                                               },
                                             ),
                                             if (i < 5 && i < portal.length - 1)
-                                              const SizedBox(width: 10),
+                                               SizedBox(width: 5.w),
                                           ],
                                         ),
                                       for (int i = 6; i < portal.length; i++)
-                                        const SizedBox(width: 10),
+                                         SizedBox(width: 5.w),
                                     ],
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 5),
+                               SizedBox(height: 5.h),
                             ],
                           ),
+                    SizedBox(height: 5.h,),
                     courseviews.isEmpty
                         ? Container()
                         : Column(
@@ -237,13 +241,13 @@ class _MainPageState extends State<MainPage> {
                                         CustomPageRoute(
                                             child: const MostView()));
                                   }),
-                              const SizedBox(height: 5),
+                              SizedBox(height: 5.h,),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
                                     padding: isArabic()
-                                        ? const EdgeInsets.all(10)
-                                        : const EdgeInsets.all(1),
+                                        ? const EdgeInsets.all(10).w
+                                        : const EdgeInsets.all(1).w,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -282,18 +286,18 @@ class _MainPageState extends State<MainPage> {
                                               }
                                             },
                                           ),
-                                        const SizedBox(width: 2),
+                                         SizedBox(width: 2.w),
                                       ],
                                     )),
                               ),
                             ],
                           ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: 5.h,),
                     courseadd.isEmpty
                         ? Container()
                         : Column(
                             children: [
-                              const SizedBox(height: 5),
+                               SizedBox(height: 2.h),
                               Specialforyou(
                                   text: S.of(context).LatestCAdded,
                                   press: () {
@@ -302,26 +306,27 @@ class _MainPageState extends State<MainPage> {
                                         CustomPageRoute(
                                             child: const Latestcourse()));
                                   }),
-                              const SizedBox(height: 2),
+                               SizedBox(height: 2.h),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(5).w,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(15).w,
                                       border: Border.all(color: tdbrown)),
                                   child: Padding(
-                                      padding: const EdgeInsets.all(2),
+                                      padding: const EdgeInsets.all(2).w,
                                       child:
                                           LatestCourseAdd(courses: courseadd)),
                                 ),
                               ),
                             ],
                           ),
+                    SizedBox(height: 5.h,),
                     randomcourse.isEmpty
                         ? Container()
                         : Column(
                             children: [
-                              const SizedBox(height: 10),
+                               SizedBox(height: 5.h),
                               Specialforyou(
                                   text: S.of(context).ForYou,
                                   press: () {
@@ -330,13 +335,13 @@ class _MainPageState extends State<MainPage> {
                                         CustomPageRoute(
                                             child: const ForYouCourse()));
                                   }),
-                              const SizedBox(height: 5),
+                              SizedBox(height: 5.h),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
                                     padding: isArabic()
-                                        ? const EdgeInsets.all(10)
-                                        : const EdgeInsets.all(1),
+                                        ? const EdgeInsets.all(10).w
+                                        : const EdgeInsets.all(1).w,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -373,13 +378,13 @@ class _MainPageState extends State<MainPage> {
                                               }
                                             },
                                           ),
-                                        const SizedBox(width: 1),
+                                         SizedBox(width: 1.w),
                                       ],
                                     )),
                               ),
                             ],
                           ),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 20.h),
                   ],
                 ),
               ),

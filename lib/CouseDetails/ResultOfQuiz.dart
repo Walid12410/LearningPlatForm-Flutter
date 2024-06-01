@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:provider/provider.dart';
@@ -50,8 +51,8 @@ class _ResultQuizState extends State<ResultQuiz> {
                       children: [
                         users[0].picture == ''
                             ? SizedBox(
-                                width: 150,
-                                height: 150,
+                                width: 110.w,
+                                height: 100.h,
                                 child: ClipOval(
                                     child: Image.asset(
                                   'assets/user.png',
@@ -67,40 +68,41 @@ class _ResultQuizState extends State<ResultQuiz> {
                                     'assets/user.png',
                                     fit: BoxFit.cover,
                                   ),
-                                  width: 150,
-                                  height: 150,
+                                  width: 110.w,
+                                  height: 100.h,
                                 ),
                               ),
-                        const SizedBox(height: 10),
+                         SizedBox(height: 5.h),
                         Text(
                           users[0].toString(),
-                          style: const TextStyle(
-                              fontSize: 20,
+                          style:  TextStyle(
+                              fontSize: 15.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height: 5.h),
                         Text(
                           '${S.of(context).Score} ${widget.score.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.black),
+                          style:  TextStyle(
+                              fontSize: 12.sp, color: Colors.black),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height: 5.h),
                         Text(
                           S.of(context).Congrats,
-                          style: const TextStyle(
-                              fontSize: 24,
+                          style:  TextStyle(
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height: 5.h),
                         Text(
                           S.of(context).CongratsDetails,
-                          style: const TextStyle(
-                              fontSize: 15,
+                          style:  TextStyle(
+                              fontSize: 10.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
+                        SizedBox(height: 5.h),
                         ElevatedButton.icon(
                           onPressed: () {
                             Navigator.push(
@@ -108,16 +110,17 @@ class _ResultQuizState extends State<ResultQuiz> {
                                 MaterialPageRoute(
                                     builder: (context) => const HomePage()));
                           },
-                          icon: const Icon(
+                          icon:  Icon(
                             Icons.home,
                             color: Colors.black,
+                            size: 20.w,
                           ),
                           label: Text(
                             S.of(context).BackToHome,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              fontSize: 10.sp,
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
@@ -147,8 +150,8 @@ class _ResultQuizState extends State<ResultQuiz> {
                     children: [
                       users[0].picture == ''
                           ? SizedBox(
-                              width: 150,
-                              height: 150,
+                          width: 110.w,
+                          height: 100.h,
                               child: ClipOval(
                                   child: Image.asset(
                                 'assets/user.png',
@@ -164,47 +167,48 @@ class _ResultQuizState extends State<ResultQuiz> {
                                   'assets/user.png',
                                   fit: BoxFit.cover,
                                 ),
-                                width: 150,
-                                height: 150,
+                                width: 110.w,
+                                height: 100.h,
                               ),
                             ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 5.h),
                       Text(
                         users[0].toString(),
-                        style: const TextStyle(
-                            fontSize: 20,
+                        style:  TextStyle(
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 5.h),
                       Text(
                         '${S.of(context).Score} ${widget.score.toStringAsFixed(2)}',
                         style:
-                            const TextStyle(fontSize: 18, color: Colors.white),
+                             TextStyle(fontSize: 12.sp, color: Colors.white),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 5.h),
                       Text(
                         S.of(context).DidNotPass,
-                        style: const TextStyle(
-                            fontSize: 15,
+                        style:  TextStyle(
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 5.h),
                       ElevatedButton.icon(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(
+                        icon:  Icon(
                           Icons.replay,
                           color: Colors.white,
+                          size: 20.w,
                         ),
                         label: Text(
                           S.of(context).BackToHome,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                            fontSize: 10.sp,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(

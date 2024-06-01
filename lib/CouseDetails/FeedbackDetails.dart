@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../generated/l10n.dart';
@@ -37,8 +38,8 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
             ? Center(
                 child: Text(
                   S.of(context).NoFeedBackOfThisCourse,
-                  style: const TextStyle(
-                      fontSize: 15,
+                  style:  TextStyle(
+                      fontSize: 12.sp,
                       color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
@@ -46,34 +47,35 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
             : Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(3).w,
                     child: Row(
                       children: [
                         IconButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: const Icon(
+                          icon:  Icon(
                             Icons.arrow_back_ios,
                             color: Colors.black,
+                            size: 20.w,
                           ),
                         ),
                         Text(
                           S.of(context).RatingAndReview,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 15.sp,
                           ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(10).w,
                     child: Text(
                       S.of(context).RatingDesc,
-                      style: const TextStyle(fontSize: 15, color: Colors.black),
+                      style:  TextStyle(fontSize: 10.sp, color: Colors.black),
                     ),
                   ),
                   Expanded(
@@ -81,20 +83,20 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                       itemCount: reviewDetails.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0).w,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
                                   Container(
-                                    width: 50,
-                                    height: 50,
+                                    width: 40.w,
+                                    height: 35.h,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                         color: Colors.black,
-                                        width: 2,
+                                        width: 2.w,
                                       ),
                                     ),
                                     child: ClipOval(
@@ -115,13 +117,13 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                                           : Container(), // Use Container if user is null
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                   SizedBox(width: 5.w),
                                   Text(
                                     reviewDetails[index]
-                                        .toString(), // Use empty string if user is null
-                                    style: const TextStyle(
+                                        .toString(),
+                                    style:  TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+                                      fontSize: 12.sp,
                                     ),
                                   ),
                                   const Spacer(),
@@ -132,33 +134,34 @@ class _FeedbackCourseState extends State<FeedbackCourse> {
                                         color: Colors.red),
                                     onRatingUpdate: (index) {},
                                     itemPadding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
+                                        horizontal: 2).w,
                                     minRating: 1,
                                     itemCount: 5,
-                                    itemSize: 18,
+                                    itemSize: 15.w,
                                     initialRating:
                                         reviewDetails[index].rating.toDouble(),
                                     ignoreGestures: true,
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 5),
+                               SizedBox(height: 5.h),
                               Padding(
-                                padding: const EdgeInsets.all(2.0),
+                                padding: const EdgeInsets.all(2.0).w,
                                 child: ReadMoreText(
                                   reviewDetails[index].comment,
                                   trimLines: 3,
+                                  style: TextStyle(fontSize: 10.sp),
                                   trimMode: TrimMode.Line,
                                   trimExpandedText: S.of(context).ShowLess,
                                   trimCollapsedText: S.of(context).ShowMore,
-                                  moreStyle: const TextStyle(
-                                    fontSize: 14,
+                                  moreStyle:  TextStyle(
+                                    fontSize: 10.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.blueAccent,
                                   ),
-                                  lessStyle: const TextStyle(
+                                  lessStyle:  TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                                    fontSize: 10.sp,
                                     color: Colors.blueAccent,
                                   ),
                                 ),

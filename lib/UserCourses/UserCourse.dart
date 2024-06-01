@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/UserCourses/FavoriteCourse.dart';
 import 'package:learningplatformapp/UserCourses/MyCoures.dart';
 import 'package:learningplatformapp/UserCourses/Widgets/listTile.dart';
@@ -41,15 +42,15 @@ class _UserCoursePageState extends State<UserCoursePage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
+                     SizedBox(height: 10.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 120,
-                          height: 120,
+                          width: 90.w,
+                          height: 80.h,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(100).w,
                               child: users[0].picture == ''
                                   ? Image.asset(
                                       'assets/user.png',
@@ -70,25 +71,25 @@ class _UserCoursePageState extends State<UserCoursePage> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                     SizedBox(
+                      height: 5.h,
                     ),
                     Text(
                       users[0].toString(),
-                      style: const TextStyle(
-                          fontSize: 15,
+                      style:  TextStyle(
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
                     Text(
                       users[0].title,
-                      style: const TextStyle(
-                          fontSize: 15,
+                      style:  TextStyle(
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                    const SizedBox(
-                      height: 10,
+                     SizedBox(
+                      height: 5.h,
                     ),
                     Column(
                       children: [

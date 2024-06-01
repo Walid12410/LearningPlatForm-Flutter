@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import '../../generated/l10n.dart';
 import 'passwordfield.dart';
@@ -43,7 +44,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
       key: widget.formKey,
       child: Column(
         children: [
-          const SizedBox(height: 50),
+          SizedBox(height: 30.h),
           Row(
             children: [
               Expanded(
@@ -51,20 +52,20 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   controller: widget.firstNameController,
                   decoration: InputDecoration(
                     labelText: S.of(context).FirstName,
-                    labelStyle: const TextStyle(
+                    labelStyle:  TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 10.sp,
                       color: tdBlue,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: tdBlue,
                         width: 1,
                       ),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: Colors.grey,
                         width: 1,
@@ -85,20 +86,20 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   controller: widget.lastNameController,
                   decoration: InputDecoration(
                     labelText: S.of(context).LastName,
-                    labelStyle: const TextStyle(
+                    labelStyle:  TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 10.sp,
                       color: tdBlue,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: tdBlue,
                         width: 1,
                       ),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: Colors.grey,
                         width: 1,
@@ -115,25 +116,25 @@ class _SignUpFieldsState extends State<SignUpFields> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+           SizedBox(height: 10.h),
           TextFormField(
             controller: widget.emailController,
             decoration: InputDecoration(
               labelText: S.of(context).emailAddress,
-              labelStyle: const TextStyle(
+              labelStyle:  TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 10.sp,
                 color: tdBlue,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: tdBlue,
                   width: 1,
                 ),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: Colors.grey,
                   width: 1,
@@ -158,26 +159,26 @@ class _SignUpFieldsState extends State<SignUpFields> {
               Expanded(
                 child: Padding(
                   padding: isArabic()
-                      ? const EdgeInsets.only(left: 8)
-                      : const EdgeInsets.only(right: 8),
+                      ? const EdgeInsets.only(left: 8).w
+                      : const EdgeInsets.only(right: 8).w,
                   child: TextFormField(
                     controller: widget.telephoneController,
                     decoration: InputDecoration(
                       labelText: S.of(context).Telephone,
-                      labelStyle: const TextStyle(
+                      labelStyle:  TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 10.sp,
                         color: tdBlue,
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(15).w,
                         borderSide: const BorderSide(
                           color: tdBlue,
                           width: 1,
                         ),
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(15).w,
                         borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 1,
@@ -201,20 +202,20 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   controller: widget.userNameController,
                   decoration: InputDecoration(
                     labelText: S.of(context).UserName,
-                    labelStyle: const TextStyle(
+                    labelStyle:  TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 10.sp,
                       color: tdBlue,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: tdBlue,
                         width: 1,
                       ),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15).w,
                       borderSide: const BorderSide(
                         color: Colors.grey,
                         width: 1,
@@ -231,17 +232,17 @@ class _SignUpFieldsState extends State<SignUpFields> {
               ),
             ],
           ),
-          const SizedBox(height: 5),
+           SizedBox(height: 5.h),
           Row(
             children: [
               Expanded(
                 child: RadioListTile<String>(
                   title: Text(
                     S.of(context).Male,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: tdBlue,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 15.sp,
                     ),
                   ),
                   value: 'M',
@@ -261,10 +262,10 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 child: RadioListTile<String>(
                   title: Text(
                     S.of(context).Female,
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: tdBlue,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 15.sp,
                     ),
                   ),
                   value: 'F',
@@ -282,12 +283,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
               ),
             ],
           ),
-          const SizedBox(height: 2),
+           SizedBox(height: 2.h),
           PasswordFields(
             passwordController: widget.passwordController,
             confirmPasswordController: widget.confirmPasswordController,
           ),
-          const SizedBox(height: 20),
+           SizedBox(height: 10.h),
         ],
       ),
     );

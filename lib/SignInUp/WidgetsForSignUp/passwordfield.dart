@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 import '../../generated/l10n.dart';
@@ -31,20 +32,20 @@ class _PasswordFieldsState extends State<PasswordFields> {
             obscureText: isObscurePassword,
             decoration: InputDecoration(
               labelText: S.of(context).password,
-              labelStyle: const TextStyle(
+              labelStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 10.sp,
                 color: tdBlue,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: tdBlue,
                   width: 1,
                 ),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: Colors.grey,
                   width: 1,
@@ -76,27 +77,27 @@ class _PasswordFieldsState extends State<PasswordFields> {
             },
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 5.w),
         Expanded(
           child: TextFormField(
             controller: widget.confirmPasswordController,
             obscureText: isObscureConfirmPassword,
             decoration: InputDecoration(
               labelText: S.of(context).PasswordConfirm,
-              labelStyle: const TextStyle(
+              labelStyle:  TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 10.sp,
                 color: tdBlue,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: tdBlue,
                   width: 1,
                 ),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15).w,
                 borderSide: const BorderSide(
                   color: Colors.grey,
                   width: 1,

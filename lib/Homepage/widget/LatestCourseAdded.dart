@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -12,7 +13,7 @@ class LatestCourseAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(1),
+      padding: const EdgeInsets.all(1).w,
       child: Container(
         child: Column(
           children: [
@@ -21,14 +22,16 @@ class LatestCourseAdd extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   course.title,
-                  style: const TextStyle(
+                  style:  TextStyle(
                       color: tdBlue,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis),
                 ),
                 subtitle: Text(
                   course.description,
-                  style: const TextStyle(
+                  style:  TextStyle(
+                    fontSize: 10.sp,
                       color: tdBlue, overflow: TextOverflow.ellipsis),
                 ),
                 onTap: () {
@@ -38,18 +41,18 @@ class LatestCourseAdd extends StatelessWidget {
                           child: CourseDetails(courseid: course.id)));
                 },
                 trailing: Container(
-                  width: 64,
-                  height: 64,
+                  width: 50.w,
+                  height: 50.h,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: Colors.black,
-                      width: 2,
+                      width: 2.w,
                     ),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
-                        2), // Adjust border radius as needed
+                        2).w, // Adjust border radius as needed
                     child: Image.asset(
                       'assets/image1.png',
                       fit: BoxFit.fill,

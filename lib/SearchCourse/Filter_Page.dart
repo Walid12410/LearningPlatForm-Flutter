@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/AllClass/course.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _FilterPageState extends State<FilterPage> {
       appBar: AppBar(
         title: Text(
           S.of(context).QuickFilter,
-          style:const  TextStyle(color: tdbrown, fontWeight: FontWeight.bold),
+          style: TextStyle(color: tdbrown, fontWeight: FontWeight.bold,fontSize: 15.sp),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -56,43 +57,43 @@ class _FilterPageState extends State<FilterPage> {
               List<Portal>? portals = appDataProvider.portals;
               if (portals == null || portals.isEmpty) {
                 return Center(
-                  child: Text(S.of(context).NoCategoriesAvailable),
+                  child: Text(S.of(context).NoCategoriesAvailable,style: TextStyle(fontSize: 12.sp),),
                 );
               }
               Set<String> uniqueValues = {};
               return Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(12.0).w,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       S.of(context).AllCategories,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontSize: 12.sp,
                         color: tdBlue,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 5.h),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        labelStyle: const TextStyle(
+                        labelStyle:  TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 10.sp,
                           color: tdBlue,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
+                          borderRadius: BorderRadius.circular(15).w,
+                          borderSide:  BorderSide(
                             color: tdBlue,
-                            width: 1,
+                            width: 1.w,
                           ),
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:const BorderSide(
+                          borderRadius: BorderRadius.circular(15).w,
+                          borderSide: BorderSide(
                             color: Colors.grey,
-                            width: 1,
+                            width: 1.w,
                           ),
                         ),
                       ),
@@ -105,7 +106,7 @@ class _FilterPageState extends State<FilterPage> {
                       items: [
                         DropdownMenuItem<String>(
                           value: '',
-                          child: Text(S.of(context).AllCategoriesSelected),
+                          child: Text(S.of(context).AllCategoriesSelected,style: TextStyle(fontSize: 12.sp),),
                         ),
                         ...portals
                             .map<DropdownMenuItem<String>>((Portal portal) {
@@ -115,7 +116,7 @@ class _FilterPageState extends State<FilterPage> {
                               value: portal.portalID.toString(),
                               child: Text(
                                 portal.portalName,
-                                style: const TextStyle(overflow: TextOverflow.ellipsis),
+                                style:  TextStyle(overflow: TextOverflow.ellipsis,fontSize: 12.sp),
                               ),
                             );
                           } else {
@@ -133,8 +134,8 @@ class _FilterPageState extends State<FilterPage> {
                         Expanded(
                           child: Padding(
                             padding: isArabic()
-                                ? const EdgeInsets.only(left: 8.0)
-                                : const EdgeInsets.only(right: 8.0),
+                                ? const EdgeInsets.only(left: 8.0).w
+                                : const EdgeInsets.only(right: 8.0).w,
                             child:TextField(
                               onChanged: (value) {
                                 setState(() {
@@ -144,23 +145,23 @@ class _FilterPageState extends State<FilterPage> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: S.of(context).MinimumPrice,
-                                labelStyle: const TextStyle(
+                                labelStyle:  TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 10.sp,
                                   color: tdBlue,
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
+                                  borderRadius: BorderRadius.circular(15).w,
+                                  borderSide:  BorderSide(
                                     color: tdBlue,
-                                    width: 1,
+                                    width: 1.w,
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
+                                  borderRadius: BorderRadius.circular(15).w,
+                                  borderSide:  BorderSide(
                                     color: Colors.grey,
-                                    width: 1,
+                                    width: 1.w,
                                   ),
                                 ),
                               ),
@@ -170,8 +171,8 @@ class _FilterPageState extends State<FilterPage> {
                         Expanded(
                           child: Padding(
                             padding: isArabic()
-                                ? const EdgeInsets.only(right: 8.0)
-                                : const EdgeInsets.only(left: 8.0),
+                                ? const EdgeInsets.only(right: 8.0).w
+                                : const EdgeInsets.only(left: 8.0).w,
                             child: TextField(
                               onChanged: (value) {
                                 setState(() {
@@ -181,23 +182,23 @@ class _FilterPageState extends State<FilterPage> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: S.of(context).MaximumPrice,
-                                labelStyle: const TextStyle(
+                                labelStyle:  TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 10.sp,
                                   color: tdBlue,
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
+                                  borderRadius: BorderRadius.circular(15).w,
+                                  borderSide:  BorderSide(
                                     color: tdBlue,
-                                    width: 1,
+                                    width: 1.w,
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(
+                                  borderRadius: BorderRadius.circular(15).w,
+                                  borderSide:  BorderSide(
                                     color: Colors.grey,
-                                    width: 1,
+                                    width: 1.w,
                                   ),
                                 ),
                               ),
@@ -206,7 +207,7 @@ class _FilterPageState extends State<FilterPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 10.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -215,22 +216,22 @@ class _FilterPageState extends State<FilterPage> {
                             Navigator.pop(context);
                           },
                           child: Container(
-                            width: 150,
-                            height: 50,
+                            width: 120.w,
+                            height: 35.h,
                             decoration: BoxDecoration(
                                 color: tdbrown,
-                                borderRadius: BorderRadius.circular(20)
+                                borderRadius: BorderRadius.circular(20).w
                             ),
                             child: Center(
                               child: Text(
                                 S.of(context).Cancel,
-                                style:const TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white,fontSize: 12.sp),
                               ),
                             ),
 
                           ),
                         ),
-                        const SizedBox(width: 20),
+                         SizedBox(width: 10.w),
                         GestureDetector(
                           onTap: (){
                             setState(() {
@@ -252,16 +253,16 @@ class _FilterPageState extends State<FilterPage> {
                             Navigator.pop(context);
                           },
                           child: Container(
-                            width: 150,
-                            height: 50,
+                            width: 120.w,
+                            height: 35.h,
                             decoration: BoxDecoration(
                               color: tdbrown,
-                              borderRadius: BorderRadius.circular(20)
+                              borderRadius: BorderRadius.circular(20).w
                             ),
                             child: Center(
                               child: Text(
                                 S.of(context).Done,
-                                style: const TextStyle(color: Colors.white),
+                                style:  TextStyle(color: Colors.white,fontSize: 12.sp),
                               ),
                             ),
                           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 import '../../generated/l10n.dart';
@@ -16,14 +17,14 @@ class Specialforyou extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.only(left: 8,right: 8).w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             text,
-            style: const TextStyle(
-              fontSize: 18,
+            style:  TextStyle(
+              fontSize: 12.sp,
               color: tdBlue,
             ),
           ),
@@ -31,7 +32,7 @@ class Specialforyou extends StatelessWidget {
             onTap: press,
             child:  Text(
              S.of(context).SeeMore,
-              style: const TextStyle(color: tdBlue),
+              style:TextStyle(color: tdBlue,fontSize: 12.sp),
             ),
           )
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
@@ -55,11 +56,11 @@ class _SearchCourseState extends State<SearchCourse> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(5.0).w,
                                   child: Text(
                                     portal.portalName,
-                                    style: const TextStyle(
-                                      fontSize: 30,
+                                    style:  TextStyle(
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                       color: tdBlue,
                                     ),

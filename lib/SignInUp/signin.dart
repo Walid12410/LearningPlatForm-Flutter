@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/SignInUp/signup.dart';
 import 'package:learningplatformapp/TrainerPage/Homepage/homepage.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -38,13 +39,12 @@ class _SignInState extends State<SignIn> {
     prefs.setBool('isLoggedIn', true);
     prefs.setString('username', username);
     prefs.setInt('uid', uid);
-    Provider.of<AppDataProvider>(context, listen: false)
-        .setUserId(uid);
+    Provider.of<AppDataProvider>(context, listen: false).setUserId(uid);
   }
 
   Future<void> checkLogin(
       BuildContext context, String username, String password) async {
-    String apiUrl = 'http://192.168.1.4/api/walid/login.php';
+    String apiUrl = 'http://192.168.1.5/api/walid/login.php';
     var response = await http.post(
       Uri.parse(apiUrl),
       body: {
@@ -109,19 +109,20 @@ class _SignInState extends State<SignIn> {
                 children: [
                   Text(
                     S.of(context).signIn,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.black,
-                      fontSize: 30,
+                      fontSize: 25.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 15.h,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(15.0).w,
                     child: TextField(
                       controller: usernameController,
+                      style: TextStyle(fontSize: 12.sp),
                       decoration: InputDecoration(
                         hintText: S.of(context).UserName,
                         fillColor: const Color(0xffD8D8DD),
@@ -130,10 +131,11 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(15.0).w,
                     child: TextField(
                       controller: passwordController,
                       obscureText: isObscure,
+                      style: TextStyle(fontSize: 12.sp),
                       decoration: InputDecoration(
                         hintText: S.of(context).password,
                         suffixIcon: IconButton(
@@ -152,7 +154,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(18),
+                    padding: const EdgeInsets.all(15).w,
                     child: Row(
                       children: [
                         AnimatedSwitch(
@@ -164,27 +166,29 @@ class _SignInState extends State<SignIn> {
                             });
                           },
                         ),
-                        const SizedBox(
-                          width: 5,
+                        SizedBox(
+                          width: 5.w,
                         ),
                         Text(
                           S.of(context).RememberMe,
-                          style:  TextStyle(
+                          style: TextStyle(
+                            fontSize: 10.sp,
                             color: Colors.grey.shade200,
                           ),
                         ),
                         const Spacer(),
                         Text(
                           S.of(context).forgetPassword,
-                          style:  TextStyle(
+                          style: TextStyle(
+                            fontSize: 10.sp,
                             color: Colors.grey.shade200,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -201,46 +205,45 @@ class _SignInState extends State<SignIn> {
                       child: Center(
                         child: Text(
                           S.of(context).signIn,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: isArabic()
-                        ? const EdgeInsets.only(right: 100.0, top: 30)
-                        : const EdgeInsets.only(left: 100.0, top: 30),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          S.of(context).DoNotHaveAccount,
+                  SizedBox(height: 15.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        S.of(context).DoNotHaveAccount,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUp()),
+                          );
+                        },
+                        child: Text(
+                          S.of(context).Signup,
                           style:  TextStyle(
-                            color: Colors.grey.shade200,
+                            color: tdbrown,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp,
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUp()),
-                            );
-                          },
-                          child: Text(
-                            S.of(context).Signup,
-                            style: const TextStyle(
-                              color: tdbrown,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
