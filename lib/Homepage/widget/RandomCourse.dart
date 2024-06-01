@@ -45,10 +45,12 @@ class RandomCourse extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  child: Image.asset(
-                    image,
-                    height: 100.h,
-                    fit: BoxFit.contain,
+                  child: Center(
+                    child: Image.asset(
+                      image,
+                      height: 100.h,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Row(

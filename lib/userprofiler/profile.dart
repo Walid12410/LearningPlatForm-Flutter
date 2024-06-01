@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/UserCourses/MyCoures.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/pageroute/LeftToRight.dart';
@@ -46,23 +47,26 @@ class _ProfileState extends State<Profile> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          S.of(context).settingProfile,
-                          style: const TextStyle(
-                              fontSize: 25,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(5.0).w,
+                      child: Row(
+                        children: [
+                          Text(
+                            S.of(context).settingProfile,
+                            style:  TextStyle(
+                                fontSize: 18.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 120,
-                          height: 120,
+                          width: 90.w,
+                          height: 80.h,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: users[0].picture == ''
@@ -90,43 +94,46 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(
                       users[0].toString(),
-                      style: const TextStyle(fontSize: 15),
+                      style:  TextStyle(fontSize: 12.sp),
                     ),
                     Text(
                       users[0].email,
-                      style: const TextStyle(fontSize: 15),
+                      style:  TextStyle(fontSize: 12.sp),
                     ),
-                    const SizedBox(
-                      height: 10,
+                     SizedBox(
+                      height: 5.h,
                     ),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: () {
+                    GestureDetector(
+                        onTap: () {
                           Navigator.push(
                               context,
                               CustomPageRoute(
                                   child: const UpdateProfileScreen()));
                         },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: tdbrown,
-                            side: BorderSide.none,
-                            shape: const StadiumBorder()),
-                        child: Text(
-                          S.of(context).EditProfile,
-                          style: const TextStyle(
-                              color: tdBlue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25),
-                        ),
+                        child: Container(
+                          width: 180.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(100).w,
+                            color: tdbrown
+                          ),
+                          child: Center(
+                            child: Text(
+                              S.of(context).EditProfile,
+                              style:  TextStyle(
+                                  color: tdBlue,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp),
+                            ),
+                          ),
+
+                        )
                       ),
-                    ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h,),
                     Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
+                         SizedBox(height: 5.h,),
                         ProfileMenuWidget(
                             icon: Icons.language,
                             text: S.of(context).Language,
@@ -137,7 +144,7 @@ class _ProfileState extends State<Profile> {
                                       builder: (context) => const Language()));
                             },
                             textColor: tdBlue),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 5.h,),
                         ProfileMenuWidget(
                             icon: Icons.person,
                             text: S.of(context).information,
@@ -146,7 +153,7 @@ class _ProfileState extends State<Profile> {
                                   CustomPageRoute(child: const Information()));
                             },
                             textColor: tdBlue),
-                        const SizedBox(height: 10),
+                         SizedBox(height: 5.h),
                         ProfileMenuWidget(
                             icon: Icons.assignment,
                             text: S.of(context).MyCourse,
@@ -155,7 +162,7 @@ class _ProfileState extends State<Profile> {
                                   CustomPageRoute(child: const UserCourse()));
                             },
                             textColor: tdBlue),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 5.h),
                         const Divider(
                           color: Colors.black,
                           thickness: 3,
@@ -166,7 +173,7 @@ class _ProfileState extends State<Profile> {
                             onPressed: () {},
                             endIcon: false,
                             textColor: Colors.red),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 5.h),
                         ProfileMenuWidget(
                             icon: Icons.logout_outlined,
                             text: S.of(context).LogOut,

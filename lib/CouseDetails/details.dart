@@ -28,7 +28,7 @@ class _CourseDetailsState extends State<CourseDetails>
   bool isStudent = false;
   final PageController _pageController1 = PageController(initialPage: 0);
   int _currentPage1 = 0;
-  late double averageRating =0;
+  late double averageRating = 0;
 
   @override
   void initState() {
@@ -153,246 +153,246 @@ class _CourseDetailsState extends State<CourseDetails>
       );
     }
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(5.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            size: 20.w,
-                            color: Colors.black,
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(5.0.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 20.w,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        if (courseDetail.isNotEmpty)
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  courseDetail[0].title,
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w900,
+                          if (courseDetail.isNotEmpty)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    courseDetail[0].title,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FeedbackCourse(
-                                              courseId: widget.courseid)));
-                                },
-                                child: Icon(
-                                  Icons.feedback,
-                                  color: tdBlue,
-                                  size: 20.w,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FeedbackCourse(
+                                                    courseId:
+                                                        widget.courseid)));
+                                  },
+                                  child: Icon(
+                                    Icons.feedback,
+                                    color: tdBlue,
+                                    size: 20.w,
+                                  ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  try {
-                                    bool newFavoriteStatus = !_isFavorite;
-                                    FavoriteService.toggleFavorite(userId,
-                                        widget.courseid, newFavoriteStatus);
-                                    setState(() {
-                                      _isFavorite = newFavoriteStatus;
-                                    });
-                                  } catch (e) {
-                                    print('Error toggling favorite status: $e');
-                                  }
-                                },
-                                child: Icon(
-                                  _isFavorite
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: tdBlue,
-                                  size: 20.w,
+                                GestureDetector(
+                                  onTap: () {
+                                    try {
+                                      bool newFavoriteStatus = !_isFavorite;
+                                      FavoriteService.toggleFavorite(userId,
+                                          widget.courseid, newFavoriteStatus);
+                                      setState(() {
+                                        _isFavorite = newFavoriteStatus;
+                                      });
+                                    } catch (e) {
+                                      print(
+                                          'Error toggling favorite status: $e');
+                                    }
+                                  },
+                                  child: Icon(
+                                    _isFavorite
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: tdBlue,
+                                    size: 20.w,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          SizedBox(height: 5.h),
+                          Text(
+                            S.of(context).CourseDetailDesc,
+                            style: TextStyle(fontSize: 10.sp),
                           ),
-                        SizedBox(height: 5.h),
-                        Text(
-                          S.of(context).CourseDetailDesc,
-                          style: TextStyle(fontSize: 10.sp),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    _handlePageTap(0);
+                                  },
+                                  child: Text(
+                                    'Info',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: _currentPage1 == 0
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                      color:
+                                          _currentPage1 == 0 ? tdBlack : tdGrey,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 65.w,
+                                  height: 1.h,
+                                  decoration: BoxDecoration(
+                                    color: _currentPage1 == 0
+                                        ? tdbrown
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(4).w,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    _handlePageTap(1);
+                                  },
+                                  child: Text(
+                                    'Chapter',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: _currentPage1 == 1
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                      color:
+                                          _currentPage1 == 1 ? tdBlack : tdGrey,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 60.w,
+                                  height: 1.h,
+                                  decoration: BoxDecoration(
+                                    color: _currentPage1 == 1
+                                        ? tdbrown
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(4).w,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    _handlePageTap(2);
+                                  },
+                                  child: Text(
+                                    'Quiz',
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: _currentPage1 == 2
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                      color:
+                                          _currentPage1 == 2 ? tdBlack : tdGrey,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 70.w,
+                                  height: 1.h,
+                                  decoration: BoxDecoration(
+                                    color: _currentPage1 == 2
+                                        ? tdbrown
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(4).w,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 5.h,
+                        SizedBox(height: 10.h),
+                        ExpandablePageView(
+                          controller: _pageController1,
+                          onPageChanged: (page) {
+                            setState(() {
+                              _currentPage1 = page.toInt();
+                            });
+                          },
+                          children: [
+                            CourseInformation(
+                                courseid: widget.courseid,
+                                averageRating: averageRating),
+                            chapterPage(
+                                courseid: widget.courseid,
+                                isStudent: isStudent),
+                            Quizzes(
+                                courseId: widget.courseid,
+                                isStudent: isStudent),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  _handlePageTap(0);
-                                },
-                                child: Text(
-                                  'Featured',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: _currentPage1 == 0
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color:
-                                        _currentPage1 == 0 ? tdBlack : tdGrey,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 65.w,
-                                height: 1.h,
-                                decoration: BoxDecoration(
-                                  color: _currentPage1 == 0
-                                      ? tdBlack
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(4).w,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  _handlePageTap(1);
-                                },
-                                child: Text(
-                                  'On Sale',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: _currentPage1 == 1
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color:
-                                        _currentPage1 == 1 ? tdBlack : tdGrey,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 60.w,
-                                height: 1.h,
-                                decoration: BoxDecoration(
-                                  color: _currentPage1 == 1
-                                      ? tdBlack
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(4).w,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  _handlePageTap(2);
-                                },
-                                child: Text(
-                                  'Top Rated',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: _currentPage1 == 2
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color:
-                                        _currentPage1 == 2 ? tdBlack : tdGrey,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 70.w,
-                                height: 1.h,
-                                decoration: BoxDecoration(
-                                  color: _currentPage1 == 2
-                                      ? tdBlack
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(4).w,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10.h),
-                      ExpandablePageView(
-                        controller: _pageController1,
-                        onPageChanged: (page) {
-                          setState(() {
-                            _currentPage1 = page.toInt();
-                          });
-                        },
-                        children: [
-                          CourseInformation(courseid: widget.courseid, averageRating: averageRating),
-                          chapterPage(courseid: widget.courseid, isStudent: isStudent),
-                          Quizzes(courseId: widget.courseid, isStudent: isStudent),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        height: 40.h,
-        color: Colors.white,
-        child: isStudent
-            ? Center(
-                child: Text(
-                  S.of(context).CourseEnroll,
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  ],
                 ),
-              )
-            : GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 40.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.w),
-                    border: Border.all(color: Colors.black),
-                    color: tdbrown,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Enroll Now',
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: isStudent
+            ? null
+            : BottomAppBar(
+                height: 75.h,
+                color: Colors.white,
+                surfaceTintColor: Colors.white,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.w),
+                      border: Border.all(color: Colors.black),
+                      color: tdbrown,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Enroll Now',
+                        style: TextStyle(
+                            fontSize: 12.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
-              ),
-      ),
-    );
+              ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
@@ -72,8 +73,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(S.of(context).Success),
-        content: Text(S.of(context).ProfileUpdateS),
+        title: Text(S.of(context).Success,style: TextStyle(fontSize: 12.sp),),
+        content: Text(S.of(context).ProfileUpdateS,style: TextStyle(fontSize: 12.sp),),
         actions: <Widget>[
           TextButton(
             onPressed: () {
@@ -103,15 +104,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
+          icon:  Icon(
             Icons.arrow_back,
             color: tdBlue,
-            size: 25,
+            size: 20.w,
           ),
         ),
         title: Text(
           S.of(context).EditProfile,
-          style: const TextStyle(fontSize: 25, color: tdBlue),
+          style:  TextStyle(fontSize: 15.sp, color: tdBlue),
         ),
         backgroundColor: tdbrown,
       ),
@@ -119,15 +120,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           ? const Center(child: CircularProgressIndicator())
           : ListView(shrinkWrap: true, children: [
               Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5).w,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                     SizedBox(height: 5.h),
                     Stack(
                       children: [
                         SizedBox(
-                            width: 120,
-                            height: 120,
+                            width: 100.w,
+                            height: 85.h,
                             child: users[0].picture == ''
                                 ? ClipOval(
                                     child: Image.asset('assets/user.png',
@@ -152,111 +153,114 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           bottom: 0,
                           right: 0,
                           child: Container(
-                            width: 35,
-                            height: 35,
+                            width: 27.w,
+                            height: 24.h,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(100).w,
                               color: tdBlue,
                             ),
-                            child: const Icon(Icons.account_circle,
-                                color: Colors.white, size: 20),
+                            child:  Icon(Icons.account_circle,
+                                color: Colors.white, size: 20.w),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 50),
+                     SizedBox(height: 25.h),
                     Form(
                       child: Column(
                         children: [
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: S.of(context).FirstName,
-                              labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(Icons.account_circle),
+                              labelStyle:  TextStyle(color: tdBlue,fontSize: 12.sp),
+                              prefixIcon:  Icon(Icons.account_circle,size: 20.w,),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                             ),
                             controller: fnameController,
                           ),
-                          const SizedBox(height: 20),
+                           SizedBox(height: 10.h),
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: S.of(context).LastName,
-                              labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(Icons.account_circle),
+                              labelStyle:  TextStyle(color: tdBlue,fontSize: 12.sp),
+                              prefixIcon:  Icon(Icons.account_circle,size: 20.w,),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                             ),
                             controller: lnameController,
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: S.of(context).emailAddress,
-                              labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(Icons.email),
+                              labelStyle:  TextStyle(color: tdBlue,fontSize: 12.sp),
+                              prefixIcon:  Icon(Icons.email,size: 20.w,),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                             ),
                             controller: emailController,
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: S.of(context).Telephone,
-                              labelStyle: const TextStyle(color: tdBlue),
-                              prefixIcon: const Icon(Icons.phone),
+                              labelStyle:  TextStyle(color: tdBlue,fontSize: 12.sp),
+                              prefixIcon:  Icon(Icons.phone,size: 20.w,),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(15.0).w,
                                 borderSide: const BorderSide(color: tdBlue),
                               ),
                             ),
                             controller: phoneController,
                           ),
-                          const SizedBox(height: 10),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
+                          SizedBox(height: 15.h),
+                          GestureDetector(
+                              onTap: () {
                                 updateProfile();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: tdbrown,
-                                side: BorderSide.none,
-                                shape: const StadiumBorder(),
-                              ),
-                              child: Text(
-                                S.of(context).SaveEdit,
-                                style: const TextStyle(
-                                    color: tdBlue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                              child: Container(
+                                width: double.infinity,
+                                height: 35.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100).w,
+                                  border: Border.all(color: Colors.black),
+                                  color: tdbrown
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    S.of(context).SaveEdit,
+                                    style:  TextStyle(
+                                        color: tdBlue,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
+                           SizedBox(height: 5.h),
                         ],
                       ),
                     ),

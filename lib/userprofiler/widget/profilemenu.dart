@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
 
 class ProfileMenuWidget extends StatelessWidget {
@@ -22,8 +23,8 @@ class ProfileMenuWidget extends StatelessWidget {
     return ListTile(
       onTap: onPressed,
       leading: Container(
-        width: 40,
-        height: 40,
+        width: 30.w,
+        height: 30.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: tdBGColor,
@@ -38,20 +39,20 @@ class ProfileMenuWidget extends StatelessWidget {
         style: TextStyle(
           color: textColor,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 15.sp,
         ),
       ),
       trailing: endIcon
           ? Container(
-              width: 30,
-              height: 30,
+              width: 20.w,
+              height: 20.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(100).w,
                 color: tdBGColor,
               ),
-              child: const Icon(
+              child:  Icon(
                 Icons.arrow_forward_ios,
-                size: 18,
+                size: 15.w,
                 color: tdBlue,
               ),
             )

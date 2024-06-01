@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/AllClass/trainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/futureapi/TrainerApi.dart';
@@ -37,24 +38,23 @@ class _InformationState extends State<Information> {
       appBar: AppBar(
         title: Text(
           S.of(context).Profile,
-           style: const TextStyle(fontWeight: FontWeight.bold, color: tdBlue),
+           style:  TextStyle(fontWeight: FontWeight.bold, color: tdBlue,fontSize: 12.sp),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
+        child: Column(
             children: [
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 15.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                      width: 120,
-                      height: 120,
+                      width: 90.w,
+                      height: 80.h,
                       child: users[0].picture == ''
                           ? ClipOval(
                               child: Image.asset('assets/user.png',
@@ -77,13 +77,12 @@ class _InformationState extends State<Information> {
                             )),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 10.h),
               Profileview(title: S.of(context).name, desc: users[0].toString()),
               Profileview(title: S.of(context).emailAddress, desc: users[0].email),
               Profileview(title: S.of(context).Telephone, desc: users[0].telephone),
             ],
           ),
-        ),
       ),
     );
   }
