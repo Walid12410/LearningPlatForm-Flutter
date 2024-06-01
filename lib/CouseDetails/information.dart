@@ -1,63 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:learningplatformapp/colors/color.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:learningplatformapp/futureapi/RatingCourses.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:learningplatformapp/provider/provider_data.dart';
 import 'package:intl/intl.dart';
 import '../generated/l10n.dart';
 
-class CourseInformation extends StatefulWidget {
-  const CourseInformation({required this.courseid});
+class CourseInformation extends StatelessWidget {
+  const CourseInformation(
+      {required this.courseid, required this.averageRating});
 
   final int courseid;
-
-  @override
-  State<CourseInformation> createState() => _CourseInformationState();
-}
-
-class _CourseInformationState extends State<CourseInformation> {
-  double? _averageRating;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final provider = Provider.of<AppDataProvider>(context, listen: false);
-      provider.fetchCourseByID(widget.courseid);
-      provider.getCourseTine(widget.courseid);
-      provider.getPartNumber(widget.courseid);
-      provider.getTrainerCourseShow(widget.courseid);
-    });
-    loadData(context);
-  }
-
-  void loadData(context)  {
-    try {
-      fetchAverageRating(widget.courseid).then((value) {
-        if (mounted) {
-          setState(() {
-            _averageRating = value;
-          });
-        }
-      });
-
-    } catch (error) {
-      print('Error: $error');
-    }
-  }
-
-  bool isArabic() {
-    return Intl.getCurrentLocale() == 'ar';
-  }
+  final double averageRating;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Consumer<AppDataProvider>(
+    bool isArabic() {
+      return Intl.getCurrentLocale() == 'ar';
+    }
+
+    return Column(
+      children: [
+        Consumer<AppDataProvider>(
           builder: (context, provider, child) {
             var TotalCoureTime = provider.courseTime;
             var data = provider.data;
@@ -73,9 +38,12 @@ class _CourseInformationState extends State<CourseInformation> {
                     SizedBox(
                       height: 120.h,
                       width: double.infinity,
-                      child: Image.asset('assets/image1.png',fit: BoxFit.contain,),
+                      child: Image.asset(
+                        'assets/image1.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                     SizedBox(height: 10.h),
+                    SizedBox(height: 10.h),
                     Padding(
                       padding: const EdgeInsets.all(2).w,
                       child: Row(
@@ -87,26 +55,28 @@ class _CourseInformationState extends State<CourseInformation> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border:
-                                Border.all(color: Colors.black, width: 2.w),
+                                    Border.all(color: Colors.black, width: 2.w),
                               ),
                               child: ClipOval(
                                 child: CachedNetworkImage(
                                   imageUrl: data[0].profilePicture,
-                                  placeholder: (context, url) =>
-                                  Image.asset('assets/gif-unscreen.gif',fit: BoxFit.cover,),
+                                  placeholder: (context, url) => Image.asset(
+                                    'assets/gif-unscreen.gif',
+                                    fit: BoxFit.cover,
+                                  ),
                                   errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
+                                      const Icon(Icons.error),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                           SizedBox(
+                          SizedBox(
                             width: 5.w,
                           ),
                           if (data.isNotEmpty)
                             Text(
                               data[0].toString(),
-                              style:  TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.sp,
                               ),
@@ -115,76 +85,96 @@ class _CourseInformationState extends State<CourseInformation> {
                           RatingBar.builder(
                             direction: Axis.horizontal,
                             itemBuilder: (context, _) =>
-                            const Icon(Icons.star, color: Colors.red),
+                                const Icon(Icons.star, color: Colors.red),
                             onRatingUpdate: (index) {},
                             itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 2).w,
+                                const EdgeInsets.symmetric(horizontal: 2).w,
                             minRating: 1,
                             itemCount: 5,
                             itemSize: 15.w,
-                            initialRating: _averageRating ?? 1,
+                            initialRating: averageRating ?? 1,
                             ignoreGestures: true,
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: isArabic() ?
-                      const EdgeInsets.only(right: 45, top: 5,bottom: 5).w :
-                      const EdgeInsets.only(left: 45, top: 5,bottom: 5).w,
+                      padding: isArabic()
+                          ? const EdgeInsets.only(right: 45, top: 5, bottom: 5)
+                              .w
+                          : const EdgeInsets.only(left: 45, top: 5, bottom: 5)
+                              .w,
                       child: Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                               Icon(Icons.access_time_outlined,size: 20.w,),
-                               SizedBox(width: 2.w),
-                              if (TotalCoureTime.isNotEmpty && mounted)
+                              Icon(
+                                Icons.access_time_outlined,
+                                size: 20.w,
+                              ),
+                              SizedBox(width: 2.w),
+                              if (TotalCoureTime.isNotEmpty)
                                 Text(
                                   '${TotalCoureTime[0].getTotalHours()} ${S.of(context).HourCourse} (${partNumbers.length} ${S.of(context).Lessons})',
-                                style: TextStyle(fontSize: 10.sp),)
+                                  style: TextStyle(fontSize: 10.sp),
+                                )
                             ],
                           ),
-                           Row(
+                          Row(
                             children: [
-                               Icon(Icons.school,size: 20.w,),
+                              Icon(
+                                Icons.school,
+                                size: 20.w,
+                              ),
                               SizedBox(width: 2.w),
-                              Text(S.of(context).Certification,style: TextStyle(fontSize: 10.sp),),
+                              Text(
+                                S.of(context).Certification,
+                                style: TextStyle(fontSize: 10.sp),
+                              ),
                             ],
                           ),
-                           Row(
+                          Row(
                             children: [
-                               Icon(Icons.language,size: 20.w,),
+                              Icon(
+                                Icons.language,
+                                size: 20.w,
+                              ),
                               SizedBox(width: 2.w),
-                              Text(S.of(context).CourseLanguage,style: TextStyle(fontSize: 10.sp),),
+                              Text(
+                                S.of(context).CourseLanguage,
+                                style: TextStyle(fontSize: 10.sp),
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                     Padding(
-                      padding:const EdgeInsets.all(5).w,
+                    Padding(
+                      padding: const EdgeInsets.all(5).w,
                       child: Text(
                         S.of(context).AboutCourse,
-                        style:  TextStyle(
+                        style: TextStyle(
                             fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                     ),
                     if (courses.isNotEmpty)
                       Padding(
-                        padding:isArabic() ?
-                        const EdgeInsets.only(right: 5).w :
-                        const EdgeInsets.only(left: 5).w,
+                        padding: isArabic()
+                            ? const EdgeInsets.only(right: 5).w
+                            : const EdgeInsets.only(left: 5).w,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                                '${courses[0].title}.${courses[0].description}',style: TextStyle(fontSize: 10.sp),),
+                              '${courses[0].title}.${courses[0].description}',
+                              style: TextStyle(fontSize: 10.sp),
+                            ),
                           ],
                         ),
                       )
                     else
-                       Center(
+                      Center(
                         child: Text(
                           S.of(context).NoDetailYet,
                           style: TextStyle(
@@ -197,7 +187,7 @@ class _CourseInformationState extends State<CourseInformation> {
             );
           },
         ),
-      ),
+      ],
     );
   }
 }

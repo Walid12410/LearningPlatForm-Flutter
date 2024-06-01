@@ -38,7 +38,7 @@ class _QuizPageState extends State<QuizPage> {
 
     return Scaffold(
       body: questions.isEmpty
-          ?  Center(
+          ? Center(
               child: Text(
                 S.of(context).NoQuizAddYet,
                 style: TextStyle(
@@ -57,14 +57,16 @@ class _QuizPageState extends State<QuizPage> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child:  Icon(
+                        child: Icon(
                           Icons.arrow_back_ios_new,
                           color: Colors.black,
                           size: 20.w,
                         ),
                       ),
-                       SizedBox(width: 10.w,),
-                       Text(
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
                         S.of(context).quiz,
                         style: TextStyle(
                           fontSize: 18.sp,
@@ -72,9 +74,9 @@ class _QuizPageState extends State<QuizPage> {
                           color: Colors.black,
                         ),
                       ),
-                       Text(
+                      Text(
                         S.of(context).challenge,
-                        style:  TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.sp,
                           color: tdbrown,
@@ -103,14 +105,14 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: canSubmit() ? submitQuiz : null,
-                    icon:  Icon(
+                    icon: Icon(
                       Icons.calculate_rounded,
                       color: Colors.black,
                       size: 20.w,
                     ),
-                    label:  Text(
+                    label: Text(
                       S.of(context).SubmitQuiz,
-                      style:  TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 12.sp,
@@ -152,8 +154,6 @@ class _QuizPageState extends State<QuizPage> {
         MaterialPageRoute(
             builder: (context) => ResultQuiz(
                   score: score,
-                )
-        )
-    );
+                )));
   }
 }
