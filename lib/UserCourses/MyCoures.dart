@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/CouseDetails/details.dart';
@@ -16,6 +17,8 @@ class UserCourse extends StatefulWidget {
 }
 
 class _UserCourseState extends State<UserCourse> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +26,18 @@ class _UserCourseState extends State<UserCourse> {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       provider.getParticipation().then((_) {
         checkStudents();
+      });
+      _startTimer();
+    });
+  }
+
+  void _startTimer() {
+    setState(() {
+      _isLoading = true;
+    });
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
       });
     });
   }
@@ -59,33 +74,50 @@ class _UserCourseState extends State<UserCourse> {
         centerTitle: true,
         title: Text(
           S.of(context).MyCourse,
-          style:  TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12.sp),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 12.sp),
         ),
         backgroundColor: tdbrown,
       ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            if (userCourses.isNotEmpty)
+            if (_isLoading)
+              Center(
+                child: SizedBox(
+                    width: 100.w,
+                    height: 100.h,
+                    child: Image.asset(
+                      'assets/gif-unscreen.gif',
+                      fit: BoxFit.contain,
+                    )),
+              )
+            else if (userCourses.isNotEmpty)
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0).w,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20).w,
-                      border: Border.all(color: tdbrown),
-                    ),
-                    child: ListView.builder(
-                      itemCount: userCourses.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8),
+                  child: ListView.builder(
+                    itemCount: userCourses.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(5).w,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: tdBlue),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 5)
+                              ]),
                           child: ListTile(
                             title: Text(
                               userCourses[index].title,
-                              style:  TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                                 fontSize: 12.sp,
@@ -93,11 +125,10 @@ class _UserCourseState extends State<UserCourse> {
                             ),
                             subtitle: Text(
                               userCourses[index].courseDescr,
-                              style:  TextStyle(
-                                color: Colors.grey,
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 10.sp
-                              ),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 10.sp),
                             ),
                             onTap: () {
                               Navigator.push(
@@ -108,9 +139,9 @@ class _UserCourseState extends State<UserCourse> {
                                               userCourses[index].courseID)));
                             },
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )
@@ -118,20 +149,24 @@ class _UserCourseState extends State<UserCourse> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0).w,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20).w,
-                      border: Border.all(color: tdbrown),
-                    ),
-                    child: ListView.builder(
-                      itemCount: allCourses.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(5).w,
+                  child: ListView.builder(
+                    itemCount: allCourses.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(5).w,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: tdBlue),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    spreadRadius: 5)
+                              ]),
                           child: ListTile(
                             title: Text(
                               allCourses[index].title,
-                              style:  TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                                 fontSize: 12.sp,
@@ -139,11 +174,10 @@ class _UserCourseState extends State<UserCourse> {
                             ),
                             subtitle: Text(
                               allCourses[index].description,
-                              style:  TextStyle(
-                                color: Colors.grey,
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 10.sp
-                              ),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 10.sp),
                             ),
                             onTap: () {
                               Navigator.push(
@@ -153,9 +187,9 @@ class _UserCourseState extends State<UserCourse> {
                                           courseid: allCourses[index].id)));
                             },
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )
@@ -166,7 +200,7 @@ class _UserCourseState extends State<UserCourse> {
                   children: [
                     Text(
                       S.of(context).YouDoNotHaveCourse,
-                      style:  TextStyle(
+                      style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -189,7 +223,7 @@ class _UserCourseState extends State<UserCourse> {
                             child: Center(
                               child: Text(
                                 S.of(context).HomePage,
-                                style:  TextStyle(
+                                style: TextStyle(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),

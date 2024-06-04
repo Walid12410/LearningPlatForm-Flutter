@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/colors/color.dart';
@@ -15,6 +17,8 @@ class UserFavorite extends StatefulWidget {
 }
 
 class _UserFavoriteState extends State<UserFavorite> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +26,18 @@ class _UserFavoriteState extends State<UserFavorite> {
       final provider = Provider.of<AppDataProvider>(context, listen: false);
       int userID = provider.userId;
       provider.getUserFavoriteCourse(userID);
+      _startTimer();
+    });
+  }
+
+  void _startTimer() {
+    setState(() {
+      _isLoading = true;
+    });
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 
@@ -29,12 +45,40 @@ class _UserFavoriteState extends State<UserFavorite> {
   Widget build(BuildContext context) {
     final provider = Provider.of<AppDataProvider>(context, listen: true);
     var userCourses = provider.userFavoriteCourse;
+
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            S.of(context).YourFavoriteCourse,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 12.sp),
+          ),
+          centerTitle: true,
+          backgroundColor: tdbrown,
+        ),
+        body: Center(
+            child: SizedBox(
+                width: 100.w,
+                height: 100.h,
+                child: Image.asset(
+                  'assets/gif-unscreen.gif',
+                  fit: BoxFit.contain,
+                )),
+          ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           S.of(context).YourFavoriteCourse,
-          style:  TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12.sp),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 12.sp),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,
@@ -43,7 +87,7 @@ class _UserFavoriteState extends State<UserFavorite> {
           ? Center(
               child: Text(
                 S.of(context).NoFavCourse,
-                style:  TextStyle(
+                style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
@@ -68,7 +112,7 @@ class _UserFavoriteState extends State<UserFavorite> {
                             child: ListTile(
                               title: Text(
                                 userCourses[index].title,
-                                style:  TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 12.sp,
@@ -76,7 +120,7 @@ class _UserFavoriteState extends State<UserFavorite> {
                               ),
                               subtitle: Text(
                                 userCourses[index].courseDescription,
-                                style:  TextStyle(
+                                style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 10.sp,
                                   overflow: TextOverflow.ellipsis,
