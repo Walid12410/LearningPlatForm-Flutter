@@ -3,6 +3,7 @@ import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import '../TrainerPage/homepageTrainer.dart';
 import '../generated/l10n.dart';
 
 
@@ -16,15 +17,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App',
       debugShowCheckedModeBanner: false,
-      color: Colors.red,
       home: FutureBuilder<SharedPreferences>(
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final prefs = snapshot.data;
             final isLoggedIn = prefs?.getBool('isLoggedIn') ?? false;
-            if (isLoggedIn) {
+            final studentCheck = prefs?.getString('userType') ?? '';
+            if (isLoggedIn && studentCheck == 'ST') {
               return const HomePage();
+            }else if(isLoggedIn && studentCheck == 'TR'){
+              return const HomePageTrainer();
             } else {
               return const PageViewScreen();
             }

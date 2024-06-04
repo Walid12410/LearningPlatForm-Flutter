@@ -18,7 +18,7 @@ class _AboutState extends State<About> {
       appBar: AppBar(
         title: Text(
           S.of(context).aboutOurAppFullSentence,
-          style:  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+          style:  TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: tdbrown,

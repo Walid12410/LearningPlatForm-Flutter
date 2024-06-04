@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:learningplatformapp/SignInUp/signup.dart';
-import 'package:learningplatformapp/TrainerPage/Homepage/homepage.dart';
+import 'package:learningplatformapp/TrainerPage/homepageTrainer.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import 'package:learningplatformapp/mainpages/HomePage.dart';
 import 'package:learningplatformapp/SignInUp/Dialog.dart';
@@ -34,11 +34,12 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> saveLoginInfo(
-      BuildContext context, String username, int uid) async {
+      BuildContext context, String username, int uid,String userType) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', true);
     prefs.setString('username', username);
     prefs.setInt('uid', uid);
+    prefs.setString('userType', userType); // Add this line
     Provider.of<AppDataProvider>(context, listen: false).setUserId(uid);
   }
 
@@ -61,7 +62,7 @@ class _SignInState extends State<SignIn> {
         String? userType = responseData['usertype'];
         if (userID != null) {
           if (rememberMe) {
-            await saveLoginInfo(context, username, userID);
+            await saveLoginInfo(context, username, userID,userType!);
           }
           if (userType == 'TR') {
             Navigator.push(context,

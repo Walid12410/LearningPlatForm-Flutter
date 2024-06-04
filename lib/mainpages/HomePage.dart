@@ -33,35 +33,73 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: tdbrown,
-      child: Scaffold(
+
+    return Scaffold(
+        backgroundColor: Colors.white,
         body: _pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: tdbrown,
-          selectedItemColor: tdBlue,
-          unselectedItemColor:
-              tdBGColor,
-          onTap: (int newIndex) {
-            setState(() {
-              _selectedIndex = newIndex;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-                icon:  Icon(Icons.home,size: 20.w), label: S.of(context).HomePage),
-            BottomNavigationBarItem(
-                icon:  Icon(Icons.school,size: 20.w), label: S.of(context).MyCourse),
-            BottomNavigationBarItem(
-                icon:  Icon(Icons.search,size: 20.w,), label: S.of(context).Search),
-            BottomNavigationBarItem(
-                icon:  Icon(Icons.account_circle,size: 20.w,),
-                label: S.of(context).Profile)
-          ],
-        ),
-      ),
-    );
+        bottomNavigationBar: Builder(builder: (context) {
+          final mediaQuery = MediaQuery.of(context);
+          return MediaQuery(
+            data: mediaQuery.removeViewPadding(
+              removeBottom: true,
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: 8 + mediaQuery.viewPadding.right,
+                left: 8 + mediaQuery.viewPadding.left,
+                bottom: 12 + mediaQuery.viewPadding.bottom,
+              ),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(200).w,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(200).w,
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: tdbrown,
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    selectedLabelStyle: const TextStyle(fontSize: 0),
+                    unselectedLabelStyle: const TextStyle(fontSize: 0),
+                    onTap: (newIndex) {
+                      setState(() {
+                        _selectedIndex = newIndex;
+                      });
+                    },
+                    currentIndex: _selectedIndex,
+                    items:  [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home, color: Colors.black,size: 30.w),
+                        label: '',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.school_outlined,
+                            color: Colors.black, size: 30.w),
+                        label: '',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.search_outlined,
+                            color: Colors.black, size: 30.w),
+                        label: '',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.account_box, color: Colors.black,size: 30.w,),
+                        label: '',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }));
   }
 }

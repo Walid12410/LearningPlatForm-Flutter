@@ -84,6 +84,7 @@ class _MainPageState extends State<MainPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    SizedBox(height: 5.h,),
                     Padding(
                       padding: const EdgeInsets.only(left: 5,right: 5).w,
                       child: Row(

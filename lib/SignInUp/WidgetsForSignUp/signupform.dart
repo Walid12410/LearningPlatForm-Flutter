@@ -4,7 +4,6 @@ import 'package:learningplatformapp/SignInUp/signin.dart';
 import 'package:learningplatformapp/colors/color.dart';
 import '../../generated/l10n.dart';
 import 'singupfield.dart';
-import 'termsandcodition.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpForm extends StatefulWidget {
@@ -68,7 +67,7 @@ class _SignUpFormState extends State<SignUpForm> {
             SizedBox(height: 10.h),
             Container(
               height: 35.h,
-              width: 200.w,
+              width: 250.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40).w, color: tdbrown),
               child: TextButton(
@@ -93,7 +92,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   S.of(context).AlreadyHaveAcc,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                       color: tdBlue),
                 ),
                 GestureDetector(
@@ -106,7 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     child: Text(
                       S.of(context).signIn,
                       style: TextStyle(
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue),
                     ))

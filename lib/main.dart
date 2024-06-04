@@ -18,7 +18,6 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final userId = prefs.getInt('uid') ?? 0;
   Locale savedLocale = Locale(prefs.getString('language_code') ?? 'en');
-
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppDataProvider()..setUserId(userId),
