@@ -131,12 +131,9 @@ class _UserCourseState extends State<UserCourse> {
                                   fontSize: 10.sp),
                             ),
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  CustomPageRoute(
-                                      child: CourseDetails(
-                                          courseid:
-                                              userCourses[index].courseID)));
+                              Navigator.push(context, CustomPageRoute(
+                                  child: CourseDetails(courseid: userCourses[index].courseID))
+                              );
                             },
                           ),
                         ),
